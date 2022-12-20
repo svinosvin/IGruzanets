@@ -1,15 +1,11 @@
 <template>
-
-    <router-view/>
-
+AdminHome
 </template>
 
 <script>
-
 export default {
-
+    name: "AdminHome"
 }
-
 </script>
 
 <style scoped>
