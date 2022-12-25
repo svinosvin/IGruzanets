@@ -1,39 +1,29 @@
-<template>
-    <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <img src="../../../images/admin/logo.png" class="logo-container__img" alt="osprey logo">
-                <router-link :to="'/admin/'"><span class="logo-container__name">IGruzanets</span></router-link>
-            </div>
-            <nav class="user-nav">
-                <div class="user-nav__user">
-<!--                    <img src="../../../img/user.png" alt="User Photo" class="user-nav__user-photo">-->
-                    <router-link :to="'/admin/login'"><span class="user-nav__user-name">Login</span></router-link>
-                    <router-link :to="'/admin/login'"><span class="user-nav__user-name">Login</span></router-link>
 
+<template>
+        <div class="wrapper">
+            <Header/>
+            <div class="content-wrapper">
+                <div class="container mx-auto">
+                    <router-view></router-view>
                 </div>
-            </nav>
-        </header>
-        <div class="content">
-            <Sidebar />
-            <main class="main-part">
-               <router-view></router-view>
-            </main>
+            </div>
+            <Footer/>
         </div>
-    </div>
 </template>
 
 
-
 <script>
-import Main from "./Pages/AdminHome.vue";
-import Sidebar from "./Elements/Sidebar.vue";
+import Header from "./layout/Header.vue";
+import Footer from "./layout/Footer.vue";
+
+// import Main from "./Pages/AdminHome.vue";
+// import Sidebar from "./Elements/Sidebar.vue";
 
 export default {
     name:'AdminMain',
     components: {
-        Sidebar,
-        Main
+        Footer,
+        Header
 
     }
 }

@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('company_id')
-                ->nullable()
-                ->references('id')
-                ->on('companies')
-                ->onUpdate('cascade');
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->timestamp('expires_at')->nullable();
         });
     }
 
@@ -29,9 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['company_id']);
-            $table->dropColumn('company_id');
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            //
         });
     }
 };

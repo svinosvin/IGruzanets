@@ -9,14 +9,24 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-{{--    <link rel="stylesheet" href="{{Vite::asset('resources/jquery-ui/jquery-ui.css')}}">--}}
 
-@vite(['resources/css/app.css',
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/dist/css/adminlte.min.css')}} ">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/plugins/fontawesome-free/css/all.min.css ')}} ">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css ')}} ">
+
+    <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/plugins/select2/css/select2.min.css')}}">
+
+    @vite(['resources/css/app.css',
     'resources/js/app.js',
     'resources/sass/app.scss',
     'resources/sass/_variables.scss',
 
 ])
+
+
 
 
 
@@ -26,6 +36,38 @@
 
 </div>
 </body>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src=" {{Vite::asset('resources/adminlte/plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src=" {{Vite::asset('resources/adminlte/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src=" {{Vite::asset('resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- overlayScrollbars -->
+<script src=" {{Vite::asset('resources/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src=" {{Vite::asset('resources/adminlte/dist/js/adminlte.js')}}"></script>
+
+<script src=" {{Vite::asset('resources/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
+<script src="{{Vite::asset('resources/adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
+
+<script>
+    $('.tags').select2();
+    $('.colors').select2();
+    $(function () {
+        bsCustomFileInput.init();
+    })
+</script>
+
+
+
 </html>
 
 
