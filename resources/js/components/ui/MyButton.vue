@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "MyButton"
+    name: "my-button"
 }
 </script>
 
@@ -18,9 +18,9 @@ export default {
     border: 2px solid white;
     border-radius: 2px;
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
-    padding: 1.8rem 3rem;
+    padding: 1.8rem 40px;
     transition: all .2s;
     cursor: pointer;
     &:hover {

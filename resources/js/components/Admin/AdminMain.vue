@@ -15,17 +15,32 @@
 <script>
 import Header from "./layout/Header.vue";
 import Footer from "./layout/Footer.vue";
+import axios from "../../axios/axios-instance";
 
 // import Main from "./Pages/AdminHome.vue";
 // import Sidebar from "./Elements/Sidebar.vue";
-
 export default {
     name:'AdminMain',
     components: {
         Footer,
         Header
+    },
+    mounted() {
+        this.getData();
+    },
+    methods:{
+        getData(){
+            axios.get('/api/admin/get')
+             .then(response =>{
+                 console.log(response.data);
+             })
+        },
+        logout(){
+            this.$store.dispatch('logoutAdmin');
+        }
 
-    }
+    },
+
 }
 </script>
 

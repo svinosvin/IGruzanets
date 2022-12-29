@@ -3,9 +3,9 @@
 
     <div class="login-pager">
         <form class="form">
-            <my-input type="text" placeholder="Email address" v-model="user.email"></my-input>
-            <my-input type="text" placeholder="Password" v-model="user.password"></my-input>
-            <my-button type="submit">login</my-button>
+            <my-input type="text" placeholder="email" v-model="admin.email"></my-input>
+            <my-input type="text" placeholder="password" v-model="admin.password"></my-input>
+            <my-button type="submit" @click.prevent="login">login</my-button>
             <router-link to="/home"> <p class="message">Вы не администратор? <a href="#">На главную</a></p> </router-link>
         </form>
     </div>
@@ -14,15 +14,23 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "Login",
     data: () => ({
-        user: {
+        admin: {
             email:"",
             password:"",
         },
 
-    })
+    }),
+    methods:{
+        login(){
+            //console.log(this.user);
+            this.$store.dispatch('loginAdmin', this.admin);
+        }
+    }
 
 
 }

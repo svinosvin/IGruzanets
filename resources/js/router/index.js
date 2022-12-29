@@ -20,25 +20,25 @@ const routes = ([
             },
             {
                 path:'about',
-                component: import('../components/About.vue')
+                component:()=> import('../components/About.vue')
             },
             {
                 path:'reviews',
-                component: import('../components/Reviews.vue')
+                component:()=> import('../components/Reviews.vue')
             },
             {
                 path:'services',
-                component: import('../components/Services.vue')
+                component:()=> import('../components/Services.vue')
             },
         ]
     },
     {
         path: '/register',
-        component: import('../components/Auth/Register.vue')
+        component: ()=>import('../components/Auth/Register.vue')
     },
     {
         path: '/login',
-        component: import('../components/Auth/Login.vue')
+        component:()=> import('../components/Auth/Login.vue')
     },
 
     {
@@ -47,17 +47,17 @@ const routes = ([
     children :[
         {
             path:'',
-            component: import('../components/Admin/Pages/AdminHome.vue')
+            component: ()=>import('../components/Admin/Pages/AdminHome.vue')
         },
         {
             path:'services',
-            component: import('../components/Admin/Pages/AdminServices.vue')
+            component:()=> import('../components/Admin/Pages/AdminServices.vue')
         },
 
     ]},
     {
         path:'/admin/login',
-        component: import('../components/Admin/AuthAdmin/Login.vue')
+        component: ()=> import('../components/Admin/AuthAdmin/Login.vue')
     },
 
 ])

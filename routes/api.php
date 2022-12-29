@@ -20,8 +20,8 @@ use App\Http\Controllers\Main\AuthController;
 //});
 
 Route::post('admin/login', [AdminAuthController::class, 'login']);
-Route::get('admin/', [AdminAuthController::class, 'index'])->middleware(['auth:sanctum', 'abilities:admin']);
-Route::post('admin/logout', [AdminAuthController::class, 'logout'])->middleware(['auth:sanctum', 'abilities:admin']);
+Route::get('/admin/get', [AdminAuthController::class, 'index'])->middleware(['auth:sanctum', 'abilities:admin']);
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware(['auth:sanctum', 'abilities:admin']);
 
 
 
