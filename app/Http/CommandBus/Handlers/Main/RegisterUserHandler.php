@@ -3,6 +3,7 @@
 namespace App\Http\CommandBus\Handlers\Main;
 
 use App\Http\CommandBus\Commands\Main\RegisterUserCommand;
+use App\Http\Resources\User\UserResourceMin;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -23,7 +24,7 @@ class RegisterUserHandler
         $token = $user->createToken('MyApp', ['user'])->plainTextToken;
         return [
             'token' => $token,
-            'user' => $user,
+            'user' => UserResourceMin::make($user),
         ];
 
     }

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('autos', function (Blueprint $table) {
-            $table->foreignId('auto_category_id')->index()
+            $table->foreignId('auto_category_id')->nullable()->index()
                 ->constrained('auto_categories')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

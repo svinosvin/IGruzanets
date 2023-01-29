@@ -18,12 +18,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('examples');
-            $table->foreignId('resource_id')
-                ->references('id')
-                ->on('resources')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
             $table->timestamps();
 
         });

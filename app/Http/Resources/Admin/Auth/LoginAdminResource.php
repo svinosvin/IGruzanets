@@ -15,12 +15,12 @@ class LoginAdminResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $request->id,
-            'email'=> $request->email,
-            'name' => $request->name,
-            'lastname'=> $request->lastname,
-            'patronymic'=> $request->patronymic,
-            'email_verified'=>$request->email_verified
+            'id' => $this->id,
+            'email'=> $this->email,
+            'name' => $this->name,
+            'lastname'=> $this->lastname,
+            'patronymic'=> $this->patronymic,
+            'email_verified'=>$this->email_verified
         ];
     }
 }

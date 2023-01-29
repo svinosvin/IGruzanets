@@ -14,6 +14,6 @@ class AutoCategory extends Model
 
     public function drivers(){
 
-        return $this->belongsToMany(Driver::class, 'driver_auto_categories');
+        return $this->belongsToMany(Driver::class, 'driver_auto_categories','category_id', 'driver_id');
     }
 }

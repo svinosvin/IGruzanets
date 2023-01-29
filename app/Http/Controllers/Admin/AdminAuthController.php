@@ -31,7 +31,7 @@ class AdminAuthController extends Controller
     }
 
     public function index(){
-        return response()->json([Admin::all()], 201);
+        return response()->json(['admin' => Auth::user()], 201);
     }
 
 }

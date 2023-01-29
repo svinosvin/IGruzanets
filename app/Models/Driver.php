@@ -14,6 +14,14 @@ class Driver extends Model
 
     public function auto_categories(){
 
-        return $this->belongsToMany(AutoCategory::class, 'driver_auto_categories');
+        return $this->belongsToMany(AutoCategory::class, 'driver_auto_categories', 'driver_id', 'category_id');
     }
+
+    public function attachUniqueCategories($ids){
+        $attachedIds = $this->auto_categories()->whereIn('category_id', $ids)->pluck('category_id');
+        $newIds = array_diff( $ids, array(...$attachedIds));
+        $this->auto_categories()->attach($newIds);
+
+    }
+
 }

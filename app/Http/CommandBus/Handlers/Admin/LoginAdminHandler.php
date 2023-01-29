@@ -3,7 +3,9 @@
 namespace App\Http\CommandBus\Handlers\Admin;
 
 
+use App\Exceptions\JsonExceptionResponse;
 use App\Http\CommandBus\Commands\Admin\LoginAdminCommand;
+use App\Http\Resources\Admin\AdminFullResource;
 use Illuminate\Support\Facades\Auth;
 
 class LoginAdminHandler
@@ -13,9 +15,10 @@ class LoginAdminHandler
         if(Auth::guard('admin')->attempt(['email' => $command->email, 'password' => $command->password])){
             $admin = Auth::guard('admin')->user();
             $token = $admin->createToken('MyApp',['admin'])->plainTextToken;
-            return ['admin' => $admin, 'token' => $token];
+            return ['admin' => AdminFullResource::make($admin), 'token' => $token];
         }
-        return response()->json(['error' => 'Bad credits'], 402);
+        return JsonExceptionResponse::error('Bad credits', 402);
+
 
 
     }

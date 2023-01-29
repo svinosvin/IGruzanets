@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('driver_auto_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('driver_id')->index()->constrained('drivers')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('category_id')->references('id')->on('auto_categories')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('driver_id')->nullable()->index()->constrained('drivers')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('category_id')->nullable()->index()->constrained('auto_categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

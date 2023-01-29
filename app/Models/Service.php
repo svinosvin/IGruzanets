@@ -13,9 +13,14 @@ class Service extends Model
     protected $guarded = false;
 
 
-    public function resource(){
-        return $this->hasOne(Resource::class);
+
+    public function my_resources(){
+       return  $this->belongsToMany(Resource::class, 'service_resources', 'service_id', 'resource_id');
     }
+    public function attachUniqueResources($ids){
+        $attachedIds = $this->my_resources()->whereIn('resource_id', $ids)->pluck('resource_id');
+        $newIds = array_diff( $ids, array(...$attachedIds));
+        $this->my_resources()->attach($newIds);
 
-
+    }
 }
