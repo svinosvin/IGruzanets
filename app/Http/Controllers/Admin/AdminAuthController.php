@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\JsonExceptionResponse;
 use App\Http\CommandBus\Commands\Admin\LoginAdminCommand;
 use App\Http\CommandBus\Handlers\Admin\LoginAdminHandler;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,10 @@ class AdminAuthController extends Controller
         $data = $request->validated();
         $command = new LoginAdminCommand($data['email'], $data['password']);
         $response = $handler->handle($command);
-        return response()->json($response, 201);
+        if($response)
+            return response()->json($response, 201);
+        return JsonExceptionResponse::error('Bad credits', 402);
+
 
     }
 

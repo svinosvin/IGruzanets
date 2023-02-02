@@ -15,10 +15,9 @@ class LoginAdminHandler
         if(Auth::guard('admin')->attempt(['email' => $command->email, 'password' => $command->password])){
             $admin = Auth::guard('admin')->user();
             $token = $admin->createToken('MyApp',['admin'])->plainTextToken;
-            return ['admin' => AdminFullResource::make($admin), 'token' => $token];
+            return  ['admin' => AdminFullResource::make($admin), 'token' => $token];
         }
-        return JsonExceptionResponse::error('Bad credits', 402);
-
+        return null;
 
 
     }
