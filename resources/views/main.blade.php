@@ -17,7 +17,6 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css ')}} ">
 
-    <link rel="stylesheet" href="{{Vite::asset('resources/adminlte/plugins/select2/css/select2.min.css')}}">
 
     @vite(['resources/css/app.css',
     'resources/js/app.js',
@@ -54,17 +53,6 @@
 <!-- AdminLTE App -->
 <script src=" {{Vite::asset('resources/adminlte/dist/js/adminlte.js')}}"></script>
 
-<script src=" {{Vite::asset('resources/adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
-
-<script src="{{Vite::asset('resources/adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
-
-<script>
-    $('.tags').select2();
-    $('.colors').select2();
-    $(function () {
-        bsCustomFileInput.init();
-    })
-</script>
 
 
 

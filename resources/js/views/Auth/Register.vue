@@ -4,32 +4,32 @@
         <div class="login-pager">
             <form class="form">
                 <my-input type="text" placeholder="email" v-model="user.email"></my-input>
-                <my-input type="text" placeholder="password" v-model="user.password"></my-input>
-                <my-button type="submit" @click.prevent="login">login</my-button>
-                <router-link to="/register"> <p class="message">Вы не зарегистрированы? <a href="#">Регистрация</a></p> </router-link>
+                <my-input type="text" placeholder="пароль" v-model="user.password"></my-input>
+                <my-input type="text" placeholder="повторите пароль" v-model="user.password_confirmation"></my-input>
+                <my-input type="text" placeholder="80296413370" v-model="user.tel_number"></my-input>
+
+                <my-button type="submit" @click.prevent="register">Зарегистрироваться</my-button>
+                <router-link to="/login"> <p class="message">У Вас уже есть аккаунт? <a href="#">Войти</a></p> </router-link>
             </form>
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: "Login",
+<script setup>
+import {useStore} from "vuex";
+import {ref} from "vue";
+//uses
+const store = useStore();
+const user = ref({})
 
-    data:()=>({
-        user:{
-            email:"",
-            password:"",
-        }
-    }),
-    methods:{
-        login(){
-
-        }
-    }
-
+const register = ()=>{
+    store.dispatch('authUser/registerUser', user);
 }
+
+
+
 </script>
+
 
 <style lang="scss">
 
@@ -72,4 +72,3 @@ export default {
     color: var(--color-grey-light-4);
 }
 </style>
-

@@ -6,7 +6,7 @@
         <!-- Content Wrapper. Contains page content -->
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2022 <a href="/">Ivanets</a>.</strong>
+            <strong>Copyright &copy; 2022 <a href="/public">Ivanets</a>.</strong>
             Все права защищены
         </footer>
 

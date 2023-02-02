@@ -1,5 +1,6 @@
 
 <template>
+        {{currentAdmin.name}}
         <div class="wrapper">
             <Header/>
             <div class="content-wrapper">
@@ -8,40 +9,36 @@
                 </div>
             </div>
             <Footer/>
+            {{currentAdmin.email}}
         </div>
 </template>
 
 
-<script>
+<script setup>
 import Header from "./layout/Header.vue";
 import Footer from "./layout/Footer.vue";
 import axios from "../../axios/axios-instance";
+import {useStore} from "vuex"
+import {computed, onMounted} from "vue";
 
-// import Main from "./Pages/AdminHome.vue";
-// import Sidebar from "./Elements/Sidebar.vue";
-export default {
-    name:'AdminMain',
-    components: {
-        Footer,
-        Header
-    },
-    mounted() {
-        this.getData();
-    },
-    methods:{
-        getData(){
-            axios.get('/api/admin/get')
-             .then(response =>{
-                 console.log(response.data);
-             })
-        },
-        logout(){
-            this.$store.dispatch('logoutAdmin');
-        }
+//uses
+const store = useStore();
+const currentAdmin = computed(()=>store.state.authAdmin.admin);
 
-    },
+//
+// Methods
+//
+const getData = () =>{
+    store.dispatch('authAdmin/getDataAdmin');
+};
+const logout = ()=> {
+    store.dispatch('authAdmin/logoutAdmin');
 
 }
+//
+onMounted(getData);
+
+
 </script>
 
 

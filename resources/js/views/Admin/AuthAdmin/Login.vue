@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
     name: "Login",
@@ -28,7 +27,7 @@ export default {
     methods:{
         login(){
             //console.log(this.user);
-            this.$store.dispatch('loginAdmin', this.admin);
+            this.$store.dispatch('authAdmin/loginAdmin', this.admin);
         }
     }
 
