@@ -27,7 +27,7 @@ class DriverUpdateRequest extends FormRequest
             'name' => 'nullable|string',
             'first_name' => 'nullable|string',
             'patronymic' => 'nullable|string',
-            'tel_number' => ['nullable','string', 'unique:drivers,tel_number','regex:/^(80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$/'],
+            'tel_number' => ['nullable','string','regex:/^(8)\s(0)(29|25|44|33)\s(\d{3})(\d{2})(\d{2})$/'],
             'categories' => 'array|nullable',
 
         ];

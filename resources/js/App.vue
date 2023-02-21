@@ -1,12 +1,13 @@
 <template>
+    <Toast/>
     <router-view/>
+    <ConfirmDialog/>
 </template>
 
-<script>
+<script setup>
 
-export default {
-
-}
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 </script>
 

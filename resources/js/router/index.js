@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Main from "../views/Main.vue";
-import Home from '../views/Home.vue'
-import AdminMain from '../views/Admin/AdminMain.vue'
-import Register from "../views/Auth/Register.vue";
+import Main from "../views/base/Main.vue";
+import Home from '../views/base/Home.vue'
+import AdminMain from '../views/base/Admin/AdminMain.vue'
+import Register from "../views/base/Auth/Register.vue";
 
 
 const routes = ([
@@ -24,31 +24,31 @@ const routes = ([
             },
             {
                 path:'about',
-                component:()=> import('../views/About.vue')
+                component:()=> import('../views/base/About.vue')
             },
             {
                 path:'reviews',
-                component:()=> import('../views/Reviews.vue')
+                component:()=> import('../views/base/Reviews.vue')
             },
             {
                 path:'services',
-                component:()=> import('../views/Services.vue')
+                component:()=> import('../views/base/Services.vue')
             },
             {
                 path:'profile',
-                component:()=> import('../views/Profile.vue')
+                component:()=> import('../views/base/Profile.vue')
             },
         ]
     },
     {
         path: '/register',
-        component: ()=>import('../views/Auth/Register.vue'),
+        component: ()=>import('../views/base/Auth/Register.vue'),
         name: 'Register'
 
     },
     {
         path: '/login',
-        component:()=> import('../views/Auth/Login.vue'),
+        component:()=> import('../views/base/Auth/Login.vue'),
         name: 'Login'
 
     },
@@ -59,22 +59,22 @@ const routes = ([
     children :[
         {
             path:'',
-            component: ()=>import('../views/Admin/Pages/AdminHome.vue'),
+            component: ()=>import('../views/base/Admin/Pages/AdminHome.vue'),
             name: 'AdminHome',
         },
         {
             path:'services',
-            component:()=> import('../views/Admin/Pages/AdminServices.vue')
+            component:()=> import('../views/base/Admin/Pages/AdminServices.vue')
         },
         {
             path:'drivers',
-            component:()=> import('../views/Admin/Pages/AdminDrivers.vue')
+            component:()=> import('../views/base/Admin/Pages/AdminDrivers.vue')
         },
 
     ]},
     {
         path:'/admin/login',
-        component: ()=> import('../views/Admin/AuthAdmin/Login.vue'),
+        component: ()=> import('../views/base/Admin/AuthAdmin/Login.vue'),
         name: 'AdminLogin'
 
     },

@@ -4,11 +4,13 @@ const state = {
 
     drivers : [],
     activeDriver: {
-        name: 0,
-        last_name: 0,
-        patronymic: 0,
-        tel_number: 0,
-        categories : []
+        id: null,
+        name: '',
+        first_name: '',
+        patronymic: '',
+        tel_number: '',
+        categories : [],
+        categoriesString: null,
     },
 };
 const getters = {
@@ -36,7 +38,18 @@ const actions = {
 
 const mutations = {
     fill_drivers(state, drivers){
-        state.drivers = drivers;
+        state.drivers = drivers.map( x => {
+            return {
+                id: x.id,
+                name: x.name,
+                first_name: x.first_name,
+                patronymic: x.patronymic,
+                tel_number: x.tel_number,
+                categories : x.categories,
+                categoriesString: x.categories.map(x=>x.title).join('; '),
+            }
+        })
+
     },
     add_driver(state, value){
         state.drivers.push(value);
@@ -49,12 +62,14 @@ const mutations = {
         mutations.clear_active_driver(state);
     },
     clear_active_driver(state) {
-        this.activeDriver = {
-            name: 0,
-            last_name: 0,
-            patronymic: 0,
-            tel_number: 0,
-            categories : []
+        state.activeDriver = {
+            id: null,
+            name: '',
+            first_name: '',
+            patronymic: '',
+            tel_number: '',
+            categories : [],
+            categoriesString: null
         }
     }
 }

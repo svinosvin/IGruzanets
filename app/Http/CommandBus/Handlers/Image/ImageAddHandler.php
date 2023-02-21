@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ImageAddHandler
 {
     public function handle(ImageAddCommand $command){
+
       $existImage = Image::where('name', $command->image)->first();
       if(!$existImage){
           $path = Storage::disk('public')->put('/images/'.$command->folder, $command->image);

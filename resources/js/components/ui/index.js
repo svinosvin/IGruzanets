@@ -10,10 +10,14 @@ import Toolbar from 'primevue/toolbar';
 import Button from "primevue/button";
 import MultiSelect from "primevue/multiselect";
 import Dialog from "primevue/dialog";
+import NavLink from "../../views/base/Admin/layout/NavLink.vue";
+import InputText from "primevue/inputtext";
+
 export default [
     Toolbar,
     MyButton,
     MyInput,
+    NavLink,
     NavItem,
     DataTable,
     Column,
@@ -22,5 +26,6 @@ export default [
     InputMask,
     Button,
     MultiSelect,
-    Dialog
+    Dialog,
+    InputText
 ]

@@ -1056,19 +1056,20 @@
     color: #495057;
     background: #ffffff;
     padding: 0.5rem 0.5rem;
-    border: 1px solid #ced4da;
+    border: 1px solid #59acc4;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     appearance: none;
     border-radius: 3px;
+    font-weight: bold;
 }
 .p-inputtext:enabled:hover {
-    border-color: #4CAF50;
+    border-color: #59acc4;
 }
 .p-inputtext:enabled:focus {
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 0.2rem #b7e0b8;
-    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.14rem #59acc4;
+    border-color: #03407c;
 }
 .p-inputtext.p-invalid.p-component {
     border-color: #f44336;
@@ -5676,3 +5677,4 @@
 .p-hidden-accessible{
     display: none;
 }
+

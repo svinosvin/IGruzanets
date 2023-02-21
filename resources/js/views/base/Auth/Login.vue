@@ -3,8 +3,10 @@
 
         <div class="login-pager">
             <form class="form">
-                <my-input type="text" placeholder="email" v-model="user.email"></my-input>
-                <my-input type="text" placeholder="password" v-model="user.password"></my-input>
+
+                <InputText></InputText>
+                <my-input type="text" placeholder="email" name="Email" v-model="user.email"></my-input>
+                <my-input type="text" placeholder="password" name="Password" v-model="user.password"></my-input>
                 <my-button type="submit" @click.prevent="login">login</my-button>
                 <router-link to="/register"> <p class="message">Вы не зарегистрированы? <a href="#">Регистрация</a></p> </router-link>
             </form>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AutoService from '../../../services/AutoService';
+import AutoService from '../../../../services/AutoService';
 
 export default {
     name: "AdminAutos",

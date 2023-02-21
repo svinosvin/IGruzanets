@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </main>
-            <footer class="footer  position-absolute bottom-0 left-0 min-w-full">
+            <footer class="footer absolute bottom-0 left-0 min-w-full">
                 <div class="container mx-auto">
                <div>
                    dsadasdasdas

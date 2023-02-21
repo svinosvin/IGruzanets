@@ -27,7 +27,7 @@ class DriverStoreRequest extends FormRequest
             'name' => 'required|string',
             'first_name' => 'required|string',
             'patronymic' => 'required|string',
-            'tel_number' => ['required','string', 'unique:drivers,tel_number','regex:/^(80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$/'],
+            'tel_number' => ['required','string', 'unique:drivers,tel_number','regex:/^(8)\s(0)(29|25|44|33)\s(\d{3})(\d{2})(\d{2})$/'],
             'categories' => 'array|nullable',
 
         ];

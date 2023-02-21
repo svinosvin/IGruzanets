@@ -6,6 +6,7 @@ use App\Exceptions\JsonExceptionResponse;
 use App\Http\Requests\Driver\DriverStoreRequest;
 use App\Http\Requests\Driver\DriverUpdateRequest;
 use App\Http\Resources\Driver\DriverFullResource;
+use App\Models\AutoCategory;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 
@@ -50,13 +51,16 @@ class DriverController extends Controller
         $driver = Driver::findOrFail($id);
         $data = $request->validated();
 
-        $categoriesID = $data['categories'] ?? null;
+        $categories = $data['categories'] ?? null;
         unset($data['categories']);
+        $driver->updateOrFail($data);
 
-        $driver->update($data);
-        if($categoriesID){
-            $driver->attachUniqueCategories($categoriesID);
+        foreach ($categories as $category_id){
+            if(AutoCategory::find($category_id) === null){
+                return JsonExceptionResponse::error("Категория №${category_id} не найдена", 451);
+            }
         }
+        $driver->auto_categories()->sync($categories);
         return DriverFullResource::make($driver);
     }
 
