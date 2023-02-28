@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('examples');
+            $table->foreignId('resource_id')->nullable()->index()
+                ->constrained('resources')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
-
         });
     }
 
