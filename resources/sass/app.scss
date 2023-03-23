@@ -4,3 +4,7 @@
 // Variables
 @import 'variables';
 @import "custom_styles";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

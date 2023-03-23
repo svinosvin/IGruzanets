@@ -12,8 +12,16 @@ import MultiSelect from "primevue/multiselect";
 import Dialog from "primevue/dialog";
 import NavLink from "../../views/base/Admin/layout/NavLink.vue";
 import InputText from "primevue/inputtext";
-
+import Textarea from "primevue/textarea";
+import Select from "./Select.vue"
+import Dropdown from "primevue/dropdown";
+import AdminPageWrapper from '../base/AdminPageWrapper.vue'
+import Upload from '../ui/Upload.vue'
+import FileUpload from "primevue/fileupload";
+import Image from 'primevue/image'
 export default [
+    Image,
+    Dropdown,
     Toolbar,
     MyButton,
     MyInput,
@@ -27,5 +35,10 @@ export default [
     Button,
     MultiSelect,
     Dialog,
-    InputText
+    InputText,
+    Textarea,
+    Select,
+    AdminPageWrapper,
+    Upload,
+    FileUpload
 ]

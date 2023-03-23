@@ -1,48 +1,49 @@
 <template>
-    <Toolbar class="mb-4 flex flex-wrap">
-        <template #start>
-                <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />
-
+    <AdminPageWrapper headerPage="Водители">
+        <template v-slot:header>
+            <Toolbar class="mb-4 flex flex-wrap">
+                <template #start>
+                    <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />
+                </template>
+                <template #end>
+                </template>
+            </Toolbar>
         </template>
-        <template #end>
+        <template v-slot:main>
+            <DataTable :value="drivers" v-model:selection="activeDriver" dataKey="id"  :resizableColumns="true" columnResizeMode="expand" showGridlines responsiveLayout="scroll"
+                       :paginator="true" v-model:filters="filter" filterDisplay="row" :autoLayot="true" @row-dblclick="dblclickHandler" :rows="5"
+                       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                       :rowsPerPageOptions="[5,10,25]">
+                <template #header>
 
-        </template>
-    </Toolbar>
-    <DataTable :value="drivers" v-model:selection="activeDriver" dataKey="id"  :resizableColumns="true" columnResizeMode="expand" showGridlines responsiveLayout="scroll"
-               :paginator="true" v-model:filters="filter" filterDisplay="row" :autoLayot="true" @row-dblclick="dblclickHandler" :rows="5"
-               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-               :rowsPerPageOptions="[5,10,25]">
-        <template #header>
-            <span>Drivers</span>
-
-            <span class="p-input-icon-right ml-5">
+                    <span class="p-input-icon-right">
                         <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
                         <i class="pi pi-search" />
-                </span>
-        </template>
-
-            <Column field="id" header="ID">
-
-            </Column>
-            <Column field="name" header="Имя"  :sortable="true"></Column>
-            <Column field="first_name" header="Фамилия" :sortable="true"></Column>
-            <Column field="patronymic" header="Отчество" :sortable="true"></Column>
-            <Column field="tel_number" header="Номер телефона" :sortable="true"></Column>
-            <Column field="categoriesString" header="Категории прав" filterField="categoriesString" :sortable="true" :showFilterMatchModes="true">
+            </span>
+                </template>
+                <Column field="name" header="Имя"  :sortable="true"></Column>
+                <Column field="first_name" header="Фамилия" :sortable="true"></Column>
+                <Column field="patronymic" header="Отчество" :sortable="true"></Column>
+                <Column field="tel_number" header="Номер телефона" :sortable="true"></Column>
+                <Column field="categoriesString" header="Категории прав" filterField="categoriesString" :sortable="true" :showFilterMatchModes="true">
                     <template #filter="{filterModel,filterCallback}">
-<!--                        <MultiSelect v-model="filter['categories'].value" :options="categories" optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom"-->
-<!--                                     emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов">-->
-<!--                        </MultiSelect>-->
+                        <!--                        <MultiSelect v-model="filter['categories'].value" :options="categories" optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom"-->
+                        <!--                                     emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов">-->
+                        <!--                        </MultiSelect>-->
                         <InputText type="text" v-model="filter['categoriesString'].value" class="p-column-filter" :placeholder="`Search by name - `"/>
                     </template>
-            </Column>
-            <Column :exportable="false" style="min-width:8rem">
-                <template #body="slotProps">
-                    <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>
-                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteDriver(slotProps.data.id)"/>
-                </template>
-            </Column>
-    </DataTable>
+                </Column>
+                <Column :exportable="false" style="min-width:8rem">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>
+                        <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteDriver(slotProps.data.id)"/>
+                    </template>
+                </Column>
+            </DataTable>
+        </template>
+    </AdminPageWrapper>
+
+
     <DriverDialog v-model:visible="openDialog" @close="handleCloseDialog"></DriverDialog>
 </template>
 

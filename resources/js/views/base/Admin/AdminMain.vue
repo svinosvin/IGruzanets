@@ -1,7 +1,6 @@
 
 <template>
-
-    <div class="page-wrapper min-h-screen g-gradient-light" :class="{'sidebar-active': sidebarSmall}">
+    <div class="page-wrapper min-h-screen g-gradient-light " :class="{'sidebar-active': sidebarSmall}">
         <header class="header">
             <div class="header__wrapper">
                 <nav class="header__nav">
@@ -23,6 +22,7 @@
                 </nav>
             </div>
         </header>
+
         <aside class="main-sidebar">
             <div class="sidebar">
                 <div class="sidebar__header">
@@ -37,15 +37,16 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="sidebarSmall" route="/admin/" tooltip="Главная" icon="pi-home">Главная</NavLink>
+                    <NavLink :isOpen="sidebarSmall" route="/admin/home" tooltip="Главная" icon="pi-home">Главная</NavLink>
                     <NavLink :isOpen="sidebarSmall" route="/admin/services" tooltip="Услуги" icon="pi-user">Услуги</NavLink>
                     <NavLink :isOpen="sidebarSmall" route="/admin/drivers" tooltip="Водитель" icon="pi-user">Водитель</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/drivers" tooltip="Машины" icon=" pi-car">Машины</NavLink>
+                    <NavLink :isOpen="sidebarSmall" route="/admin/autos" tooltip="Машины" icon=" pi-car">Машины</NavLink>
+                    <NavLink :isOpen="sidebarSmall" route="/admin/subresources" tooltip="Ресурсы" icon=" pi-car pi-table">Ресурсы</NavLink>
                 </nav>
                 <div class="profile__content">
                     <div class="profile">
                         <div class="profile__details">
-                            <img src="../../../../images/admin/user.jpg" alt="">
+                            <img src="../../../../images/admin/user.jpg" alt="">[plugin:vite:import-analysis] Failed to resolve import "../../../../images/admin/user.jpg" from "resources/js/components/ui/Upload.vue". Does the file exist?
                             <div class="name__job">
                                 <div class="name">Artem Ivanets</div>
                                 <div class="job">Programmer</div>
@@ -67,7 +68,6 @@
             </div>
         </main>
     </div>
-
 </template>
 
 
@@ -77,7 +77,6 @@ import Footer from "./layout/Footer.vue";
 import axios from "../../../axios/axios-instance";
 import {useStore} from "vuex"
 import {computed, onMounted, ref} from "vue";
-
 
 
 //uses

@@ -2,8 +2,13 @@ import axios from '../axios/axios-instance'
 
 export default class Resource{
 
+
     async getResources(){
         let response = await axios.get('/api/resource/');
+        return await response.data;
+    }
+    async getSmallResources(){
+        let response = await axios.get('/api/resource/small');
         return await response.data;
     }
     async getResource(id){

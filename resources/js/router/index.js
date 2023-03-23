@@ -59,6 +59,10 @@ const routes = ([
     children :[
         {
             path:'',
+            redirect: 'admin/home'
+        },
+        {
+            path: 'home',
             component: ()=>import('../views/base/Admin/Pages/AdminHome.vue'),
             name: 'AdminHome',
         },
@@ -70,6 +74,14 @@ const routes = ([
             path:'drivers',
             component:()=> import('../views/base/Admin/Pages/AdminDrivers.vue')
         },
+        {
+            path:'subresources',
+            component:()=> import('../views/base/Admin/Pages/AdminSubResources.vue')
+        },
+        {
+            path:'autos',
+            component:()=> import('../views/base/Admin/Pages/AdminAutos.vue')
+        },
 
     ]},
     {
@@ -77,6 +89,11 @@ const routes = ([
         component: ()=> import('../views/base/Admin/AuthAdmin/Login.vue'),
         name: 'AdminLogin'
 
+    },
+
+    {
+        path: '/:pathMatch(.*)*',
+        component: ()=> import('../views/NotFoundPage.vue')
     },
 
 ])

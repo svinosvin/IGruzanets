@@ -11,7 +11,8 @@ export default {
     },
     methods :{
         updateInput(event){
-            this.$emit('update:modelValue', event.target.value)
+            let data = event.target.value;
+            this.$emit('update:modelValue', data)
         }
     }
 
