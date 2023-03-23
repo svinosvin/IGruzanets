@@ -8,11 +8,13 @@
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.0",
-        "laravel/sanctum": "^2.14",
-        "laravel/tinker": "^2.7"
+        "laravel/framework": "^9.19.0",
+        "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7",
+        "spatie/laravel-query-builder": "^5.1"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
@@ -33,12 +35,18 @@
         }
     },
     "scripts": {
+        "ide" : [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -48,9 +56,11 @@
         ]
     },
     "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
+            "laravel": {
+                "dont-discover": [
+                    "barryvdh/laravel-ide-helper"
+                ]
+            }
     },
     "config": {
         "optimize-autoloader": true,
