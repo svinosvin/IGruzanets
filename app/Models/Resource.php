@@ -13,17 +13,11 @@ class Resource extends Model
     protected $guarded = false;
 
     public function sub_resources(){
-        return $this->belongsToMany(SubResource::class, 'resource_sub_resources', 'resource_id', 'sub_resource_id');
+        return $this->hasMany(SubResource::class);
     }
 
     public function services(){
        return $this->belongsToMany(Service::class, 'service_resources', 'resource_id', 'service_id');
-    }
-
-    public function attachUniqueSubResource($ids){
-        $attachedIds = $this->sub_resources()->whereIn('sub_resource_id', $ids)->pluck('sub_resource_id');
-        $newIds = array_diff( $ids, array(...$attachedIds));
-        $this->sub_resources()->attach($newIds);
     }
 
     public function attachUniqueService($ids){

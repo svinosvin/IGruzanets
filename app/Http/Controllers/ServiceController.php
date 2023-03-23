@@ -7,6 +7,7 @@ use App\Http\Requests\Service\ServiceStoreRequest;
 use App\Http\Requests\Service\ServiceUpdateRequest;
 use App\Http\Resources\Service\ServiceResourceFull;
 use App\Http\Resources\Service\ServiceResourceMin;
+use App\Models\Resource;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -24,9 +25,16 @@ class ServiceController extends Controller
         $data = $request->validated();
         $resources = $data['resources'] ?? null;
         unset($data['resources']);
+
         $service = Service::create($data);
-        if($resources){
-            $service->attachUniqueResources($resources);
+        if($resources)
+        {
+            foreach ($resources as $resource_id) {
+                if(Resource::find($resource_id)===null){
+                    return JsonExceptionResponse::error("Resource №${$resource_id} does not exist!", 406);
+                }
+            }
+            $service->my_resources()->sync($resources);
         }
         return ServiceResourceFull::make($service);
     }
@@ -54,8 +62,15 @@ class ServiceController extends Controller
         $resources = $data['resources'] ?? null;
         unset($data['resources']);
         $service->update($data);
-        if($resources){
-            $service->attachUniqueResources($resources);
+        if($resources)
+        {
+            foreach ($resources as $resource_id) {
+                if(Resource::find($resource_id)===null){
+                    return JsonExceptionResponse::error("Resource №${$resource_id} does not exist!", 406);
+                }
+            }
+            $service->my_resources()->sync($resources);
+
         }
         return ServiceResourceFull::make($service);
 

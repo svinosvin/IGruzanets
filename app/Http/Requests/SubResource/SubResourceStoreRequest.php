@@ -27,7 +27,8 @@ class SubResourceStoreRequest extends FormRequest
             'title' => 'required|unique:sub_resources|string',
             'description' => 'required|string',
             'examples' => 'required|string',
-            'resources' => 'nullable|array'
+            'resource' => 'nullable|integer'
+
         ];
     }
 }

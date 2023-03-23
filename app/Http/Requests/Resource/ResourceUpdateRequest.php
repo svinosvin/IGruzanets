@@ -24,7 +24,7 @@ class ResourceUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|unique:resources|string',
+            'title' => 'nullable|string',
             'description' => 'nullable|string',
             'examples' => 'nullable|string',
             'sub_resources' => 'nullable|array',

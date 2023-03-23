@@ -4,6 +4,7 @@ namespace App\Http\Resources\Resource;
 
 use App\Http\Resources\Service\ServiceResourceMin;
 use App\Http\Resources\SubResource\SubResourceResourceMin;
+use App\Http\Resources\SubResource\SubResourceTableResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResourceResourceFull extends JsonResource
@@ -21,7 +22,7 @@ class ResourceResourceFull extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'examples' => $this->examples,
-            'sub_resources' => SubResourceResourceMin::collection($this->sub_resources),
+            'sub_resources' => SubResourceTableResource::collection($this->sub_resources),
             'services' => ServiceResourceMin::collection($this->services),
 
         ];

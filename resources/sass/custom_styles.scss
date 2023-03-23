@@ -1,0 +1,37 @@
+:root{
+    --input-border: #8b8a8b;
+    --input-focus-h: 245;
+    --input-focus-s: 100%;
+    --input-focus-l: 42%;
+}
+.link{
+    transition: .2s all;
+    &:hover{
+        color: darkgrey;
+    }
+}
+
+.input-custom{
+    width: 70%;
+    border: 1px solid teal;
+    padding: 10px 15px;
+    margin-top: 15px;
+    color: black;
+}
+
+.input-custom:focus{
+    border-color: hsl(
+            var(--input-focus-h),
+            var(--input-focus-s),
+            var(--input-focus-l)
+    );
+    box-shadow: 0 0 0 2px;
+    //hsla(
+    //        var(--input-focus-h),
+    //        var(--input-focus-s),
+    //        calc(var(--input-focus-l) + 40%),
+    //        0.8
+    //);
+    outline: 1px solid transparent;
+}
+

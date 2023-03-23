@@ -21,7 +21,7 @@ class SubResourceResourceFull extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'examples' => $this->examples,
-            'resource' => ResourceMinResource::collection($this->my_resources)
+            'resource' => ResourceMinResource::make($this->my_resource)
         ];
     }
 }

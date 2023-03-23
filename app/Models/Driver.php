@@ -21,7 +21,6 @@ class Driver extends Model
         $attachedIds = $this->auto_categories()->whereIn('category_id', $ids)->pluck('category_id');
         $newIds = array_diff( $ids, array(...$attachedIds));
         $this->auto_categories()->attach($newIds);
-
     }
 
 }

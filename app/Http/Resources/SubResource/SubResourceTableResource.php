@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources\SubResource;
 
-use App\Http\Resources\Resource\ResourceMinResource;
 use App\Http\Resources\Resource\ResourceTableResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubResourceResourceMin extends JsonResource
+class SubResourceTableResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +18,6 @@ class SubResourceResourceMin extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description,
-            'examples' => $this->examples,
-            'resource' => ResourceMinResource::make($this->my_resource)
-
 
         ];
     }

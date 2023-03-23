@@ -61,6 +61,7 @@ class DriverController extends Controller
             }
         }
         $driver->auto_categories()->sync($categories);
+        $driver->save();
         return DriverFullResource::make($driver);
     }
 

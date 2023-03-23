@@ -81,6 +81,8 @@ Route::prefix('auto_category')->group(function (){
 
 Route::prefix('resource')->group(function (){
     Route::get('/', [ResourceController::class, 'getAll']);
+    Route::get('/small', [ResourceController::class, 'getSmallAll']);
+
     Route::get('/{id}',[ResourceController::class, 'getById']);
 
     Route::post('/', [ResourceController::class,'store']);

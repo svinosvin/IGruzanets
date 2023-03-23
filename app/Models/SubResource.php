@@ -12,8 +12,8 @@ class SubResource extends Model
    protected $table = 'sub_resources';
    protected $guarded = false;
 
-   public function my_resources(){
-       return $this->belongsToMany(Resource::class, 'resource_sub_resources', 'sub_resource_id', 'resource_id');
+   public function my_resource(){
+       return $this->belongsTo(Resource::class, 'resource_id', 'id');
    }
     public function attachUniqueResources($ids){
         $attachedIds = $this->my_resources()->whereIn('resource_id', $ids)->pluck('resource_id');

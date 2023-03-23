@@ -4,7 +4,7 @@ namespace App\Http\Resources\Resource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ResourceMinResource extends JsonResource
+class ResourceTableResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,6 @@ class ResourceMinResource extends JsonResource
         return [
             'id' => $this->id,
             'title'=> $this->title,
-            'description' => $this->description,
-            'examples' => $this->examples,
         ];
     }
 }

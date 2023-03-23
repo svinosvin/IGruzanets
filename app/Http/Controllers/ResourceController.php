@@ -7,7 +7,9 @@ use App\Http\Requests\Resource\ResourceStoreRequest;
 use App\Http\Requests\Resource\ResourceUpdateRequest;
 use App\Http\Resources\Resource\ResourceMinResource;
 use App\Http\Resources\Resource\ResourceResourceFull;
+use App\Http\Resources\Resource\ResourceTableResource;
 use App\Models\Resource;
+use App\Models\Service;
 use App\Models\SubResource;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,11 @@ class ResourceController extends Controller
     {
         return ResourceMinResource::collection(Resource::all());
     }
+
+    public function getSmallAll(){
+        return ResourceTableResource::collection(Resource::all());
+    }
+
 
 
     public function store(ResourceStoreRequest $request)
@@ -30,12 +37,26 @@ class ResourceController extends Controller
 
         $resource = Resource::create($data);
         $resource->save();
+
         if($subresources)
         {
-            $resource->attachUniqueSubResource($subresources);
+            $subresources_models = [];
+            foreach ($subresources as $subresource_id) {
+                $model = SubResource::find($subresource_id);
+                if($model===null){
+                    return JsonExceptionResponse::error("Subresource №${$subresource_id} does not exist!" ,406);
+                }
+                $subresources_models[] = $model;
+            }
+            $resource->sub_resources()->saveMany([...$subresources_models]);
         }
         if($services){
-            $resource->attachUniqueService($services);
+            foreach ($services as $service_id) {
+                if(Service::find($service_id)===null){
+                    return JsonExceptionResponse::error("Service №${$service_id} does not exist!", 406);
+                }
+            }
+            $resource->services()->sync($services);
         }
 
         return ResourceResourceFull::make($resource);
@@ -64,13 +85,29 @@ class ResourceController extends Controller
         unset($data['services']);
 
         $resource->update($data);
+
         if($subresources)
         {
-            $resource->attachUniqueSubResource($subresources);
+            $subresources_models = [];
+            foreach ($subresources as $subresource_id) {
+                $model = SubResource::find($subresource_id);
+                if($model===null){
+                    return JsonExceptionResponse::error("Subresource №${$subresource_id} does not exist!" ,406);
+                }
+                $subresources_models[] = $model;
+            }
+            $resource->sub_resources()->saveMany([...$subresources_models]);
         }
         if($services){
-            $resource->attachUniqueService($services);
+            foreach ($services as $service_id) {
+                if(Service::find($service_id)===null){
+                    return JsonExceptionResponse::error("Service №${$service_id} does not exist!", 406);
+                }
+            }
+            $resource->services()->sync($services);
         }
+        $resource->save();
+
         return ResourceResourceFull::make($resource);
 
 
