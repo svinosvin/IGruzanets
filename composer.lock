@@ -3031,29 +3031,29 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "5.1.1",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "14a6802cd513cfd2abf68044cca5fd7391eb543d"
+                "reference": "5908f58fdff70fb600982b58c187e84855e2b5bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/14a6802cd513cfd2abf68044cca5fd7391eb543d",
-                "reference": "14a6802cd513cfd2abf68044cca5fd7391eb543d",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/5908f58fdff70fb600982b58c187e84855e2b5bc",
+                "reference": "5908f58fdff70fb600982b58c187e84855e2b5bc",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^9.0",
-                "illuminate/http": "^9.0",
-                "illuminate/support": "^9.0",
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/http": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
                 "php": "^8.0",
                 "spatie/laravel-package-tools": "^1.11"
             },
             "require-dev": {
                 "ext-json": "*",
                 "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^7.0",
+                "orchestra/testbench": "^7.0|^8.0",
                 "pestphp/pest": "^1.20",
                 "spatie/laravel-ray": "^1.28"
             },
@@ -3099,7 +3099,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-12-02T21:28:40+00:00"
+            "time": "2023-01-24T23:33:10+00:00"
         },
         {
             "name": "symfony/console",
