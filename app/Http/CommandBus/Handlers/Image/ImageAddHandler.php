@@ -11,14 +11,15 @@ class ImageAddHandler
 {
     public function handle(ImageAddCommand $command){
 
-      $existImage = Image::where('name', $command->image)->first();
+      $name = time().$command->image->getClientOriginalName();
+      $existImage = Image::where('name', $name)->first();
       if(!$existImage){
           $path = Storage::disk('public')->put('/images/'.$command->folder, $command->image);
-          $image = Image::firstOrCreate()([
+          $image = Image::firstOrCreate([
               'path' => $path,
-              'name' =>  $command->image,
+              'name' => $name,
           ]);
-          return $image->path;
+          return $path;
       }
       return null;
     }

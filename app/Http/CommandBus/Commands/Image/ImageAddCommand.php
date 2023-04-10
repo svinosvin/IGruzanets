@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class ImageAddCommand
 {
-    public string $image;
+    public object $image;
     public string $folder;
 
     public function __construct($image, $folder = Image::FOLDER_BASE)
