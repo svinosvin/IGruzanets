@@ -12,10 +12,9 @@ class Image extends Model
     public const FOLDER_BASE = '';
     public const FOLDER_AUTO = 'Auto';
 
+    protected $guarded = false;
+
     protected $table = 'images';
 
-    protected $fillable = [
-        'name',
-        'path'
-    ];
+
 }

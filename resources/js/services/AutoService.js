@@ -1,4 +1,6 @@
 import axios from '../axios/axios-instance'
+import axiosPost from '../axios/axios-instance-post'
+
 
 export default class Auto{
 
@@ -11,11 +13,15 @@ export default class Auto{
         return await response.data[0];
     }
     async createAuto(data){
-        let response = await axios.post(`/api/auto`, data);
+        let response = await axiosPost.post(`/api/auto/`, data);
+        console.log(response.data);
         return  await response.data[0];
     }
     async updateAuto(id, data){
-        let response = await axios.patch(`/api/auto/${id}`, data);
+        console.log(data);
+        console.log(id);
+        let response = await axiosPost.post(`/api/auto/${id}`, data);
+        console.log(response.data);
         return await response.data[0];
     }
     async deleteAuto(id){

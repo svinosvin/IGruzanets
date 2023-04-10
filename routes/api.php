@@ -66,7 +66,7 @@ Route::prefix('auto')->group(function (){
     Route::get('/{id}',[AutoController::class, 'getById']);
 
     Route::post('/', [AutoController::class,'store']);
-    Route::patch('/{id}', [AutoController::class,'update']);
+    Route::post('/{id}', [AutoController::class,'update']);
     Route::delete('/{id}', [AutoController::class,'destroy']);
 });
 

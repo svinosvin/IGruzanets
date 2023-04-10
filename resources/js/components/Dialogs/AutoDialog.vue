@@ -1,14 +1,12 @@
 <template>
-    <Dialog  :modal="true" :style="{width: '50vw'}">
+    <Dialog @hide="handleClose"  :modal="true" :style="{width: '50vw'}">
         <template #header>
-            <h3>Водитель-Грузчик</h3>
+            <h3>Грузовики и Машины</h3>
         </template>
         <div class="flex-column justify-center">
             <div class="mb-6">
                 <h2>Картинка машины</h2>
-
                 <Upload placeholder="dsadas" :source="activeAuto.img" v-model="file"/>
-
             </div>
             <div class="mb-6">
                 <h2>Марка машины</h2>
@@ -16,25 +14,29 @@
             </div>
             <div class="mb-6">
                 <h2>Описание</h2>
-                <InputText class="w-full" v-model="activeAuto.first_name"></InputText>
+                <Textarea v-model="activeAuto.description" class="w-full"  :autoResize="true" rows="2" cols="50" />
+
             </div>
             <div class="mb-6">
-                <h2>Максимальное кол-во</h2>
-                <InputText class="w-full" v-model="activeAuto.patronymic"></InputText>
+                <h2>Грузоподъемность в (т.)</h2>
+                <InputNumber v-model="activeAuto.max_weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="0.25" :min="0.5" :max="7" />
             </div>
-            <div class="mb-6">
+            <div >
                 <h2>Какая водительская категория подходит</h2>
+                <Dropdown v-model="activeAuto.auto_category" :options="[{'id':null,'title':'Выберите водительскую категорию',}, ...categories]"
+                          optionLabel="title" class="w-full"  placeholder="Выберите водительскую категорию" :filter="true" filterPlaceholder="Найти категорию">
+                </Dropdown>
 
             </div>
         </div>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
                 <div>
-                    <Button label="Удалить" v-if="activeAuto.id !=null" icon="pi pi-trash" class="p-button-danger" @click="deleteDriver"/>
+                    <Button label="Удалить" v-if="activeAuto.id !=null" icon="pi pi-trash" class="p-button-danger" @click="deleteAuto"/>
                 </div>
                 <div>
                     <Button label="Отмена" icon="pi pi-times" class="p-button-text" @click="handleClose"/>
-                    <Button label="Сохранить" icon="pi pi-check" autofocus @click="test"/>
+                    <Button label="Сохранить" icon="pi pi-check" autofocus @click="acceptChanges"/>
                 </div>
             </div>
         </template>
@@ -50,6 +52,9 @@ import { useConfirm } from "primevue/useconfirm";
 import AutoService from "../../services/AutoService";
 import AutoCategoryService from "../../services/AutoCategoryService";
 
+import InputNumber from 'primevue/inputnumber';
+
+
 
 const emit = defineEmits(['close'])
 
@@ -62,30 +67,40 @@ const autoService = new AutoService();
 //computed
 const activeAuto = computed(()=>store.getters['autoModule/activeAuto']);
 const categories = computed(()=>store.getters['autoCategoryModule/autoCategoriesMin']);
-const file = ref({})
+const file = ref(null)
 //methods
 
 const handleClose = () => {
 
+    file.value = null;
     store.dispatch('autoModule/clearActiveAuto');
     emit('close');
 }
 
+
 const test = () =>
 {
+    console.log(categories);
     console.log(file.value);
 }
 const acceptChanges = async () => {
 
+    const data = new FormData()
+    data.append("img", file.value);
+    data.append('mark',  activeAuto.value.mark);
+    data.append('description',  activeAuto.value.description);
+    data.append('max_weight',  activeAuto.value.max_weight);
+    if(activeAuto.value.auto_category){
+        data.append('auto_category', activeAuto.value.auto_category.id);
+    }
+    else {
+        data.append('auto_category', null);
+    }
+
+
     if(activeAuto.value.id == null){
 
-        await autoService.createAuto({
-            mark:  activeAuto.value.mark,
-            description: activeAuto.value.description,
-            img: activeAuto.value.img,
-            max_weight: activeAuto.value.max_weight,
-            auto_category: activeAuto.value.auto_category.id,
-        });
+        await autoService.createAuto(data);
 
         toast.add({
             severity:'success',
@@ -96,14 +111,7 @@ const acceptChanges = async () => {
     }
     else {
 
-        await autoService.updateAuto(activeAuto.value.id,{
-            mark:  activeAuto.value.mark,
-            description: activeAuto.value.description,
-            img: activeAuto.value.img,
-            max_weight: activeAuto.value.max_weight,
-            auto_category: activeAuto.value.auto_category.id,
-        });
-
+        await autoService.updateAuto(activeAuto.value.id, data);
         toast.add({
             severity:'success',
             summary: 'Данные обновлены',

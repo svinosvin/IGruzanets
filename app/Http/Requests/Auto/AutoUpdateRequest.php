@@ -26,9 +26,9 @@ class AutoUpdateRequest extends FormRequest
         return [
             'mark' => 'nullable|string',
             'description' => 'nullable|string',
-            'img' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'max_weight'=>'nullable|regex:/^\d{1}(\.\d{2})?$/',
-            'auto_category_id' => 'nullable|integer',
+            'img' => 'nullable',
+            'max_weight'=>'nullable',
+            'auto_category' => 'nullable|integer',
         ];
     }
 }

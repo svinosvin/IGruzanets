@@ -10,28 +10,39 @@
          </Toolbar>
      </template>
      <template v-slot:main>
-         <DataTable
-             :value="autos" :sortOrder="2"  :paginator="true" :rows="5"
+         <DataTable  :class="`p-datatable-sm`"
+             :value="autos" :sortOrder="2"  :paginator="true" :rows="3"
              showGridlines
              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-             :rowsPerPageOptions="[5,10]"
-             @row-dblclick=""
+             :rowsPerPageOptions="[3,10]"
+             @row-dblclick="dblclickHandlerAuto"
          >
              <template #header>
                  <span class="text-3xl">Машины</span>
              </template>
-             <Column field="img" header="Изображение"></Column>
+             <Column header="Изображение">
+                 <template #body="slotProps">
+                     <div v-if="slotProps.data.img!=null">
+                         <img :src="`${slotProps.data.img}`" :alt="slotProps.data.img" class="w-32 h-32 rounded-full mx-auto" />
+                     </div>
+                     <div v-else class="text-center">
+                         <img src="../../../../../images/admin/auto.png" alt="Нет картинки" class="w-28 h-28 rounded-full mx-auto" />
+                         <div class="font-bold">Нет изображения</div>
+                     </div>
+                 </template>
+             </Column>
              <Column field="mark" header="Марка"></Column>
              <Column field="description" header="Описание"></Column>
-             <Column field="examples" header="Примеры"></Column>
-             <Column field="max_weight" header="Максимальная масса груза"></Column>
+             <Column field="max_weight" header="Максимальная масса груза (т.)"></Column>
+             <Column field="auto_category.title" header="Требуемая водительская категория"></Column>
+
              <Column :exportable="false" style="min-width:8rem">
                  <template #body="slotProps">
                      <div class="mb-2">
-                         <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
+                         <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>
                      </div>
                      <div>
-                         <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                         <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteAuto(slotProps.data.id)"/>
                      </div>
                  </template>
              </Column>
@@ -77,6 +88,16 @@ const autos = computed(()=>store.getters['autoModule/autos']);
 
 
 //methods
+
+const setActiveAuto = (data)=>{
+    store.dispatch('autoModule/setActiveAuto', data);
+}
+
+const dblclickHandlerAuto = (event) =>{
+    setActiveAuto(event.data);
+    openDialog.value = true;
+}
+
 
 const fillAutos = async () =>{
     await autoService.getAutos().then(data => {
@@ -133,7 +154,7 @@ const deleteAuto = async (id)=>{
             await toast.add({
                 severity:'success',
                 summary: 'Удалено!',
-                detail:'Водитель успешно удален!',
+                detail:'Авто успешно удалено!',
                 life: 3000
             })
             await fillAutos();
@@ -154,6 +175,7 @@ const deleteAuto = async (id)=>{
 //hooks
 onMounted(() =>{
     fillAutos();
+    fillCategories();
 })
 
 onUnmounted(()=>{

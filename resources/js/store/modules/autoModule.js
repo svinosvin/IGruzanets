@@ -23,6 +23,7 @@ const actions = {
         commit('add_auto', value);
     },
     setActiveAuto({commit}, value) {
+        console.log(value);
         commit('set_active_auto', value);
     },
     clearStore({commit}) {
@@ -41,11 +42,11 @@ const mutations = {
         state.autos.push(value);
     },
     set_active_auto(state,value) {
-        state.activeDriver = value;
+        state.activeAuto = value;
     },
     clear_store(state) {
-        state.drivers = [];
-        mutations.clear_active_driver(state);
+        state.autos = [];
+        mutations.clear_active_auto(state);
     },
     clear_active_auto(state) {
         state.activeAuto =  {

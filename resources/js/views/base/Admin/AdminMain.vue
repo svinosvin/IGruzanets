@@ -37,16 +37,16 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="sidebarSmall" route="/admin/home" tooltip="Главная" icon="pi-home">Главная</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/services" tooltip="Услуги" icon="pi-user">Услуги</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/drivers" tooltip="Водитель" icon="pi-user">Водитель</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/autos" tooltip="Машины" icon=" pi-car">Машины</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/subresources" tooltip="Ресурсы" icon=" pi-car pi-table">Ресурсы</NavLink>
+                    <NavLink :isOpen="show" route="/admin/home" tooltip="Главная" icon="pi-home">Главная</NavLink>
+                    <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi-user">Услуги</NavLink>
+                    <NavLink :isOpen="show" route="/admin/drivers" tooltip="Водитель" icon="pi-user">Водитель</NavLink>
+                    <NavLink :isOpen="show" route="/admin/autos" tooltip="Машины" icon=" pi-car">Машины</NavLink>
+                    <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon=" pi-car pi-table">Ресурсы</NavLink>
                 </nav>
                 <div class="profile__content">
                     <div class="profile">
                         <div class="profile__details">
-                            <img src="../../../../images/admin/user.jpg" alt="">[plugin:vite:import-analysis] Failed to resolve import "../../../../images/admin/user.jpg" from "resources/js/components/ui/Upload.vue". Does the file exist?
+                            <img src="../../../../images/admin/user.jpg" alt="">
                             <div class="name__job">
                                 <div class="name">Artem Ivanets</div>
                                 <div class="job">Programmer</div>
@@ -85,12 +85,25 @@ const currentAdmin = computed(()=>store.state.authAdmin.admin);
 //
 //refs
 let sidebarSmall = ref(false);
+let show = ref(false);
 
 //
 // Methods
 //
 const switchSidebar = () =>{
     sidebarSmall.value = !sidebarSmall.value;
+    if(show.value===true){
+        setTimeout(()=>{
+            show.value = !show.value;
+        },20)
+    }
+    else {
+        show.value = !show.value;
+
+    }
+
+
+
 }
 
 const getData = () =>{

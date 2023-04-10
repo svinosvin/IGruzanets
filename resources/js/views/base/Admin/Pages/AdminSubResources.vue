@@ -12,7 +12,7 @@
             <template v-slot:main>
                 <div class="mb-20">
                     <DataTable
-                        :value="resources" :sortOrder="2"  :paginator="true" :rows="5"
+                        :value="resources" :sortOrder="2" :class="`p-datatable-sm`" :paginator="true" :rows="5"
                         showGridlines
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         :rowsPerPageOptions="[5,10]"
@@ -54,7 +54,7 @@
                     </template>
                 </Toolbar>
                 <div class="mb-20">
-                    <DataTable :value="subresources" showGridlines
+                    <DataTable :value="subresources" showGridlines  :class="`p-datatable-sm`"
                                rowGroupMode="subheader"  responsiveLayout="scroll"
                                sortMode="single"
                                sortField="resource"
@@ -62,9 +62,9 @@
                                :sortOrder="1"
                                scrollable
                                @row-dblclick="dblclickHandlerSub"
-                               :paginator="true" :rows="15"
+                               :paginator="true" :rows="10"
                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                               :rowsPerPageOptions="[15,20]"
+                               :rowsPerPageOptions="[10,15,20]"
                     >
                         <template #header>
                             <span class="text-3xl">Подкомпоненты</span>
