@@ -11,12 +11,11 @@
             </template>
             <template v-slot:main>
                 <div class="mb-20">
-                    <DataTable
+                    <DataTable style="font-size: 90%"
                         :value="resources" :sortOrder="2" :class="`p-datatable-sm`" :paginator="true" :rows="5"
-                        showGridlines
+                        showGridlines :autoLayot="true"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        :rowsPerPageOptions="[5,10]"
-                        @row-dblclick="dblclickHandlerResource"
+                        :rowsPerPageOptions="[5,10]" scrollable  @row-dblclick="dblclickHandlerResource"
                     >
 
                         <template #header>
@@ -30,15 +29,17 @@
                                 </div>
                             </template>
                         </Column>
-                        <Column field="description" header="Описание"></Column>
-                        <Column field="examples" header="Примеры"></Column>
-                        <Column :exportable="false" style="min-width:8rem">
+                        <Column field="description" header="Описание" style="max-width:40rem"></Column>
+                        <Column field="examples" header="Примеры" ></Column>
+                        <Column :exportable="false" style="min-width:6rem">
                             <template #body="slotProps">
-                                <div class="mb-2">
-                                    <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
-                                </div>
-                                <div>
-                                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                                <div class="flex">
+                                    <div class="">
+                                        <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
+                                    </div>
+                                    <div>
+                                        <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                                    </div>
                                 </div>
                             </template>
                         </Column>
@@ -54,8 +55,8 @@
                     </template>
                 </Toolbar>
                 <div class="mb-20">
-                    <DataTable :value="subresources" showGridlines  :class="`p-datatable-sm`"
-                               rowGroupMode="subheader"  responsiveLayout="scroll"
+                    <DataTable style="font-size:85%" :value="subresources" showGridlines  :class="`p-datatable-sm`"
+                               rowGroupMode="subheader" :autoLayot="true"
                                sortMode="single"
                                sortField="resource"
                                groupRowsBy="resource.title"
@@ -72,14 +73,14 @@
                         <Column field="resource.title" header="Resource"></Column>
                         <Column field="title" header="Название">
                             <template #body="slotProps">
-                                <div class="text-gray-500 font-bold">
+                                <div class="text-gray-500 font-bold"  style="font-size: 120%">
                                     {{slotProps.data.title}}
                                 </div>
                             </template>
                         </Column>
-                        <Column field="description" header="Описание"></Column>
+                        <Column field="description" header="Описание"  style="max-width:40rem" ></Column>
                         <Column field="examples" header="Примеры"></Column>
-                        <Column :exportable="false" style="min-width:8rem">
+                        <Column :exportable="false" style="min-width:6rem">
                             <template #body="slotProps">
                                 <div class="mr-2">
                                     <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleSubresourceEditDialog(slotProps.data)"/>

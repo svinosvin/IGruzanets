@@ -17,9 +17,11 @@ class DriverMinResource extends JsonResource
         return [
             'id' => $request->id,
             'name' => $request->name,
+            'img' => $this->imgUrl,
             'first_name' => $request->first_name,
             'patronymic' => $request->patronymic,
             'tel_number' => $request->tel_number,
+
         ];
     }
 }

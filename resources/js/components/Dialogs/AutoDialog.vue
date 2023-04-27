@@ -15,11 +15,16 @@
             <div class="mb-6">
                 <h2>Описание</h2>
                 <Textarea v-model="activeAuto.description" class="w-full"  :autoResize="true" rows="2" cols="50" />
-
             </div>
-            <div class="mb-6">
-                <h2>Грузоподъемность в (т.)</h2>
-                <InputNumber v-model="activeAuto.max_weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="0.25" :min="0.5" :max="7" />
+            <div class="mb-6 flex">
+                <div class="mr-7">
+                    <h2>Грузоподъемность в (т.)</h2>
+                    <InputNumber v-model="activeAuto.max_weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="0.25" :min="0.5" :max="7" />
+                </div>
+                <div>
+                    <h2>Номер автомобиля</h2>
+                    <InputMask  v-model="activeAuto.car_numbers" mask="9999 aa-9" placeholder="3333 AI-7" />
+                </div>
             </div>
             <div >
                 <h2>Какая водительская категория подходит</h2>
@@ -90,6 +95,8 @@ const acceptChanges = async () => {
     data.append('mark',  activeAuto.value.mark);
     data.append('description',  activeAuto.value.description);
     data.append('max_weight',  activeAuto.value.max_weight);
+    data.append('car_numbers',  activeAuto.value.car_numbers ?? '');
+
     if(activeAuto.value.auto_category){
         data.append('auto_category', activeAuto.value.auto_category.id);
     }

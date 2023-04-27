@@ -1,14 +1,28 @@
 <template>
     <div class="wrapper bg-gradient-gray-dark  min-h-screen">
-
-        <div class="login-pager">
+        <div class="container login-pager">
             <form class="form">
-
-                <InputText></InputText>
-                <my-input type="text" placeholder="email" name="Email" v-model="user.email"></my-input>
-                <my-input type="text" placeholder="password" name="Password" v-model="user.password"></my-input>
-                <my-button type="submit" @click.prevent="login">login</my-button>
-                <router-link to="/register"> <p class="message">Вы не зарегистрированы? <a href="#">Регистрация</a></p> </router-link>
+                <div class="w-full flex-col shrink-0 grow-0">
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Email</h2>
+                        <InputText placeholder="" name="Email"  сlass="w-full" v-model="user.email"></InputText>
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Password</h2>
+                        <Password class="w-full" :feedback="false"  toggleMask   v-model="user.password">
+                            <!--                        <template #header>-->
+                            <!--                            <h6>Pick a password</h6>-->
+                            <!--                        </template>-->
+                            <!--                        <template #footer>-->
+                            <!--                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">-->
+                            <!--                                <li>Минимум 8 символов</li>-->
+                            <!--                            </ul>-->
+                            <!--                        </template>-->
+                        </Password>
+                    </div>
+                    <my-button type="submit" @click.prevent="login">login</my-button>
+                    <router-link to="/register"> <p class="message">Вы не зарегистрированы? <a href="#">Регистрация</a></p> </router-link>
+                </div>
             </form>
         </div>
     </div>
@@ -22,11 +36,21 @@ export default {
         user:{
             email:"",
             password:"",
-        }
+        },
+        errors:[],
     }),
     methods:{
         login(){
-            this.$store.dispatch('authUser/loginUser', this.user);
+            if(this.user.email && this.user.password)
+                this.$store.dispatch('authUser/loginUser', this.user)
+            this.errors = [];
+
+            if(!this.user.email)
+                this.errors.push('')
+
+            if(!this.user.password)
+                this.errors.push('')
+
         }
     }
 
@@ -36,7 +60,6 @@ export default {
 <style lang="scss">
 
 .login-pager {
-    font-weight: bold;
     width: 450px;
     padding: 10% 0 0;
     margin: auto;
@@ -72,6 +95,11 @@ export default {
 .form .message a {
     text-decoration: none;
     color: var(--color-grey-light-4);
+}
+@media only screen and (max-width: 1024px) {
+    .login-pager {
+        width: 250px;
+    }
 }
 </style>
 

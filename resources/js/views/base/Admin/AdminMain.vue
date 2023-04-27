@@ -37,11 +37,17 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="show" route="/admin/home" tooltip="Главная" icon="pi-home">Главная</NavLink>
-                    <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi-user">Услуги</NavLink>
-                    <NavLink :isOpen="show" route="/admin/drivers" tooltip="Водитель" icon="pi-user">Водитель</NavLink>
-                    <NavLink :isOpen="show" route="/admin/autos" tooltip="Машины" icon=" pi-car">Машины</NavLink>
-                    <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon=" pi-car pi-table">Ресурсы</NavLink>
+                    <NavLink :isOpen="show" route="/admin/home" tooltip="Главная" icon="pi pi-home">Главная</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi pi-shopping-bag">Услуги</NavLink>
+                    <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon="pi pi-car pi-table">Ресурсы</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/drivers" tooltip="Водители" icon="pi pi-user">Водители</NavLink>
+                    <NavLink :isOpen="show" route="/admin/autos" tooltip="Машины" icon="pi pi-car">Машины</NavLink>
+                    <NavLink :isOpen="show" route="/admin/categories" tooltip="Категории" icon="pi pi-book">Авто Категории</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/employees" tooltip="Сотрудники" icon="fas fa-user-cog">Сотрудники</NavLink>
+                    <NavLink :isOpen="show" route="/admin/users" tooltip="Пользователи" icon="fas fa-users">Пользователи</NavLink>
                 </nav>
                 <div class="profile__content">
                     <div class="profile">
@@ -62,7 +68,7 @@
         </aside>
         <main class="main">
             <div class="main__wrapper">
-                <div class="container mx-auto">
+                <div class="mx-auto">
                     <router-view></router-view>
                 </div>
             </div>
@@ -174,7 +180,7 @@ $sidebar_size_close:80px;
 
 .main{
    padding-left: calc($sidebar_size + 150px);
-   padding-top: 150px;
+   padding-top: 110px;
    padding-right: 150px;
 }
 

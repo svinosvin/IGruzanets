@@ -12,14 +12,16 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $guard = 'user';
+    protected $table = 'users';
 
     protected $guarded = false;
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     public function company(){
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
 }

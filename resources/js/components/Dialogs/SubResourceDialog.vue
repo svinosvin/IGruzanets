@@ -6,7 +6,7 @@
         <div class="flex-column justify-center">
             <div class="mb-6">
                 <h2 class="font-bold">Категория</h2>
-                <Dropdown v-model="activeSubresource.resource" :options="[{'id':null,'title':'Выберите категорию', 'description': '', 'examples': ''}, ...resources]"
+                <Dropdown v-model="activeSubresource.resource"  :options="[{'id':null,'title':'Выберите категорию', 'description': '', 'examples': ''}, ...resources]"
                           optionLabel="title" class="w-full"  placeholder="Выберите категорию" :filter="true" filterPlaceholder="Найти категорию">
                 </Dropdown>
 

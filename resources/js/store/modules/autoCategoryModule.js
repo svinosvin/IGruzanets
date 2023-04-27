@@ -35,7 +35,7 @@ const actions = {
     clearStore({commit}) {
         commit('clear_store');
     },
-    clearActiveDriver({commit}) {
+    clearActiveCategory({commit}) {
         commit('clear_active_category');
     }
 };

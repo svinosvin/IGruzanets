@@ -23,4 +23,11 @@ class Driver extends Model
         $this->auto_categories()->attach($newIds);
     }
 
+
+    public function getImgUrlAttribute(){
+        if($this->img === null){
+            return null;
+        }
+        return url('storage/'. $this->img);
+    }
 }

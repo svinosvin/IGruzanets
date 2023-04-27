@@ -82,7 +82,18 @@ const routes = ([
             path:'autos',
             component:()=> import('../views/base/Admin/Pages/AdminAutos.vue')
         },
-
+        {
+            path:'categories',
+            component:()=> import('../views/base/Admin/Pages/AdminAutoCategories.vue')
+        },
+        {
+            path:'users',
+            component:()=> import('../views/base/Admin/Pages/AdminUsers.vue')
+        },
+        {
+            path:'employees',
+            component:()=> import('../views/base/Admin/Pages/AdminEmployees.vue')
+        },
     ]},
     {
         path:'/admin/login',

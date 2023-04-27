@@ -6,6 +6,7 @@ const state = {
     activeDriver: {
         id: null,
         name: '',
+        img: null,
         first_name: '',
         patronymic: '',
         tel_number: '',
@@ -42,6 +43,7 @@ const mutations = {
             return {
                 id: x.id,
                 name: x.name,
+                img: x.img,
                 first_name: x.first_name,
                 patronymic: x.patronymic,
                 tel_number: x.tel_number,
@@ -65,6 +67,7 @@ const mutations = {
         state.activeDriver = {
             id: null,
             name: '',
+            img: null,
             first_name: '',
             patronymic: '',
             tel_number: '',

@@ -10,35 +10,43 @@
          </Toolbar>
      </template>
      <template v-slot:main>
-         <DataTable  :class="`p-datatable-sm`"
-             :value="autos" :sortOrder="2"  :paginator="true" :rows="3"
-             showGridlines
-             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-             :rowsPerPageOptions="[3,10]"
-             @row-dblclick="dblclickHandlerAuto"
+         <DataTable style=""  :class="`p-datatable-sm`"
+                     :value="autos" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="5"
+                     showGridlines
+                    scrollable
+                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                     :rowsPerPageOptions="[5,10]"
+                     @row-dblclick="dblclickHandlerAuto"
          >
              <template #header>
                  <span class="text-3xl">Машины</span>
              </template>
-             <Column header="Изображение">
+             <Column header="Изображение" style="max-width:8rem;">
                  <template #body="slotProps">
                      <div v-if="slotProps.data.img!=null">
-                         <img :src="`${slotProps.data.img}`" :alt="slotProps.data.img" class="w-32 h-32 rounded-full mx-auto" />
+                         <img :src="`${slotProps.data.img}`" :alt="slotProps.data.img" class="w-24 h-24 mx-auto" />
                      </div>
                      <div v-else class="text-center">
-                         <img src="../../../../../images/admin/auto.png" alt="Нет картинки" class="w-28 h-28 rounded-full mx-auto" />
+                         <img src="../../../../../images/admin/auto.png" alt="Нет картинки" class="w-24 h-24  mx-auto" />
                          <div class="font-bold">Нет изображения</div>
                      </div>
                  </template>
              </Column>
-             <Column field="mark" header="Марка"></Column>
-             <Column field="description" header="Описание"></Column>
-             <Column field="max_weight" header="Максимальная масса груза (т.)"></Column>
-             <Column field="auto_category.title" header="Требуемая водительская категория"></Column>
-
-             <Column :exportable="false" style="min-width:8rem">
+             <Column field="mark" header="Марка"  :sortable="true"></Column>
+             <Column field="description" header="Описание" ></Column>
+             <Column field="car_numbers" header="Номер автомобиля">
                  <template #body="slotProps">
-                     <div class="mb-2">
+                     <div class="font-bold">
+                         {{slotProps.data.car_numbers}}
+                     </div>
+                 </template>
+             </Column>
+             <Column field="max_weight" header="Ограничение (тонн.)"  :sortable="true"></Column>
+             <Column field="auto_category.title" header="Требуемая водительская категория"  :sortable="true"></Column>
+
+             <Column :exportable="false" style="min-width:6rem">
+                 <template #body="slotProps">
+                     <div class="mr-2">
                          <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>
                      </div>
                      <div>

@@ -13,16 +13,21 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
 
-    public function index()
-    {
-        return AdminFullResource::collection(Admin::all());
-    }
 
-    public function createAdmin(AdminCreateRequest $request)
-    {
-        $admin = Admin::create($request->all());
+
+    public function profile(){
+        $admin = Auth::user();
         return AdminFullResource::make($admin);
     }
+
+    public function changeAdminData(AdminUpdateRequest $request){
+        $admin = Auth::user();
+        if(!$admin)
+            return JsonExceptionResponse::error('Not Authorized!', 406);
+        $admin->update($request->validated());
+        return AdminFullResource::make($admin);
+    }
+
 
     public function getById(int $id){
         $admin = Admin::findOrFail($id) ?? null;
@@ -32,16 +37,4 @@ class AdminController extends Controller
         return AdminFullResource::make($admin);
     }
 
-    public function profile(){
-        $admin = Auth::user();
-        return AdminFullResource::make($admin);
-    }
-
-    public function destroy(int $id)
-    {
-       $admin = Admin::findOrFail($id);
-       $admin->delete();
-        return response()->json(null, 204);
-
-    }
 }

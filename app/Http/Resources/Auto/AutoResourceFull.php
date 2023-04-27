@@ -21,6 +21,7 @@ class AutoResourceFull extends JsonResource
             'description' => $this->description,
             'img' => $this->imgUrl,
             'max_weight' => $this->max_weight,
+            'car_numbers' => $this->car_numbers,
             'auto_category' => new AutoCategoryResourceMin($this->auto_category)
 
         ];

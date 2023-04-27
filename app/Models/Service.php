@@ -21,6 +21,12 @@ class Service extends Model
         $attachedIds = $this->my_resources()->whereIn('resource_id', $ids)->pluck('resource_id');
         $newIds = array_diff( $ids, array(...$attachedIds));
         $this->my_resources()->attach($newIds);
+    }
 
+    public function getImgUrlAttribute(){
+        if($this->img === null){
+            return null;
+        }
+        return url('storage/'. $this->img);
     }
 }

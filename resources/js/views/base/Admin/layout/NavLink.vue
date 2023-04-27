@@ -3,7 +3,7 @@
     <router-link :to="route"  v-slot="{ isActive}" >
         <div class="nav__block" :class="{active: isActive}">
             <div class="nav__link">
-                <i class="pi icon " :class="icon" ></i>
+                <i class="icon" :class="icon" ></i>
 
                 <slot v-if="!isOpen"></slot>
                 <span class="tooltip" >{{tooltip}}</span>

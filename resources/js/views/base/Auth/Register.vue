@@ -2,7 +2,6 @@
     <div class="wrapper bg-gradient-gray-dark  min-h-screen">
 
         <div class="login-pager">
-            <form class="form">
                 <my-input type="text" placeholder="email" v-model="user.email"></my-input>
                 <my-input type="text" placeholder="пароль" v-model="user.password"></my-input>
                 <my-input type="text" placeholder="повторите пароль" v-model="user.password_confirmation"></my-input>
@@ -10,7 +9,6 @@
 
                 <my-button type="submit" @click.prevent="register">Зарегистрироваться</my-button>
                 <router-link to="/login"> <p class="message">У Вас уже есть аккаунт? <a href="#">Войти</a></p> </router-link>
-            </form>
         </div>
     </div>
 </template>

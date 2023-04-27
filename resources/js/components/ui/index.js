@@ -19,7 +19,10 @@ import AdminPageWrapper from '../base/AdminPageWrapper.vue'
 import Upload from '../ui/Upload.vue'
 import FileUpload from "primevue/fileupload";
 import Image from 'primevue/image'
+import Password from "primevue/password";
+
 export default [
+    Password,
     Image,
     Dropdown,
     Toolbar,

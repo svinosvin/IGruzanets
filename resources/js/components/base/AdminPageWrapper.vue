@@ -1,7 +1,7 @@
 <template>
     <div class="page__wrapper">
-        <div class="mb-5 mt-1">
-            <div class="page__name w-full bg-green-600 text-white text-3xl font-bold p-2.5 text-center">
+        <div class="mb-5">
+            <div class="page__name w-full header text-white text-3xl font-bold p-2.5 text-center">
                 {{headerPage}}
             </div>
             <div class="header__view">
@@ -34,6 +34,9 @@ const props = defineProps({
 <style scoped lang="scss">
 .page__name{
     border-radius: 20px 20px 0 0;
+}
+.header{
+    background-color: #0d6424;
 }
 
 html body .page__wrapper

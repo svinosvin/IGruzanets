@@ -17,7 +17,7 @@ export default class AutoCategory{
         let response = await axios.patch(`/api/auto_category/${id}`, data);
         return await response.data[0];
     }
-    async destroyAutoCategory(id){
+    async deleteAutoCategory(id){
         let response = await axios.delete(`/api/auto_category/${id}`);
         return await response.data[0];
     }

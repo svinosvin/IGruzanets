@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Company\CompanyResourceMin;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResourceMin extends JsonResource
@@ -20,7 +21,9 @@ class UserResourceMin extends JsonResource
             'name' => $this->name,
             'first_name'=> $this->first_name,
             'patronymic'=> $this->patronymic,
-            'tel_number' => $this->tel_number
+            'tel_number' => $this->tel_number,
+            'company' => CompanyResourceMin::make($this->company)
+
         ];
     }
 }

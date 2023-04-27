@@ -1,4 +1,5 @@
 import axios from '../../axios/axios-instance'
+import router from "../../router";
 
 const state = {
     token: localStorage.getItem('user-token') || '',
@@ -22,20 +23,24 @@ const actions = {
 
                 })
                     .then(response =>{
-                        if(response.data){
-                            const token = response.data.token;
-                            const user = response.data.user;
+                        if(response.data ){
+                            const token = response.data.token ?? null;
+                            const user = response.data.user ?? null;
                             localStorage.setItem('user-token', token);
                             console.log(response.data)
                             commit('auth_user', user, token);
                             resolve(response);
-                            window.location.replace('/')
+                            if(user)
+                                router.push('/')
+                            return response.data
                         }
                 })
                     .catch((error)=> {
                         console.log(error.response);
                         localStorage.removeItem('user-token')
-                })
+                        return error.response
+
+                    })
             })
         })
     },

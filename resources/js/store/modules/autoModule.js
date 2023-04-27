@@ -7,6 +7,7 @@ const state = {
         description: '',
         img: '',
         max_weight: '',
+        car_numbers: '',
         auto_category: null,
     },
 };

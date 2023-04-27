@@ -7,7 +7,7 @@
             <div class="mb-6">
                 <h2 class="font-bold">Категория</h2>
                 <MultiSelect v-model="activeResource.sub_resources"  :options="subresources"  optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom w-full md:w-20rem"
-                             display="chip"  emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
+                             emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
             </div>
             <div class="mb-6">
                 <h2 class="font-bold">Название</h2>

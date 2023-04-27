@@ -1,4 +1,5 @@
 import axios from '../axios/axios-instance'
+import axiosPost from '../axios/axios-instance-post'
 
 export default class Driver{
 
@@ -11,11 +12,11 @@ export default class Driver{
         return await response.data;
     }
     async createDriver(data){
-        let response = await axios.post(`/api/driver/`, data);
+        let response = await axiosPost.post(`/api/driver/`, data);
         return await response.data[0];
     }
     async updateDriver(id, data){
-        let response = await axios.patch(`/api/driver/${id}`, data);
+        let response = await axiosPost.post(`/api/driver/${id}`, data);
         return await response.data[0];
     }
     async deleteDriver(id){

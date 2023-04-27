@@ -24,7 +24,7 @@ class SubResourceUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|string',
+            'title' => "required|string|unique:sub_resources,title,{$this->id}",
             'description' => 'nullable|string',
             'examples' => 'nullable|string',
             'resource' => 'nullable|integer'

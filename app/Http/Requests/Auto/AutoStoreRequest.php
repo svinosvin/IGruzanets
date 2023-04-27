@@ -29,6 +29,7 @@ class AutoStoreRequest extends FormRequest
             'img' => 'nullable',
             'max_weight'=>'required',
             'auto_category' => 'nullable|integer',
+            'car_numbers' => 'nullable|unique:autos|string',
         ];
     }
 }

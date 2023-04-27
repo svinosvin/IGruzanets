@@ -53,7 +53,8 @@ class AutoController extends Controller
             'description' => $data['description'] ?? null,
             'img' => $path,
             'max_weight' => $data['max_weight'] ?? null,
-            'auto_category_id'=> $data['auto_category'] ?? null
+            'auto_category_id'=> $data['auto_category'] ?? null,
+            'car_numbers' => $data['car_numbers'] ?? null
         ]);
 
 
@@ -80,16 +81,17 @@ class AutoController extends Controller
         }
 
         if($path!=null && $auto->img){
-            $command = new ImageRemoveCommand($auto->img, Image::FOLDER_AUTO);
+            $command = new ImageRemoveCommand($auto->img);
             $removeHandler->handle($command);
         }
 
         $auto->update([
             'mark' => $data['mark'] ,
             'description' => $data['description'],
-            'img' => $path,
+            'img' => $path ?? $auto->img,
             'max_weight' => $data['max_weight'],
             'auto_category_id' => $data['auto_category'],
+            'car_numbers' => $data['car_numbers'] ?? null
         ]);
         return AutoResourceFull::make($auto);
     }

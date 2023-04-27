@@ -6,7 +6,11 @@ import autoCategoryModule from "./modules/autoCategoryModule";
 import serviceModule from "./modules/serviceModule";
 import resourceModule from "./modules/resourceModule";
 import subresourceModule from "./modules/subresourceModule";
-import autoModule from './modules/autoModule'
+import autoModule from './modules/autoModule';
+import userModule from "./modules/userModule";
+import employeeModule from "./modules/employeeModule";
+import companyModule from "./modules/companyModule";
+
 const store = createStore({
     modules:{
         autoModule,
@@ -17,6 +21,9 @@ const store = createStore({
         serviceModule,
         subresourceModule,
         resourceModule,
+        userModule,
+        employeeModule,
+        companyModule,
     },
 
 })

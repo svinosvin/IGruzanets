@@ -5,6 +5,11 @@
         </template>
         <div class="flex-column justify-center">
             <div class="mb-6">
+                <h2>Водитель</h2>
+                <Upload placeholder="dsadas" :source="activeDriver.img" v-model="file"/>
+            </div>
+
+            <div class="mb-6">
                 <h2>Имя</h2>
                 <InputText class="w-full" v-model="activeDriver.name"></InputText>
             </div>
@@ -16,15 +21,16 @@
                 <h2>Отчество </h2>
                 <InputText class="w-full" v-model="activeDriver.patronymic"></InputText>
             </div>
-
-            <div class="mb-6">
-                <h2>Телефон</h2>
-                <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
-            </div>
-            <div class="mb-6">
-                <h2>Категория</h2>
-                <MultiSelect v-model="activeDriver.categories" :options="categories"   optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom w-full"
-                 display="chip"  emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
+            <div class="flex flex-wrap">
+                <div class="mr-6">
+                    <h2>Телефон</h2>
+                    <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                </div>
+                <div class="mb-6">
+                    <h2>Категория</h2>
+                    <MultiSelect v-model="activeDriver.categories" :options="categories"   optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom md:w-20rem w-full"
+                                 emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
+                </div>
             </div>
         </div>
         <template #footer>
@@ -57,6 +63,7 @@ const confirm = useConfirm();
 const store = useStore();
 const toast = useToast();
 //refs
+const file = ref(null)
 
 const driverService = new DriverService();
 
@@ -68,21 +75,31 @@ const categories = computed(()=>store.getters['autoCategoryModule/autoCategories
 //methods
 
 const handleClose = () => {
-
+    file.value = null;
     store.dispatch('driverModule/clearActiveDriver');
     emit('close');
 }
 
 const acceptChanges = async () => {
+    const data = new FormData()
+    data.append("img", file.value);
+    data.append('name',  activeDriver.value.name);
+    data.append('first_name',  activeDriver.value.first_name);
+    data.append('patronymic',  activeDriver.value.patronymic);
+    data.append('tel_number',  activeDriver.value.tel_number);
 
+
+    let categoriesData = [];
+    if(activeDriver.value.categories){
+        categoriesData = activeDriver.value.categories.map(elem => elem.id);
+        data.append('categories', JSON.stringify(categoriesData));
+    }
+    else {
+        data.append('categories', null);
+    }
     if(activeDriver.value.id == null){
 
-        await driverService.createDriver({
-            name: activeDriver.value.name,
-            first_name: activeDriver.value.first_name,
-            patronymic: activeDriver.value.patronymic,
-            tel_number: activeDriver.value.tel_number,
-            categories : activeDriver.value.categories.map(elem => elem.id)});
+        await driverService.createDriver(data);
 
         toast.add({
             severity:'success',
@@ -93,13 +110,7 @@ const acceptChanges = async () => {
     }
     else {
 
-        await driverService.updateDriver(activeDriver.value.id,{
-
-            name: activeDriver.value.name,
-            first_name: activeDriver.value.first_name,
-            patronymic: activeDriver.value.patronymic,
-            tel_number: activeDriver.value.tel_number,
-            categories : activeDriver.value.categories.map(elem => elem.id)});
+        await driverService.updateDriver(activeDriver.value.id, data);
 
         toast.add({
             severity:'success',

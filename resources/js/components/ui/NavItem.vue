@@ -1,8 +1,11 @@
 <template>
     <div class="wrapper" v-if="props.isVisible==true">
-        <router-link :to="props.route" v-slot="{ isActive }">
-            <div class="item" :class="{ active: isActive }">
-                <span>
+        <router-link class="link lg:text-gray-400 lg:hover:text-blue-600 hover:text-blue-600 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" :to="props.route" v-slot="{ isActive }">
+            <div class="text-center" :class="{active:isActive}">
+               <i
+                    class="lg:text-gray-300 text-gray-500 text-lg leading-lg" :class="icon"
+                ></i
+                ><span class="inline-block ml-2">
                     <slot></slot>
                 </span>
             </div>
@@ -14,17 +17,13 @@
 
 import { useRoute } from 'vue-router'
 
-const props = defineProps(['route','isVisible']);
+const props = defineProps(['route','isVisible', 'icon']);
 console.log(props.isVisible);
 </script>
 
 
 <style lang="scss" scoped>
-.wrapper {
 
-    width: 25%;
-    height: 2.5rem;
-}
 
 .item {
     margin-inline: 0.1rem;
@@ -58,12 +57,16 @@ console.log(props.isVisible);
 
 .active {
     color: #00ad81;
-    border-bottom: #00ad81 5px solid;
     font-weight: 600;
     span{
-        color: #00ad81
+
+        color: rgb(59 130 246 );
+        border-bottom: 2px solid rgb(59 130 246 ) ;
+
     }
 
 }
-
+.link {
+    transition: .2s all ease;
+}
 </style>

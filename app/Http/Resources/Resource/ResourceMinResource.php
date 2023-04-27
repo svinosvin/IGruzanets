@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Resource;
 
+use App\Http\Resources\SubResource\SubResourceTableResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResourceMinResource extends JsonResource

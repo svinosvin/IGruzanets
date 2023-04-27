@@ -18,8 +18,6 @@ export default class Auto{
         return  await response.data[0];
     }
     async updateAuto(id, data){
-        console.log(data);
-        console.log(id);
         let response = await axiosPost.post(`/api/auto/${id}`, data);
         console.log(response.data);
         return await response.data[0];
