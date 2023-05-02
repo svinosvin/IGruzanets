@@ -38,7 +38,7 @@
                         <NavItem :isVisible="true" route="/reviews">Отзывы</NavItem>
                     </li>
                     <li class="flex items-center">
-                        <NavItem :isVisible="true" route="/service">Главная</NavItem>
+                        <NavItem :isVisible="true" route="/employees">Наш автопарк</NavItem>
                     </li>
                 </ul>
                 <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
@@ -90,6 +90,6 @@ onMounted(()=>{
 </script>
 <style scoped>
 .nav{
-    background-color: rgba(255, 255,255, 0.1);
+    background-color: rgba(0, 0,0, 0.5);
 }
 </style>

@@ -75,7 +75,7 @@ const acceptChanges = async () => {
             title: activeSubresource.value.title,
             description: activeSubresource.value.description,
             examples: activeSubresource.value.examples,
-            resource : activeSubresource.value.resource.id});
+            resource : activeSubresource.value.resource !=null ? activeSubresource.value.resource.id :  null });
 
         toast.add({
             severity:'success',
@@ -91,7 +91,8 @@ const acceptChanges = async () => {
             title: activeSubresource.value.title,
             description: activeSubresource.value.description,
             examples: activeSubresource.value.examples,
-            resource : activeSubresource.value.resource.id});
+            resource : activeSubresource.value.resource !=null ? activeSubresource.value.resource.id :  null });
+
 
 
         toast.add({

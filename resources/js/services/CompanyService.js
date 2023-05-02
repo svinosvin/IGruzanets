@@ -6,7 +6,6 @@ export default class CompanyService{
 
     async getCompanies(){
         let response = await axios.get('/api/companies/');
-        console.log(response.data);
         return await response.data;
     }
 

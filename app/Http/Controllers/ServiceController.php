@@ -122,7 +122,7 @@ class ServiceController extends Controller
             return JsonExceptionResponse::error("Service doesn't exist");
         }
         if($service->img){
-            $command = new ImageRemoveCommand($service->img, Image::FOLDER_AUTO);
+            $command = new ImageRemoveCommand($service->img, Image::FOLDER_SERVICE);
             $handler->handle($command);
         }
         $service->my_resources()->detach();

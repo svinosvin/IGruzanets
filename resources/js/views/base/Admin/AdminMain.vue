@@ -5,19 +5,16 @@
             <div class="header__wrapper">
                 <nav class="header__nav">
                     <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                        <a href="" class="header__nav__link">Заказы</a>
                     </div>
                     <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                        <a href="" class="header__nav__link">Принятые</a>
                     </div>
                     <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                        <a href="" class="header__nav__link">В ожидании</a>
                     </div>
                     <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
-                    </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                        <a href="" class="header__nav__link">График работы</a>
                     </div>
                 </nav>
             </div>
@@ -48,6 +45,9 @@
                     <br>
                     <NavLink :isOpen="show" route="/admin/employees" tooltip="Сотрудники" icon="fas fa-user-cog">Сотрудники</NavLink>
                     <NavLink :isOpen="show" route="/admin/users" tooltip="Пользователи" icon="fas fa-users">Пользователи</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/orders" tooltip="Заказы" icon="far fa-bell">Заказы</NavLink>
+                    <NavLink :isOpen="show" route="/admin/reviews" tooltip="Отзывы" icon="far fa-comment">Отзывы</NavLink>
                 </nav>
                 <div class="profile__content">
                     <div class="profile">
@@ -58,8 +58,8 @@
                                 <div class="job">Programmer</div>
                             </div>
                         </div>
-                        <div class="log_out_wrapper">
-                            <i class="pi pi-sign-out" id="log_out"></i>
+                        <div class="log_out_wrapper cursor-pointer">
+                            <i class="pi pi-sign-out" @click="logout" id="log_out"></i>
                         </div>
                     </div>
                 </div>

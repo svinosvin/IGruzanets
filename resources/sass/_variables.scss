@@ -49,6 +49,7 @@ ol[class] {
 /* Убираем внешние отступы */
 body,
 h1,
+button,
 h2,
 h3,
 h4,
@@ -107,7 +108,6 @@ html {
 
 /* Наследуем шрифты для инпутов и кнопок */
 input,
-button,
 textarea,
 select {
     font: inherit;
@@ -124,3 +124,9 @@ select {
 //        scroll-behavior: auto !important;
 //    }
 //}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}

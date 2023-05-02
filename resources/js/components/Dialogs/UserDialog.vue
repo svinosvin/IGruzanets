@@ -87,7 +87,7 @@ const acceptChanges = async () => {
             first_name: activeUser.value.first_name,
             patronymic: activeUser.value.patronymic,
             tel_number: activeUser.value.tel_number,
-            company: activeUser.value.company.id
+            company: activeUser.value.company!=null ? activeUser.value.company.id : null
         });
         toast.add({
             severity:'success',
@@ -105,7 +105,8 @@ const acceptChanges = async () => {
             first_name: activeUser.value.first_name,
             patronymic: activeUser.value.patronymic,
             tel_number: activeUser.value.tel_number,
-            company: activeUser.value.company.id });
+            company: activeUser.value.company!=null ? activeUser.value.company.id : null
+        });
 
         toast.add({
             severity:'success',

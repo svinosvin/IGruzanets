@@ -4,12 +4,13 @@ import router from "../../router";
 const state = {
     token: localStorage.getItem('user-token') || '',
     user:{
-        id: -1,
-        name: 0,
-        first_name: 0,
-        patronymic: 0,
-        email: 0,
-        tel_number: 0,
+        id: null,
+        name: '',
+        first_name: '',
+        patronymic: '',
+        email: '',
+        company: null,
+        tel_number: '',
     },
     userState: false,
 }
@@ -77,7 +78,6 @@ const actions = {
                 const token = localStorage.getItem('user-token');
                 axios.get('/api/user/profile')
                     .then(response=>{
-                        console.log(response.data.user)
                         const user = response.data.user;
                         commit('auth_user', user,token);
 
@@ -107,12 +107,12 @@ const mutations = {
     },
     auth_user_logout(state){
         state.user = {
-            id:-1,
-            name: 0,
-            first_name: 0,
-            patronymic: 0,
-            email: 0,
-            tel_number: 0,
+            id:"",
+            name: '',
+            first_name: "",
+            patronymic: "",
+            email: "",
+            tel_number: "",
         };
         state.token = '';
         state.userState = false;

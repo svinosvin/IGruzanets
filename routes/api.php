@@ -37,7 +37,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::group(['prefix'=>'user', 'middleware' => ['auth:sanctum', 'abilities:user']], function (){
     Route::get('/profile', [AuthController::class, 'profile']);
-    Route::patch('/updateProfile', [AuthController::class, 'changeUserData']);
+    Route::patch('/updateProfile/{id}', [AuthController::class, 'changeUserData']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum', 'abilities:user']);;
 });
 

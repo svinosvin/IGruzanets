@@ -34,8 +34,8 @@
                     </template>
                 </Column>
                 <Column field="title" header="Название"  :sortable="true"></Column>
-                <Column field="description" header="Описание"></Column>
-                <Column field="Задействуются ресурсы" header="Задействуются ресурсы">
+                <Column field="description" header="Описание" style="min-width:23rem"></Column>
+                <Column field="Задействуются ресурсы" header="Задействуются ресурсы" style="min-width:15rem">
                     <template #body="slotProps">
                         <div class="font-bold">
                             <ol>
@@ -51,14 +51,14 @@
                         </div>
                     </template>
                 </Column>
-                <Column field="price_one_unit"  header="Цена за услугу(1кг.)">
+                <Column field="price_one_unit" style="max-width: 6rem" header="Цена за услугу(1кг.)">
                     <template #body="slotProps">
                         <div class="text-center">
                             {{slotProps.data.price_one_unit}} руб.
                         </div>
                     </template>
                 </Column>
-                <Column :exportable="false" style="min-width:6rem">
+                <Column :exportable="false" style="min-width:8rem; max-width: 8rem">
                     <template #body="slotProps">
                         <div class="mr-2">
                             <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>

@@ -1,5 +1,6 @@
 import axios from '../axios/axios-instance'
 import axiosPost from '../axios/axios-instance-post'
+import {data} from "autoprefixer";
 
 export default class Service{
 

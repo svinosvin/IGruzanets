@@ -4,7 +4,6 @@ import NavItem from "./NavItem.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
-import Row from 'primevue/row';                     //
 import InputMask from 'primevue/inputmask';
 import Toolbar from 'primevue/toolbar';
 import Button from "primevue/button";
@@ -18,12 +17,10 @@ import Dropdown from "primevue/dropdown";
 import AdminPageWrapper from '../base/AdminPageWrapper.vue'
 import Upload from '../ui/Upload.vue'
 import FileUpload from "primevue/fileupload";
-import Image from 'primevue/image'
 import Password from "primevue/password";
 
 export default [
     Password,
-    Image,
     Dropdown,
     Toolbar,
     MyButton,
@@ -33,7 +30,6 @@ export default [
     DataTable,
     Column,
     ColumnGroup,
-    Row,
     InputMask,
     Button,
     MultiSelect,

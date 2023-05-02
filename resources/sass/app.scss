@@ -1,9 +1,21 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
-@import 'variables';
-@import "custom_styles";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+// Variables
+
+
+@import 'primevue/resources/themes/lara-light-blue/theme.css';
+@import 'primevue/resources/primevue.min.css';
+@import 'primeicons/primeicons.css';
+
+@import "custom_styles";
+@import 'variables';
+

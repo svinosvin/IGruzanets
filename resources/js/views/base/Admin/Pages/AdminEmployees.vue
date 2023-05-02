@@ -81,12 +81,12 @@ const currentAdmin = computed(()=>store.getters['authAdmin/currentAdmin']);
 
 //methods
 
-const setActiveUser = (data)=>{
-    store.dispatch('userModule/setActiveUser', data);
+const setActiveEmployee = (data)=>{
+    store.dispatch('employeeModule/setActiveEmployee', data);
 }
 
 const dblclickHandler = (event) =>{
-    setActiveUser(event.data);
+    setActiveEmployee(event.data);
     openDialog.value = true;
 }
 

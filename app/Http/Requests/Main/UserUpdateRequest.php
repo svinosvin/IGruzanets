@@ -24,11 +24,12 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => "required|string|unique:users,email, {$this->id}",
+
+            'email' => "required|string|unique:users,email,{$this->id}",
             'name' => 'string|nullable',
             'first_name' => 'string|nullable',
             'patronymic' => 'string|nullable',
-            'tel_number' => ['nullable','string','regex:/^(8)\s(0)(29|25|44|33)\s(\d{3})(\d{2})(\d{2})$/'],
+            'tel_number' => ['required','string',"unique:users,tel_number,{$this->id}",'regex:/^(8)\s(0)(29|25|44|33)\s(\d{3})(\d{2})(\d{2})$/'],
             'password' => 'nullable|string|min:8|confirmed',
             'company'=>'nullable|integer'
         ];

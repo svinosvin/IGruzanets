@@ -1,14 +1,47 @@
 <template>
     <div class="wrapper bg-gradient-gray-dark  min-h-screen">
+        <div class="container login-pager">
+            <form class="form">
+                <div class="w-full flex-col shrink-0 grow-0">
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Email</h2>
+                        <InputText placeholder="" name="Email"  сlass="w-full" v-model="user.email"></InputText>
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Телефон</h2>
+                        <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="user.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Пароль</h2>
+                        <Password class="w-full" :feedback="true"  toggleMask   v-model="user.password">
+                            <!--                        <template #header>-->
+                            <!--                            <h6>Pick a password</h6>-->
+                            <!--                        </template>-->
+                            <!--                        <template #footer>-->
+                            <!--                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">-->
+                            <!--                                <li>Минимум 8 символов</li>-->
+                            <!--                            </ul>-->
+                            <!--                        </template>-->
+                        </Password>
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Повторите пароль</h2>
+                        <Password class="w-full" :feedback="false"  toggleMask   v-model="user.password_confirmation">
+                            <!--                        <template #header>-->
+                            <!--                            <h6>Pick a password</h6>-->
+                            <!--                        </template>-->
+                            <!--                        <template #footer>-->
+                            <!--                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">-->
+                            <!--                                <li>Минимум 8 символов</li>-->
+                            <!--                            </ul>-->
+                            <!--                        </template>-->
+                        </Password>
+                    </div>
+                    <my-button type="submit" @click.prevent="register">Register</my-button>
+                    <router-link to="/login"> <p class="message">Вы не зарегистрированы? <a href="#">Логин</a></p> </router-link>
+                </div>
 
-        <div class="login-pager">
-                <my-input type="text" placeholder="email" v-model="user.email"></my-input>
-                <my-input type="text" placeholder="пароль" v-model="user.password"></my-input>
-                <my-input type="text" placeholder="повторите пароль" v-model="user.password_confirmation"></my-input>
-                <my-input type="text" placeholder="80296413370" v-model="user.tel_number"></my-input>
-
-                <my-button type="submit" @click.prevent="register">Зарегистрироваться</my-button>
-                <router-link to="/login"> <p class="message">У Вас уже есть аккаунт? <a href="#">Войти</a></p> </router-link>
+            </form>
         </div>
     </div>
 </template>
@@ -21,10 +54,8 @@ const store = useStore();
 const user = ref({})
 
 const register = ()=>{
-    store.dispatch('authUser/registerUser', user);
+    store.dispatch('authUser/registerUser', user.value);
 }
-
-
 
 </script>
 

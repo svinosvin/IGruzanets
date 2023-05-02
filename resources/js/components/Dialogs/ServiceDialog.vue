@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <Button label="Отмена" icon="pi pi-times" class="p-button-text" @click="handleClose"/>
-                    <Button label="Сохранить" icon="pi pi-check" autofocus @click="acceptChanges"/>
+                    <Button label="Сохранить" icon="pi pi-check" class="p-button" autofocus @click="acceptChanges"/>
                 </div>
             </div>
         </template>

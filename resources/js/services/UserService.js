@@ -12,6 +12,13 @@ export default class UserService{
         let response = await axios.post('/api/register', data)
         return response.data;
     }
+    async updateUserData(id, data){
+        await axios.get('/sanctum/csrf-cookie').then( response => {
+            let res = axios.patch(`/api/user/updateProfile/${id}`, data);
+            console.log(res);
+            return response.data[0];
+        })
+    }
 
     async getProfile(){
         let response = await axios.get('/api/user/profile')

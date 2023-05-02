@@ -42,7 +42,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function changeUserData(UserUpdateRequest $request){
+    public function changeUserData(UserUpdateRequest $request, int $id){
         $user = Auth::user();
         if(!$user)
             return JsonExceptionResponse::error('Not Authorized!', 406);

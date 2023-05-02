@@ -24,6 +24,7 @@ const actions = {
         commit('add_service', value);
     },
     setActiveService({commit}, value) {
+        console.log(value)
         commit('set_active_service', value);
     },
     clearStore({commit}) {

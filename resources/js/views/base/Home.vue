@@ -61,10 +61,9 @@
                             >
                                 <i class="fas fa-award"></i>
                             </div>
-                            <h6 class="text-xl font-semibold">Awarded Agency</h6>
+                            <h6 class="text-xl font-semibold">Не первый год в деле</h6>
                             <p class="mt-2 mb-4 text-gray-600">
-                                Divide details about your product or agency work into parts.
-                                A paragraph describing a feature will be enough.
+                                Мы никогда не откажем в помощи людям и в нашей команде царит добрая, отзывчивая атмосфера.
                             </p>
                         </div>
                     </div>
@@ -77,12 +76,11 @@
                             <div
                                 class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-blue-400"
                             >
-                                <i class="fas fa-retweet"></i>
+                                <i class="fas fa-percent fa-spin"></i>
                             </div>
-                            <h6 class="text-xl font-semibold">Free Revisions</h6>
+                            <h6 class="text-xl font-semibold">Возможные скидки</h6>
                             <p class="mt-2 mb-4 text-gray-600">
-                                Keep you user engaged by providing meaningful information.
-                                Remember that by this time, the user is curious.
+                                При больших объемах или постоянным клиентам мы предлагаем пакет скидок
                             </p>
                         </div>
                     </div>
@@ -97,10 +95,9 @@
                             >
                                 <i class="fas fa-fingerprint"></i>
                             </div>
-                            <h6 class="text-xl font-semibold">Verified Company</h6>
+                            <h6 class="text-xl font-semibold">Компания подтверждена</h6>
                             <p class="mt-2 mb-4 text-gray-600">
-                                Write a few lines about each one. A paragraph describing a
-                                feature will be enough. Keep you user engaged!
+                                Компания подтверждена правительством Республики Беларусь
                             </p>
                         </div>
                     </div>
@@ -114,35 +111,28 @@
                         <i class="fas fa-user-friends text-xl"></i>
                     </div>
                     <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                        Working with us is a pleasure
+                        Работать с нами одно удовольствие
                     </h3>
                     <p
                         class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700"
                     >
-                        Don't let your uses guess by attaching tooltips and popoves to
-                        any element. Just make sure you enable them first via
-                        JavaScript.
+                        Мы  помогаем не только Вам, но и в целом пытаемся найти такой подход в работе,
+                        чтобы ничего не пропадало зря и все шло на переработку и вторичное сырье.
                     </p>
                     <p
                         class="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700"
                     >
-                        The kit comes with three pre-built pages to help you get started
-                        faster. You can change the text and images and you're good to
-                        go. Just make sure you enable them first via JavaScript.
+                        Тем самым привлекая общественность, насколько <br> все-таки <b> важно </b> иметь представление об экологии.
                     </p>
-                    <a
-                        href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/presentation"
-                        class="font-bold text-gray-800 mt-8"
-                    >Check Tailwind Starter Kit!</a
-                    >
+
                 </div>
                 <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
                     <div
-                        class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-pink-600"
+                        class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-blue-600"
                     >
                         <img
                             alt="..."
-                            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1051&amp;q=80"
+                            src="../../../images/client/186613.jpg"
                             class="w-full align-middle rounded-t-lg"
                         />
                         <blockquote class="relative p-8 mb-4">
@@ -155,16 +145,14 @@
                             >
                                 <polygon
                                     points="-30,95 583,95 583,65"
-                                    class="text-pink-600 fill-current"
+                                    class="text-blue-600 fill-current"
                                 ></polygon>
                             </svg>
                             <h4 class="text-xl font-bold text-white">
-                                Top Notch Services
+                                Пример безответственности людей
                             </h4>
                             <p class="text-md font-light mt-2 text-white">
-                                The Arctic Ocean freezes every winter and much of the
-                                sea-ice then thaws every summer, and that process will
-                                continue whatever happens.
+                                Очень часто люди оставляют все на самотек, считают, что это их не коснется однако уже пора задумываться о таких важных, как сортировка мусора.
                             </p>
                         </blockquote>
                     </div>
@@ -198,7 +186,7 @@
                     <img
                         alt="..."
                         class="max-w-full rounded-lg shadow-lg"
-                        src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80"
+                        src="../../../images/client/543.jpg"
                     />
                 </div>
                 <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
@@ -208,11 +196,9 @@
                         >
                             <i class="fas fa-rocket text-xl"></i>
                         </div>
-                        <h3 class="text-3xl font-semibold">A growing company</h3>
+                        <h3 class="text-3xl text-white font-semibold">Растущая команда</h3>
                         <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                            The extension comes with three pre-built pages to help you get
-                            started faster. You can change the text and images and you're
-                            good to go.
+                            Наши взгляды все чаще подходят людям, они с огнем в глазах идут в нашу атмосферную компанию!
                         </p>
                         <ul class="list-none mt-6">
                             <li class="py-2">
@@ -225,7 +211,7 @@
                                     </div>
                                     <div>
                                         <h4 class="text-gray-600">
-                                            Carefully crafted components
+                                           Аккуратность
                                         </h4>
                                     </div>
                                 </div>
@@ -239,7 +225,7 @@
                         ></span>
                                     </div>
                                     <div>
-                                        <h4 class="text-gray-600">Amazing page examples</h4>
+                                        <h4 class="text-gray-600">Ответственность</h4>
                                     </div>
                                 </div>
                             </li>
@@ -252,7 +238,7 @@
                         ></span>
                                     </div>
                                     <div>
-                                        <h4 class="text-gray-600">Dynamic components</h4>
+                                        <h4 class="text-gray-600">Внимательность к мелочам</h4>
                                     </div>
                                 </div>
                             </li>
@@ -266,15 +252,13 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap justify-center text-center mb-24">
                 <div class="w-full lg:w-6/12 px-4">
-                    <h2 class="text-4xl font-semibold">Here are our heroes</h2>
+                    <h2 class="text-4xl font-semibold text-white">Наши герои</h2>
                     <p class="text-lg leading-relaxed m-4 text-gray-600">
-                        According to the National Oceanic and Atmospheric
-                        Administration, Ted, Scambos, NSIDClead scentist, puts the
-                        potentially record maximum.
+                     На данный момент нашей компанией владеет один легендарный человек, который не побоялся взять ответственность в свои руки и построил империю.
                     </p>
                 </div>
             </div>
-            <div class="flex flex-wrap">
+            <div class="flex justify-center flex-wrap">
                 <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
                     <div class="px-6">
 <!--                        <img-->
@@ -283,10 +267,10 @@
 <!--                            class="shadow-lg rounded-full max-w-full mx-auto"-->
 <!--                            style="max-width: 120px;"-->
 <!--                        />-->
-                        <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold">Ryan Tompson</h5>
+                        <div class="pt-6  text-center">
+                            <h5 class="text-xl font-bold text-white">Artem Ivanets</h5>
                             <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                                Web Developer
+                                Web Developer - Владелец
                             </p>
                             <div class="mt-6">
                                 <button
@@ -304,108 +288,6 @@
                                 type="button"
                             >
                                 <i class="fab fa-dribbble"></i>
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                    <div class="px-6">
-<!--                        <img-->
-<!--                            alt="..."-->
-<!--                            src="../assets/img/team-2-800x800.jpg"-->
-<!--                            class="shadow-lg rounded-full max-w-full mx-auto"-->
-<!--                            style="max-width: 120px;"-->
-<!--                        />-->
-                        <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold">Romina Hadid</h5>
-                            <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                                Marketing Specialist
-                            </p>
-                            <div class="mt-6">
-                                <button
-                                    class="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                    type="button"
-                                >
-                                    <i class="fab fa-google"></i></button
-                                ><button
-                                class="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-facebook-f"></i>
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                    <div class="px-6">
-<!--                        <img-->
-<!--                            alt="..."-->
-<!--                            src="../assets/img/team-3-800x800.jpg"-->
-<!--                            class="shadow-lg rounded-full max-w-full mx-auto"-->
-<!--                            style="max-width: 120px;"-->
-<!--                        />-->
-                        <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold">Alexa Smith</h5>
-                            <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                                UI/UX Designer
-                            </p>
-                            <div class="mt-6">
-                                <button
-                                    class="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                    type="button"
-                                >
-                                    <i class="fab fa-google"></i></button
-                                ><button
-                                class="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-twitter"></i></button
-                            ><button
-                                class="bg-gray-800 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-instagram"></i>
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-                    <div class="px-6">
-<!--                        <img-->
-<!--                            alt="..."-->
-<!--                            src="../assets/img/team-4-470x470.png"-->
-<!--                            class="shadow-lg rounded-full max-w-full mx-auto"-->
-<!--                            style="max-width: 120px;"-->
-<!--                        />-->
-                        <div class="pt-6 text-center">
-                            <h5 class="text-xl font-bold">Jenna Kardi</h5>
-                            <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                                Founder and CEO
-                            </p>
-                            <div class="mt-6">
-                                <button
-                                    class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                    type="button"
-                                >
-                                    <i class="fab fa-dribbble"></i></button
-                                ><button
-                                class="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-google"></i></button
-                            ><button
-                                class="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-twitter"></i></button
-                            ><button
-                                class="bg-gray-800 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                                type="button"
-                            >
-                                <i class="fab fa-instagram"></i>
                             </button>
                             </div>
                         </div>
@@ -437,11 +319,9 @@
         <div class="container mx-auto px-4 lg:pt-24 lg:pb-64">
             <div class="flex flex-wrap text-center justify-center">
                 <div class="w-full lg:w-6/12 px-4">
-                    <h2 class="text-4xl font-semibold text-white">Build something</h2>
+                    <h2 class="text-4xl font-semibold text-white">Амбиции</h2>
                     <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
-                        Put the potentially record low maximum sea ice extent tihs year
-                        down to low ice. According to the National Oceanic and
-                        Atmospheric Administration, Ted, Scambos.
+                      Наш потенциал огромен и мы будем продолжать расширяться все больше и больше
                     </p>
                 </div>
             </div>
@@ -453,11 +333,10 @@
                         <i class="fas fa-medal text-xl"></i>
                     </div>
                     <h6 class="text-xl mt-5 font-semibold text-white">
-                        Excelent Services
+                        Прекрасный сервис
                     </h6>
                     <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and make up
-                        the bulk of the card's content.
+
                     </p>
                 </div>
                 <div class="w-full lg:w-3/12 px-4 text-center">
@@ -467,11 +346,10 @@
                         <i class="fas fa-poll text-xl"></i>
                     </div>
                     <h5 class="text-xl mt-5 font-semibold text-white">
-                        Grow your market
+                        Растущий маркетплейс
                     </h5>
                     <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and make up
-                        the bulk of the card's content.
+
                     </p>
                 </div>
                 <div class="w-full lg:w-3/12 px-4 text-center">
@@ -480,10 +358,9 @@
                     >
                         <i class="fas fa-lightbulb text-xl"></i>
                     </div>
-                    <h5 class="text-xl mt-5 font-semibold text-white">Launch time</h5>
+                    <h5 class="text-xl mt-5 font-semibold text-white">Экономим ваше время</h5>
                     <p class="mt-2 mb-4 text-gray-500">
-                        Some quick example text to build on the card title and make up
-                        the bulk of the card's content.
+
                     </p>
                 </div>
             </div>
@@ -497,15 +374,15 @@
                         class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300"
                     >
                         <div class="flex-auto p-5 lg:p-10">
-                            <h4 class="text-2xl font-semibold">Want to work with us?</h4>
+                            <h4 class="text-2xl font-semibold">Хотите работать с нами?</h4>
                             <p class="leading-relaxed mt-1 mb-4 text-gray-600">
-                                Complete this form and we will get back to you in 24 hours.
+                                Заполните форму и мы с вами свяжемся.
                             </p>
                             <div class="relative w-full mb-3 mt-8">
                                 <label
                                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                                     for="full-name"
-                                >Full Name</label
+                                >Полное имя</label
                                 ><input
                                 type="text"
                                 class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -517,7 +394,7 @@
                                 <label
                                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                                     for="email"
-                                >Email</label
+                                >Электронная почта</label
                                 ><input
                                 type="email"
                                 class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -529,7 +406,7 @@
                                 <label
                                     class="block uppercase text-gray-700 text-xs font-bold mb-2"
                                     for="message"
-                                >Message</label
+                                >Сообщение</label
                                 ><textarea
                                 rows="4"
                                 cols="80"
@@ -543,7 +420,7 @@
                                     type="button"
                                     style="transition: all 0.15s ease 0s;"
                                 >
-                                    Send Message
+                                    Отправить сообщение
                                 </button>
                             </div>
                         </div>
@@ -564,4 +441,5 @@ export default {
 .preview{
     background-image:url("../../../images/client/1200x630_Garbage-Truck-2.jpg");
 }
+
 </style>
