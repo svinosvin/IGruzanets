@@ -32,6 +32,7 @@
                      </div>
                  </template>
              </Column>
+             <Column field="service.title" header="Услуга"  :sortable="true"></Column>
              <Column field="mark" header="Марка"  :sortable="true"></Column>
              <Column field="description" header="Описание" ></Column>
              <Column field="car_numbers" header="Номер автомобиля">
@@ -64,6 +65,8 @@
 
 import {computed, onMounted, onUnmounted, ref,watch} from "vue";
 import AutoService from '../../../../services/AutoService'
+import ServiceService from '../../../../services/ServiceService'
+
 import AutoCategoryService from "../../../../services/AutoCategoryService";
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
@@ -78,6 +81,8 @@ const confirm = useConfirm();
 //refs
 const store = useStore();
 const autoService = new AutoService();
+const serviceService = new ServiceService();
+
 const categoriesService = new AutoCategoryService();
 //uses
 
@@ -117,7 +122,18 @@ const fillCategories = async () =>{
         store.dispatch('autoCategoryModule/fillCategories', data.data);
     })
 }
+const fillServices = async () =>{
+    await serviceService.getServices().then(data => {
+        let services = data.data.map(x => {
+            return {
+                id: x.id,
+                title: x.title,
+            }
+        });
+        store.dispatch('serviceModule/fillServices', services);
 
+    })
+}
 const clearActiveAuto = ()=>{
     store.dispatch('autoModule/clearActiveAuto');
 }
@@ -182,12 +198,14 @@ const deleteAuto = async (id)=>{
 
 //hooks
 onMounted(() =>{
+    fillServices();
     fillAutos();
     fillCategories();
 })
 
 onUnmounted(()=>{
     store.dispatch('driverModule/clearStore');
+    store.dispatch('serviceModule/clearStore');
 })
 
 </script>

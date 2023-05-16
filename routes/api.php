@@ -14,6 +14,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderTypesControllers;
+use App\Http\Controllers\ServiceTypesControllers;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +39,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::group(['prefix'=>'user', 'middleware' => ['auth:sanctum', 'abilities:user']], function (){
+
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::patch('/updateProfile/{id}', [AuthController::class, 'changeUserData']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum', 'abilities:user']);;
@@ -65,6 +69,11 @@ Route::group(['middleware' => ['auth:sanctum', 'abilities:admin']], function (){
         Route::patch('/{id}', [EmployeeController::class,'update']);
         Route::delete('/{id}', [EmployeeController::class,'destroy']);
     });
+    Route::prefix('orders')->group(function (){
+        Route::get('/', [OrderController::class, 'getAll']);
+        Route::post('/newOrder', [OrderController::class, 'getAll']);
+
+    });
 
     Route::prefix('users')->group(function (){
         Route::get('/', [UserController::class, 'getAll']);
@@ -75,9 +84,11 @@ Route::group(['middleware' => ['auth:sanctum', 'abilities:admin']], function (){
         Route::delete('/{id}', [UserController::class,'destroy']);
     });
 
-
 });
 
+
+Route::get('/order_types', [OrderTypesControllers::class, 'getAll']);
+Route::get('/service_types', [ServiceTypesControllers::class, 'getAll']);
 
 
 Route::prefix('companies')->group(function (){
@@ -146,5 +157,15 @@ Route::prefix('service')->group(function (){
     Route::delete('/{id}', [ServiceController::class,'destroy']);
 });
 
+Route::prefix('orders')->group(function (){
+    Route::get('/', [OrderController::class, 'getAll']);
+    Route::get('/{id}', [OrderController::class, 'getById']);
+
+    Route::post('/{id}', [OrderController::class, 'store']);
+    Route::patch('/{id}', [OrderController::class, 'update']);
+    Route::get('/findCar/{id}', [OrderController::class, 'findCarForOrder']);
+    Route::get('/findDriver/{id}', [OrderController::class, 'findDriverForOrder']);
+
+});
 
 

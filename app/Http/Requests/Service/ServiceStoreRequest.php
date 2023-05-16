@@ -28,7 +28,10 @@ class ServiceStoreRequest extends FormRequest
             'description' => 'required|string',
             'resources' => 'nullable',
             'img'=> 'nullable',
-            'price_one_unit' => 'required'
+            'price_one_unit' => 'required',
+            'service_type' => 'nullable',
+
+
         ];
     }
 }

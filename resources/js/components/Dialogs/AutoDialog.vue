@@ -9,6 +9,12 @@
                 <Upload placeholder="dsadas" :source="activeAuto.img" v-model="file"/>
             </div>
             <div class="mb-6">
+                <h2>Какая услуга подходит машине</h2>
+                <Dropdown v-model="activeAuto.service" :options="[{'id':null,'title':'Выберите конкретную услугу',}, ...services]"
+                          optionLabel="title" class="w-full"  placeholder="Выберите конкретную услугу" :filter="true" filterPlaceholder="Найти категорию">
+                </Dropdown>
+            </div>
+            <div class="mb-6">
                 <h2>Марка машины</h2>
                 <InputText class="w-full" v-model="activeAuto.mark"></InputText>
             </div>
@@ -31,8 +37,8 @@
                 <Dropdown v-model="activeAuto.auto_category" :options="[{'id':null,'title':'Выберите водительскую категорию',}, ...categories]"
                           optionLabel="title" class="w-full"  placeholder="Выберите водительскую категорию" :filter="true" filterPlaceholder="Найти категорию">
                 </Dropdown>
-
             </div>
+
         </div>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
@@ -72,6 +78,8 @@ const autoService = new AutoService();
 //computed
 const activeAuto = computed(()=>store.getters['autoModule/activeAuto']);
 const categories = computed(()=>store.getters['autoCategoryModule/autoCategoriesMin']);
+const services = computed(()=>store.getters['serviceModule/services']);
+
 const file = ref(null)
 //methods
 
@@ -102,6 +110,13 @@ const acceptChanges = async () => {
     }
     else {
         data.append('auto_category', null);
+    }
+
+    if(activeAuto.value.service){
+        data.append('service', activeAuto.value.service.id);
+    }
+    else {
+        data.append('service', null);
     }
 
 

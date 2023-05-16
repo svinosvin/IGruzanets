@@ -21,6 +21,7 @@ class DriverMinResource extends JsonResource
             'first_name' => $request->first_name,
             'patronymic' => $request->patronymic,
             'tel_number' => $request->tel_number,
+            'is_active' => $this->is_active,
 
         ];
     }

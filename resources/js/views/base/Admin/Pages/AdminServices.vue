@@ -33,7 +33,7 @@
                         </div>
                     </template>
                 </Column>
-                <Column field="title" header="Название"  :sortable="true"></Column>
+                <Column field="title" header="Название" style="max-width:8rem" :sortable="true"></Column>
                 <Column field="description" header="Описание" style="min-width:23rem"></Column>
                 <Column field="Задействуются ресурсы" header="Задействуются ресурсы" style="min-width:15rem">
                     <template #body="slotProps">
@@ -58,6 +58,11 @@
                         </div>
                     </template>
                 </Column>
+                <Column header="Тип" :sortable="true" style="max-width: 6rem">
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.service_type.title" :severity="getType(slotProps.data)" />
+                    </template>
+                </Column>
                 <Column :exportable="false" style="min-width:8rem; max-width: 8rem">
                     <template #body="slotProps">
                         <div class="mr-2">
@@ -68,7 +73,9 @@
                         </div>
                     </template>
                 </Column>
+                <template #footer> В сумме {{ services ? services.length : 0 }} услуг. </template>
             </DataTable>
+
         </template>
     </AdminPageWrapper>
     <ServiceDialog @close="handleCloseDialog" v-model:visible="openDialog"></ServiceDialog>
@@ -79,6 +86,7 @@
 import {computed, onMounted, onUnmounted, ref,watch} from "vue";
 import ServiceService from '../../../../services/ServiceService';
 import ResourceService from '../../../../services/ResourceService';
+import ServiceTypeService from '../../../../services/ServiceTypeService';
 
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
@@ -86,9 +94,11 @@ import { useToast } from "primevue/usetoast";
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import ServiceDialog from '../../../../components/Dialogs/ServiceDialog.vue';
 
+import Tag from "primevue/tag";
 
 const serviceService = new ServiceService();
 const resourceService = new ResourceService();
+const typeService = new ServiceTypeService();
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -110,8 +120,19 @@ const openDialog = ref(false);
 const activeService = computed(()=>store.getters['serviceModule/activeService']);
 const services = computed(()=>store.getters['serviceModule/services']);
 
+const Types = { 0: 'Вывоз', 1: 'Продажа'};
 
 //methods
+const getType = (service) => {
+    switch (service.service_type.title) {
+        case Types['0']:
+            return 'success';
+        case Types['1']:
+            return '';
+        default:
+            return null;
+    }
+};
 
 const setActiveService = (data)=>{
     store.dispatch('serviceModule/setActiveService', data);
@@ -127,6 +148,10 @@ const fillServices = async () =>{
     await serviceService.getServices().then(data => {
         store.dispatch('serviceModule/fillServices', data.data);
     })
+    await typeService.getServiceTypes().then(data => {
+        store.dispatch('serviceModule/fillServiceTypes', data.data);
+    })
+    console.log(services.value);
 };
 
 const fillResources = async () =>{

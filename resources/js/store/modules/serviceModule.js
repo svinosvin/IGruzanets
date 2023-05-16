@@ -7,18 +7,23 @@ const state = {
         description: '',
         price_one_unit: null,
         img: null,
+        service_type: null,
         resources: [],
     },
+    service_types:[],
 };
 const getters = {
     services: (state) => state.services,
-    activeService: (state) => state.activeService
-
+    activeService: (state) => state.activeService,
+    service_types: (state) => state.service_types,
 }
 
 const actions = {
     fillServices({commit}, value){
         commit('fill_services', value);
+    },
+    fillServiceTypes({commit}, value){
+        commit('fill_service_types', value);
     },
     addService({commit}, value){
         commit('add_service', value);
@@ -36,6 +41,10 @@ const actions = {
 };
 
 const mutations = {
+
+    fill_service_types(state, value){
+        state.service_types = value
+    },
     fill_services(state, value){
         state.services = value
     },

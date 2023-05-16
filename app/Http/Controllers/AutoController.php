@@ -54,6 +54,7 @@ class AutoController extends Controller
             'img' => $path,
             'max_weight' => $data['max_weight'] ?? null,
             'auto_category_id'=> $data['auto_category'] ?? null,
+            'service_id'=> $data['service'] ?? null,
             'car_numbers' => $data['car_numbers'] ?? null
         ]);
 
@@ -90,7 +91,8 @@ class AutoController extends Controller
             'description' => $data['description'],
             'img' => $path ?? $auto->img,
             'max_weight' => $data['max_weight'],
-            'auto_category_id' => $data['auto_category'],
+            'auto_category_id' => $data['auto_category'] ?? null,
+            'service_id'=> $data['service'] ?? null,
             'car_numbers' => $data['car_numbers'] ?? null
         ]);
         return AutoResourceFull::make($auto);

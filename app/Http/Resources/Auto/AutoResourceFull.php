@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Auto;
 
 use App\Http\Resources\AutoCategory\AutoCategoryResourceMin;
+use App\Http\Resources\Service\ServiceResourceSmall;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AutoResourceFull extends JsonResource
@@ -22,7 +23,9 @@ class AutoResourceFull extends JsonResource
             'img' => $this->imgUrl,
             'max_weight' => $this->max_weight,
             'car_numbers' => $this->car_numbers,
-            'auto_category' => new AutoCategoryResourceMin($this->auto_category)
+            'service' => ServiceResourceSmall::make($this->service),
+            'auto_category' => new AutoCategoryResourceMin($this->auto_category),
+            'is_active' => $this->is_active,
 
         ];
     }

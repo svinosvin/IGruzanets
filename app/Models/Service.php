@@ -12,6 +12,9 @@ class Service extends Model
     protected $table = 'services';
     protected $guarded = false;
 
+    public function service_type(){
+        return $this->belongsTo(ServiceType::class, 'service_types_id', 'id');
+    }
 
 
     public function my_resources(){

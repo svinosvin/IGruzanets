@@ -1,9 +1,15 @@
 <template>
+
     <div
-        class="relative pt-14 pb-32 w-full flex justify-center page-wrapper"
+        class="relative pt-14 pb-32 w-full flex flex-col  justify-center page-wrapper"
         style="min-height: 75vh;"
     >
-        <div class="flex  ">
+        <div  class="text-center font-bold text-5xl text-white mb-10 w-full bg-gray-800 p-5">
+
+            <h1> Наши услуги</h1>
+        </div>
+        <div class="flex">
+
 
             <div class="container__wrapper w-full ">
                 <div class="card-container flex text-white"  v-for="service in services">
@@ -77,10 +83,11 @@ onUnmounted(()=>{
     object-fit: fill;
 }
 .card-container{
+    flex-grow: 1;
+    width: 30%;
+    max-width: 30%;
     margin-right: 10px;
     margin-bottom: 30px;
-    max-width: 28%;
-    min-width: 28%;
 }
 .page-wrapper{
     padding-top: 6rem;

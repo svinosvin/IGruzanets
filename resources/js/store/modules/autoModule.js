@@ -9,6 +9,8 @@ const state = {
         max_weight: '',
         car_numbers: '',
         auto_category: null,
+        service: null,
+        is_active: '',
     },
 };
 const getters = {
@@ -24,7 +26,6 @@ const actions = {
         commit('add_auto', value);
     },
     setActiveAuto({commit}, value) {
-        console.log(value);
         commit('set_active_auto', value);
     },
     clearStore({commit}) {
@@ -57,6 +58,9 @@ const mutations = {
                 img: '',
                 max_weight: '',
                 auto_category: null,
+                is_active: '',
+                service: null,
+
         };
     }
 }

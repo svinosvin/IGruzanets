@@ -30,6 +30,7 @@ class AutoUpdateRequest extends FormRequest
             'max_weight'=>'nullable',
             'auto_category' => 'nullable|integer',
             'car_numbers' => 'nullable|string',
+            'service' => 'nullable|integer',
         ];
     }
 }

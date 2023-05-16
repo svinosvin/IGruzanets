@@ -1,5 +1,5 @@
 <template>
-    <Dialog  :modal="true" :style="{width: '50vw'}">
+    <Dialog :modal="true" :style="{width: '50vw'}">
         <template #header>
             <h3>Подкатегория</h3>
         </template>
@@ -7,6 +7,12 @@
             <div class="mb-3">
                 <h2>Пример выполненых услуг</h2>
                 <Upload placeholder="dsadas" :source="activeService.img" v-model="file"/>
+            </div>
+            <div class="mb-3">
+                <h2>Тип оказываемы услуг</h2>
+                <Dropdown v-model="activeService.service_type"  :options="[{'id': null, 'title': 'Выберите тип услуги'}, ...serviceTypes]"
+                          optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
+                </Dropdown>
             </div>
             <div class="mb-3">
                 <h2 class="font-bold">Категория</h2>
@@ -43,7 +49,7 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useStore} from "vuex";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
@@ -61,10 +67,15 @@ const serviceService = new ServiceService();
 const emit = defineEmits(['close'])
 
 const file = ref(null)
+const type = ref();
+
+
 
 //computed
 const activeService = computed(()=>store.getters['serviceModule/activeService']);
 const resources = computed(()=>store.getters['resourceModule/resources']);
+const serviceTypes = computed(()=>store.getters['serviceModule/service_types']);
+
 //methods
 
 const handleClose = () => {
@@ -80,10 +91,12 @@ const acceptChanges = async () => {
     data.append('title',  activeService.value.title);
     data.append('description',  activeService.value.description);
     data.append('price_one_unit',  activeService.value.price_one_unit);
+    data.append('service_type',  activeService.value.service_type.id !=null ? activeService.value.service_type.id : 1);
 
     let resourcesData = [];
     if(activeService.value.resources){
         resourcesData = activeService.value.resources.map(el => el.id);
+        console.log(resourcesData);
         data.append('resources', JSON.stringify(resourcesData));
     }
     else {
@@ -147,6 +160,9 @@ const deleteService = async ()=>{
 }
 
 
+onMounted(()=>{
+    console.log(serviceTypes.value);
+})
 </script>
 
 <style scoped>

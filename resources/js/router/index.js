@@ -34,6 +34,7 @@ const routes = ([
             { path:'', redirect: 'admin/home'},
             { path:'home', component: ()=>import('../views/base/Admin/Pages/AdminHome.vue'), name: 'AdminHome',},
             { path:'services', component:()=> import('../views/base/Admin/Pages/AdminServices.vue')},
+            { path:'orders', component:()=> import('../views/base/Admin/Pages/AdminOrders.vue')},
 
             { path:'drivers', component:()=> import('../views/base/Admin/Pages/AdminDrivers.vue')},
             { path:'subresources', component:()=> import('../views/base/Admin/Pages/AdminSubResources.vue')},

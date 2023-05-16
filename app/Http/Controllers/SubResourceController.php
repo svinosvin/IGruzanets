@@ -63,7 +63,7 @@ class SubResourceController extends Controller
 
         if($resource_id !== null ){
             if(Resource::find($resource_id) === null){
-                return JsonExceptionResponse::error("Resource with id={$resource_id} doesn't exist", 406);
+                return JsonExceptionResponse::error("Resource with id=$resource_id doesn't exist", 406);
             }
             $subresource->my_resource()->associate($resource_id);
         }

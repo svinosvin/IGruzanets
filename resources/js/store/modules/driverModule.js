@@ -12,6 +12,8 @@ const state = {
         tel_number: '',
         categories : [],
         categoriesString: null,
+        is_active: '',
+
     },
 };
 const getters = {
@@ -48,6 +50,7 @@ const mutations = {
                 patronymic: x.patronymic,
                 tel_number: x.tel_number,
                 categories : x.categories,
+                is_active: x.is_active,
                 categoriesString: x.categories.map(x=>x.title).join('; '),
             }
         })
@@ -72,7 +75,9 @@ const mutations = {
             patronymic: '',
             tel_number: '',
             categories : [],
-            categoriesString: null
+            categoriesString: null,
+            is_active: '',
+
         }
     }
 }

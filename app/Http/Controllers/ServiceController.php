@@ -32,29 +32,30 @@ class ServiceController extends Controller
         $data = $request->validated();
         $image = $request->file('img');
         $resources = json_decode($data['resources']) ?? null;
+        $data['service_types_id'] = $data['service_type'] ?? null;
+        unset($data['service_type']);
         unset($data['resources']);
+        unset($data['img']);
 
         $path = null;
         if($image){
             $command = new ImageAddCommand($image, Image::FOLDER_SERVICE);
             $path = $handler->handle($command);
         }
-        $service = Service::create([
-            'title' => $data['title'] ?? null,
-            'description' => $data['description'] ?? null,
-            'price_one_unit'=>$data['price_one_unit'] ?? null,
-            'img'=> $path ?? null
-        ]);
+        $data['img'] = $path;
+        $service = Service::create($data);
         $service->save();
+
         if($resources)
         {
             foreach ($resources as $resource_id) {
                 if(Resource::find($resource_id)===null){
-                    return JsonExceptionResponse::error("Resource №${$resource_id} does not exist!", 406);
+                    return JsonExceptionResponse::error("Resource № {$resource_id} does not exist!", 406);
                 }
             }
-            $service->my_resources()->sync($resources);
         }
+        $service->my_resources()->sync($resources);
+
         return ServiceResourceFull::make($service);
     }
 
@@ -62,11 +63,9 @@ class ServiceController extends Controller
     public function getById(int $id)
     {
         $service = Service::findOrFail($id);
-
         if(!$service){
             return JsonExceptionResponse::error("Service doesn't exist");
         }
-
         return  ServiceResourceFull::make($service);
 
     }
@@ -81,35 +80,36 @@ class ServiceController extends Controller
 
         $data = $request->validated();
         $image = $request->file('img');
-        $path = null;
 
+        $path = null;
         if($image){
             $command = new ImageAddCommand($image, Image::FOLDER_SERVICE);
             $path = $handler->handle($command);
         }
-
         if($path!=null && $service->img){
             $command = new ImageRemoveCommand($service->img);
             $removeHandler->handle($command);
         }
+        $data['service_types_id'] = $data['service_type'] ?? null;
         $resources = json_decode($data['resources']) ?? null;
         unset($data['resources']);
-        $service->update([
-            'title' => $data['title'] ?? null,
-            'price_one_unit'=>$data['price_one_unit'] ?? null,
-            'description' => $data['description'] ?? null,
-            'img'=> $path ?? $service->img
-        ]);
+        unset($data['service_type']);
+        unset($data['img']);
+
+        $data['img'] = $path ?? $service->img;
+        $service->update($data);
+
         if($resources)
         {
             foreach ($resources as $resource_id) {
                 if(Resource::find($resource_id)===null){
-                    return JsonExceptionResponse::error("Resource №${$resource_id} does not exist!", 406);
+                    return JsonExceptionResponse::error("Resource № {$resource_id} does not exist!", 406);
                 }
             }
-            $service->my_resources()->sync($resources);
 
         }
+
+        $service->my_resources()->sync($resources);
         return ServiceResourceFull::make($service);
 
     }

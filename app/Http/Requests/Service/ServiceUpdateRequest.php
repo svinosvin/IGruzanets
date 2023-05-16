@@ -27,8 +27,9 @@ class ServiceUpdateRequest extends FormRequest
             'title' => 'nullable|string',
             'description' => 'nullable|string',
             'resources' => 'nullable',
-            'price_one_unit' => 'nullable'
-
+            'price_one_unit' => 'nullable',
+            'type' => 'nullable|integer',
+            'service_type' => 'nullable',
         ];
     }
 }

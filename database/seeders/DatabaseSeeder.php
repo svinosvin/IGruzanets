@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AutoCategorySeeder::class,
             ResourcesSeeder::class,
-            SubResourcesSeeder::class
+            SubResourcesSeeder::class,
+            OrderTypesSeeder::class,
+            ServiceTypesSeeder::class,
         ]);
 
         $categories = AutoCategory::all();

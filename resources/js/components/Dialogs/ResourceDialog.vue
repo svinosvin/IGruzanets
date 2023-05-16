@@ -67,7 +67,7 @@ const handleClose = () => {
 
 const acceptChanges = async () => {
 
-    console.log(activeResource.value);
+    console.log(activeResource.value.sub_resources.map(elem=>elem.id));
     if(activeResource.value.id == null){
         await resourceService.createResource({
             title: activeResource.value.title,
