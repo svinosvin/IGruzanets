@@ -13,7 +13,7 @@ class OrderUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,18 +24,18 @@ class OrderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'driver_id' => 'nullable',
-            'user_id' => 'nullable',
-            'car_id' => 'nullable',
-            'service_id' => 'nullable',
-            'tel_number' => 'nullable',
-            'name' => 'nullable',
-            'address' =>'nullable',
+            'driver_id' => 'nullable|integer',
+            'user_id' => 'nullable|integer',
+            'auto_id' => 'nullable|integer',
+            'order_types_id' => 'nullable|integer',
+            'service_id' => 'nullable|integer',
+            'tel_number' => 'nullable|string',
+            'name' => 'nullable|string',
+            'address' =>'nullable|string',
             'weight' => 'nullable',
             'total_price' => 'nullable',
             'order_at' => 'nullable',
             'notice' => 'nullable',
-            'status' => 'nullable',
             'is_accepted' => 'nullable',
         ];
     }

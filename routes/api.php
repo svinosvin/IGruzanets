@@ -165,6 +165,11 @@ Route::prefix('orders')->group(function (){
     Route::patch('/{id}', [OrderController::class, 'update']);
     Route::get('/findCar/{id}', [OrderController::class, 'findCarForOrder']);
     Route::get('/findDriver/{id}', [OrderController::class, 'findDriverForOrder']);
+    Route::get('/acceptOrder/{id}', [OrderController::class, 'acceptOrder']);
+    Route::get('/finishOrder/{id}', [OrderController::class, 'finishOrder']);
+
+    Route::get('/declineOrder/{id}', [OrderController::class, 'declineOrder']);
+    Route::delete('/{id}', [OrderController::class, 'destroy']);
 
 });
 

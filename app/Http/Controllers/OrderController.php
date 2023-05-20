@@ -190,16 +190,42 @@ class OrderController extends Controller
 
     }
 
-    public function update( OrderUpdateRequest $request, $id)
+    public function update(OrderUpdateRequest $request, $id)
     {
         $data = $request->validated();
-        $order = Order::findOrFail($id);
-        $order = Order::update([
-            $data
-        ]);
+        $date = $data['order_at'];
+        unset($data['order_at']);
+        $data['order_at'] = \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+//23.05.2023 17:45:46
 
+        $order = Order::findOrFail($id);
+        $order->update($data);
         return OrderFullResource::make($order);
     }
+
+    public function acceptOrder(int $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update([
+            'order_types_id' => 2
+        ]);
+        return OrderFullResource::make($order);
+    }
+    public function finishOrder(int $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update([
+            'order_types_id' => 3
+        ]);
+        return OrderFullResource::make($order);
+    }
+    public function declineOrder(int $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return response()->json(null, 206);
+    }
+
 
     public function destroy(int $id)
     {
