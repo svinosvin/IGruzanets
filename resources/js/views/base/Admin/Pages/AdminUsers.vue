@@ -14,13 +14,17 @@
                        :value="users" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="5"
                        showGridlines
                        scrollable
+                       v-model:filters="filter"
                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                        :rowsPerPageOptions="[5,10]"
                        @row-dblclick="dblclickHandler"
 
             >
                 <template #header>
-                    <span class="text-3xl"></span>
+                  <span class="p-input-icon-right">
+                        <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
+                        <i class="pi pi-search" />
+                   </span>
                 </template>
                 <Column field="name" header="Имя"  class="font-bold" :sortable="true"></Column>
                 <Column field="first_name" header="Фамилия"></Column>
@@ -71,10 +75,9 @@ const store = useStore();
 //refs
 const openDialog = ref(false);
 //
-// const filter = ref({
-//     'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-//     'categoriesString': {value: null, matchMode: FilterMatchMode.CONTAINS},
-// })
+const filter = ref({
+    'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+})
 
 
 //computed

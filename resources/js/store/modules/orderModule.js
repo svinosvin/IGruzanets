@@ -6,6 +6,7 @@ const state = {
         driver: null,
         service: null,
         user: null,
+        resource: null,
         auto: null,
         name : '',
         tel_number : '',

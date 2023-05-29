@@ -11,9 +11,10 @@ import userModule from "./modules/userModule";
 import employeeModule from "./modules/employeeModule";
 import companyModule from "./modules/companyModule";
 import orderModule from "./modules/orderModule";
-
+import reviewModule from "./modules/reviewModule";
 const store = createStore({
     modules:{
+        reviewModule,
         orderModule,
         autoModule,
         authAdmin,

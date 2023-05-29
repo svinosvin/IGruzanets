@@ -3,6 +3,20 @@
         <template v-slot:header>
             <Toolbar class="mb-4 flex flex-wrap">
                 <template #start>
+                        <div class="mr-5" >
+                            <Dropdown @change="" v-model="orderType"  :options="[ ...orderTypes]"
+                                      optionLabel="title" class="w-full"  placeholder="Выберите cтатус заказа" :filter="true">
+                            </Dropdown>
+                        </div>
+                        <div class="mr-5">
+                            <Dropdown @change="" v-model="serviceType"  :options="[ ...services]"
+                                      optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
+                            </Dropdown>
+                        </div>
+                        <div >
+                            <Button label="Сбросить" icon="pi pi-cross" class="p-button mr-5" @click="resetButton" />
+
+                        </div>
                 </template>
                 <template #end>
                     <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />
@@ -10,7 +24,7 @@
             </Toolbar>
         </template>
         <template v-slot:main>
-            <DataTable style=""  :class="`p-datatable-sm`"
+            <DataTable  v-if="loaded" style=""  :class="`p-datatable-sm`"
                        :value="orders" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="3"
                        showGridlines
                        scrollable
@@ -53,7 +67,9 @@
                                         <div class="w-full mb-2 flex border-b-2">
                                             <h2 class="font-bold w-half mr-2">Дата: </h2>
                                             <div class="w-full pt-2 pb-2">
-                                                <Calendar class="w-full" v-model="slotProps.data.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />
+
+                                                    <Calendar class="w-full" v-model="slotProps.data.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />
+
                                             </div>
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
@@ -71,6 +87,15 @@
                                                 </div>
 
                                         </div>
+                                        <div class="w-full mb-2 flex border-b-2">
+                                            <h2 class="font-bold w-half  mr-2">Услуга: </h2>
+                                            <div class="w-full pt-2 pb-2">
+                                                <Dropdown v-model="slotProps.data.resource" :options="[{'id':null,'title':'По умолчанию',}, ...slotProps.data.service.resources]"
+                                                          optionLabel="title" class="w-full"  placeholder="По умолчанию" :filter="true" filterPlaceholder="Найти категорию">
+                                                </Dropdown>
+                                            </div>
+                                        </div>
+
                                         <div class="w-full mb-2 pt-5 pb-5 flex border-b-2 ">
                                             <h2 class="font-bold w-half  mr-2"> Цена за один кг в данной услуге:</h2>
                                             <div class="w-full text-xl font-bold">
@@ -362,12 +387,28 @@
                 <template #footer> В сумме {{ orders ? orders.length : 0 }} заказов. </template>
             </DataTable>
 
+            <DataTable v-else :value="orders">
+                <Column field="code" header="Инфо">
+                    <template #body>
+                        <Skeleton></Skeleton>
+                    </template>
+                </Column>
+                <Column field="name" header="Статус заказа">
+                    <template #body>
+                        <Skeleton></Skeleton>
+                    </template>
+                </Column>
+                <Column field="name" header="">
+                    <template #body>
+                        <Skeleton></Skeleton>
+                    </template>
+                </Column>
+            </DataTable>
         </template>
-    </AdminPageWrapper>
+    </AdminPageWrapper>Ske
 </template>
 
 <script setup>
-import Calendar from 'primevue/calendar';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import InputNumber from 'primevue/inputnumber';
@@ -375,12 +416,15 @@ import {computed, onMounted, onUnmounted, ref,watch} from "vue";
 import OrderService from '../../../../services/OrderService';
 import OrderTypeService from "../../../../services/OrderTypeService";
 import ServiceService from "../../../../services/ServiceService";
-
+import VueDatePicker from '@vuepic/vue-datepicker';
+import Calendar from "primevue/calendar";
+import Skeleton from "primevue/skeleton";
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import {data} from "autoprefixer";
+import OrderQuery from "../../../../services/Query/OrderQuery";
 
 // import ServiceDialog from '../../../../components/Dialogs/ServiceDialog.vue';
 
@@ -388,14 +432,20 @@ const services = computed(()=>store.getters['serviceModule/services']);
 
 const orderService = new OrderService();
 const orderTypeService = new OrderTypeService();
+const orderQuery = new OrderQuery();
+const loaded = ref(false)
 
 const serviceService = new ServiceService();
 
+
 const toast = useToast();
 const confirm = useConfirm();
+const store = useStore();
 
 //refs
-const store = useStore();
+const orderType = ref({'id': null, 'title':'Выберите cтатус заказа'});
+const serviceType = ref({'id': null, 'title':  'Выберите тип услуги'});
+
 //uses
 
 //refs
@@ -404,8 +454,21 @@ const store = useStore();
 //computed
 const activeOrder = computed(()=>store.getters['orderModule/activeOrder']);
 const orders = computed(()=>store.getters['orderModule/orders']);
+const orderTypes = computed(()=>store.getters['orderModule/order_types']);
 
 
+
+//watches
+watch(orderType, async ()=>{
+     await loadOrderParams();
+
+})
+watch(serviceType, async ()=>{
+    await loadOrderParams();
+
+})
+
+//methods
 const setActiveOrder = (data)=>{
     store.dispatch('orderModule/setActiveOrder', data);
 }
@@ -413,12 +476,14 @@ const setActiveOrder = (data)=>{
 
 
 const fillData = async () =>{
-    await orderService.getOrders().then(data => {
+    await orderService.getOrders(orderQuery).then(data => {
         store.dispatch('orderModule/fillOrders', data.data);
     })
     await orderTypeService.getOrderTypes().then(data => {
         store.dispatch('orderModule/fillOrderTypes', data.data);
     })
+
+    loaded.value = true;
 
 };
 
@@ -461,6 +526,40 @@ const onChangePrice = async (data) => {
 
 }
 
+
+const loadOrderParams = async (reset = false) =>{
+
+    loaded.value = false;
+    if(reset === false){
+        if (serviceType.value.id !== null) {
+            orderQuery.addFilter(orderQuery.SERVICE_FILTER, serviceType.value.id);
+        }
+        else {
+            orderQuery.removeFilter(orderQuery.SERVICE_FILTER)
+
+        }
+        if (orderType.value.id !== null) {
+            orderQuery.addFilter(orderQuery.ORDER_TYPE_FILTER, orderType.value.id);
+        }
+        else {
+            orderQuery.removeFilter(orderQuery.ORDER_TYPE_FILTER)
+        }
+    }
+    else {
+        orderQuery.deleteParams();
+    }
+    await fillData();
+
+}
+
+const resetButton = async () =>{
+    await loadOrderParams(true);
+    serviceType.value = {'id': null, 'title':'Выберите cтатус заказа'};
+    orderType.value = {'id': null, 'title':  'Выберите тип услуги'};
+
+
+}
+
 const updateOrder = async (data)=>{
     setActiveOrder(data);
     await confirm.require({
@@ -480,6 +579,7 @@ const updateOrder = async (data)=>{
                 user_id : activeOrder.value.user !=null ? activeOrder.value.user.id : null,
                 auto_id : activeOrder.value.auto !=null ? activeOrder.value.auto.id : null,
                 order_types_id : activeOrder.value.order_type != null ? activeOrder.value.order_type.id : null,
+                resource_id : activeOrder.value.resource != null ? activeOrder.value.resource.id : null,
                 service_id : activeOrder.value.service !=null ? activeOrder.value.service.id : null,
                 tel_number : activeOrder.value.tel_number,
                 name :  activeOrder.value.name,

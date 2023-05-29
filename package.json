@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.79",
+        "@vuepic/vue-datepicker": "^5.1.2",
         "chart.js": "^4.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.3",

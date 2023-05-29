@@ -35,7 +35,7 @@ const routes = ([
             { path:'home', component: ()=>import('../views/base/Admin/Pages/AdminHome.vue'), name: 'AdminHome',},
             { path:'services', component:()=> import('../views/base/Admin/Pages/AdminServices.vue')},
             { path:'orders', component:()=> import('../views/base/Admin/Pages/AdminOrders.vue')},
-
+            { path:'reviews', component:()=> import('../views/base/Admin/Pages/AdminReviews.vue')},
             { path:'drivers', component:()=> import('../views/base/Admin/Pages/AdminDrivers.vue')},
             { path:'subresources', component:()=> import('../views/base/Admin/Pages/AdminSubResources.vue')},
             { path:'autos', component:()=> import('../views/base/Admin/Pages/AdminAutos.vue')},

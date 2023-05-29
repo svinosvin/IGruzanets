@@ -23,7 +23,7 @@ class ServiceController extends Controller
 
     public function getAll()
     {
-        return ServiceResourceMin::collection(Service::all());
+        return ServiceResourceMin::collection(Service::orderBy('service_types_id', 'asc')->get());
     }
 
 

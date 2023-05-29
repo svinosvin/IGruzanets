@@ -14,12 +14,16 @@
                     <DataTable style="font-size: 90%"
                         :value="resources" :sortOrder="2" :class="`p-datatable-sm`" :paginator="true" :rows="5"
                         showGridlines :autoLayot="true"
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                               v-model:filters="filter"
+                               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         :rowsPerPageOptions="[5,10]" scrollable  @row-dblclick="dblclickHandlerResource"
                     >
 
                         <template #header>
-                            <span class="text-3xl">Компоненты</span>
+                          <span class="p-input-icon-right">
+                            <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
+                            <i class="pi pi-search" />
+                         </span>
                         </template>
                         <Column field="title" header="Название" :sortable="true">
                             <template #body="slotProps">
@@ -62,13 +66,18 @@
                                groupRowsBy="resource.title"
                                :sortOrder="1"
                                scrollable
+                               v-model:filters="filter1"
+
                                @row-dblclick="dblclickHandlerSub"
                                :paginator="true" :rows="10"
                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                :rowsPerPageOptions="[10,15,20]"
                     >
                         <template #header>
-                            <span class="text-3xl">Подкомпоненты</span>
+                             <span class="p-input-icon-right">
+                            <InputText class="m-1" v-model="filter1['global'].value" placeholder="Поиск..." />
+                            <i class="pi pi-search" />
+                         </span>
                         </template>
                         <Column field="resource.title" header="Resource"></Column>
                         <Column field="title" header="Название">
@@ -139,7 +148,9 @@ const filter = ref({
     'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
     'resources': {value: null, matchMode: FilterMatchMode.CONTAINS},
 })
-
+const filter1 = ref({
+    'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+})
 //computed
 const activeSubResource = computed(()=>store.getters['subresourceModule/activeSubResource']);
 const activeResource = computed(()=>store.getters['resourceModule/activeResource'])

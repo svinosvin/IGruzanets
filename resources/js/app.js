@@ -8,9 +8,8 @@ import store from "./store";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
-
-
 const app = createApp(App)
+import '@vuepic/vue-datepicker/dist/main.css'
 
 
 

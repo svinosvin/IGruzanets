@@ -21,7 +21,11 @@ class AuthController extends Controller
         $data = $request->validated();
         $command = new LoginUserCommand($data['email'], $data['password']);
         $response = $handler->handle($command);
-        return response()->json($response, 201);
+        if(isset($response['error']))
+        return response()->json($response, 401);
+
+        return response()->json($response, 202);
+
     }
 
 

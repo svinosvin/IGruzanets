@@ -20,7 +20,7 @@
                     <span class="p-input-icon-right">
                         <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
                         <i class="pi pi-search" />
-            </span>
+                   </span>
                 </template>
                 <Column header="Изображение" style="max-width:8rem;">
                     <template #body="slotProps">

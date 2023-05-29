@@ -8,6 +8,7 @@ const state = {
         name: '',
         first_name: '',
         patronymic: '',
+        orders: [],
         email: '',
         company: null,
         tel_number: '',
@@ -107,21 +108,24 @@ const mutations = {
     },
     auth_user_logout(state){
         state.user = {
-            id:"",
+            id: null,
             name: '',
-            first_name: "",
-            patronymic: "",
-            email: "",
-            tel_number: "",
+            first_name: '',
+            patronymic: '',
+            email: '',
+            orders: [],
+            company: null,
+            tel_number: '',
         };
         state.token = '';
         state.userState = false;
-    }
+    },
+
 
 }
 
 const getters = {
-    currentUser: state => state.user ?? {},
+    currentUser: state => state.user,
     userToken: state => state.token ?? '',
     userState: state => state.userState ?? false
 }

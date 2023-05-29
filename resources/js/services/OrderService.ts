@@ -1,17 +1,25 @@
 import axios from '../axios/axios-instance'
 
+import OrderQuery from "./Query/OrderQuery";
+
 export default class OrderService{
 
-    async getOrders(){
-        let response = await axios.get('/api/orders/');
+    async getOrders(query: OrderQuery){
+        let response = await axios.get('/api/orders/', {
+            params: query.getParams(),
+        });
         return await response.data;
     }
+
     async getOrder(id){
         let response = await axios.get(`/api/orders/${id}`);
         console.log(response);
         return await response.data;
     }
-
+    async createOrder( data){
+        let response = await axios.post(`/api/orders/`, data)
+        return await response.data[0];
+    }
     async updateOrder(id, data){
         let response = await axios.patch(`/api/orders/${id}`, data)
         return await response.data[0];

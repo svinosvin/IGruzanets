@@ -53,9 +53,153 @@
                     <template #title>
                     </template>
                     <template #content>
-                        <h2>
-                            Последние заказы
-                        </h2>
+                        <DataTable  style=""  :class="`p-datatable-sm`"
+                                    :value="user.orders" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="3"
+                                    showGridlines
+                                    scrollable
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    :rowsPerPageOptions="[3,10]"
+                        >
+                            <template #header>
+                                <span class="text-3xl">Заказы</span>
+                            </template>
+
+                            <Column header="Инфо">
+                                <template #body="slotProps">
+
+                                    <div class="flex-col w-full">
+
+                                        <div class="w-full text-center font-bold text-xl">
+                                            Дата:{{slotProps.data.order_at}}
+                                        </div>
+                                        <Accordion class="pb-10 w-full" :multiple="true" :activeIndex="[]">
+                                            <AccordionTab header="Данные заказа">
+                                                <div class="flex flex-col">
+                                                    <div class="w-full mb-2 flex border-b-2">
+                                                        <h2 class="font-bold  w-half mr-2">Имя: </h2>
+                                                        <div class="w-full pt-1 pb-1">
+                                                            <div class="w-full">{{slotProps.data.name}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-2 flex border-b-2">
+                                                        <h2 class="font-bold w-half mr-2">Адрес: </h2>
+                                                        <div class="w-full pt-2 pb-2">
+                                                            <div class="w-full pt-1 pb-1">
+                                                                <div class="w-full">{{slotProps.data.address}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-2  flex border-b-2">
+                                                        <h2 class="font-bold w-half mr-2">Телефон: </h2>
+                                                        <div class="w-full pt-2 pb-2">
+                                                            <div class="w-full">{{slotProps.data.tel_number}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-2 flex border-b-2">
+                                                        <h2 class="font-bold w-half mr-2">Дата: </h2>
+                                                        <div class="w-full pt-2 pb-2">
+                                                            <div class="w-full">{{slotProps.data.order_at}}</div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-2 flex border-b-2">
+                                                        <h2 class="font-bold w-half  mr-2">Общий вес (кг): </h2>
+                                                        <div class="w-full pt-2 pb-2">
+                                                            <div class="w-full">{{slotProps.data.weight}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-2 flex border-b-2">
+                                                        <h2 class="font-bold w-half  mr-2">Услуга: </h2>
+                                                        <div class="w-full pt-2 pb-2">
+                                                            <div class="w-full">{{slotProps.data.service.title}}</div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="w-full mb-2 pt-5 pb-5 flex border-b-2 ">
+                                                        <h2 class="font-bold w-half  mr-2"> Цена за один кг в данной услуге:</h2>
+                                                        <div class="w-full text-xl font-bold">
+                                                            {{slotProps.data.service.price_one_unit}} р.
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="w-full mb-10 flex-col pb-2 border-b-2">
+                                                        <div class="font-bold text-3xl pb-4">Машина</div>
+                                                        <div v-if="slotProps.data.auto!=null" class="flex  flex-col">
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold w-half mr-2">Марка: </h2>
+                                                                <div>{{slotProps.data.auto.mark}}</div>
+                                                            </div>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold w-half  mr-2">Грузоподъемность: </h2>
+                                                                <div>{{slotProps.data.auto.max_weight}} т.</div>
+                                                            </div>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold w-half mr-2">Категория: </h2>
+                                                                <div>{{slotProps.data.auto.auto_category.title}}</div>
+                                                            </div>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold w-half mr-2">Номера: </h2>
+                                                                <div>{{slotProps.data.auto.car_numbers}}</div>
+                                                            </div>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold w-half mr-2">Услуга машины: </h2>
+                                                                <div>{{slotProps.data.auto.service.title}}</div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="w-full flex-col" v-else>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold mr-2">Машина: </h2>
+                                                                <div>Еще не подобрана</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full mb-10 flex-col pb-2 ">
+                                                        <div class="font-bold text-3xl pb-4">Водитель</div>
+                                                        <div v-if="slotProps.data.driver!=null" class="flex flex-col">
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold mr-2">ФИО: </h2>
+                                                                <div>{{`${slotProps.data.driver.first_name}  ${slotProps.data.driver.name}  ${slotProps.data.driver.patronymic}`}}</div>
+                                                            </div>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold mr-2">Телефон: </h2>
+                                                                <div>{{slotProps.data.driver.tel_number}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="w-full flex-col" v-else>
+                                                            <div class="w-full flex">
+                                                                <h2 class="font-bold mr-2">Водитель: </h2>
+                                                                <div>Еще не подобран</div>
+                                                            </div>
+                                                            <div class="w-full mt-3 flex">
+                                                                <div class="mr-2">
+                                                                    <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data.id)"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-full mb-2 flex border-b-2">
+                                                    <h2 class="font-bold text-2xl w-half mr-2">Итого: </h2>
+                                                    <div class="w-full text-2xl">{{slotProps.data.total_price}} руб.</div>
+                                                </div>
+
+                                            </AccordionTab>
+                                        </Accordion>
+                                    </div>
+
+                                </template>
+
+                            </Column>
+                            <Column field="order_type.title" header="Статус заказа" style="max-width:8rem;">
+                            </Column>
+
+
+                            <template #footer> В сумме {{ orders ? orders.length : 0 }} заказов. </template>
+                        </DataTable>
+
+
                     </template>
                 </Card>
             </div>
@@ -65,11 +209,16 @@
 
 <script setup>
 import { useStore } from 'vuex';
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import Card from "primevue/card";
 import UserService from "../../services/UserService";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+
+import OrderService from '../../services/OrderService';
+const orderService = new OrderService();
 
 
 //uses
@@ -78,10 +227,13 @@ const toast = useToast();
 const store = useStore();
 const userService = new UserService();
 const user = computed(()=> store.getters["authUser/currentUser"])
+const loaded = ref(false)
+const orders = computed(()=>store.getters['orderModule/orders']);
 
 
-const getData = ()=>{
-    store.dispatch('authUser/getDataUser');
+const getData =  ()=>{
+     store.dispatch('authUser/getDataUser');
+
 }
 const dataUpdate = async ()=>{
 
@@ -120,8 +272,8 @@ const dataUpdate = async ()=>{
 
 }
 
-onMounted(()=>{
-    getData();
+onMounted( ()=>{
+     getData();
 })
 
 </script>

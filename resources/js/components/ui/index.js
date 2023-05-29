@@ -19,7 +19,11 @@ import Upload from '../ui/Upload.vue'
 import FileUpload from "primevue/fileupload";
 import Password from "primevue/password";
 
+
+import CustomToggle from '../ui/CustomToggle.vue'
 export default [
+    CustomToggle,
+
     Password,
     Dropdown,
     Toolbar,

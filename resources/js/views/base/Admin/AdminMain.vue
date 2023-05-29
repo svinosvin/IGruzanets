@@ -4,8 +4,11 @@
         <header class="header">
             <div class="header__wrapper">
                 <nav class="header__nav">
+                    <div class="header__nav__block cursor-pointer font-bold">
+                        Полезные вкладки:
+                    </div>
                     <div class="header__nav__block">
-                        <a href="" class="header__nav__link">Заказы</a>
+                        <router-link class="header__nav__link" to="/admin/orders" >Заказы</router-link>
                     </div>
                     <div class="header__nav__block">
                         <a href="" class="header__nav__link">Принятые</a>
@@ -34,7 +37,7 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="show" route="/admin/home" tooltip="Главная" icon="pi pi-home">Главная</NavLink>
+                    <NavLink :isOpen="show" route="/admin/home" tooltip="Статистика" icon="pi pi-home">Статистика</NavLink>
                     <br>
                     <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi pi-shopping-bag">Услуги</NavLink>
                     <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon="pi pi-car pi-table">Ресурсы</NavLink>

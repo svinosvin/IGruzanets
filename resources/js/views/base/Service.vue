@@ -17,7 +17,7 @@
                                         <img src="../../../images/admin/empty.png" alt="Нет картинки" class="custom-img w-64  h-72 " />
                                     </div>
                                 </div>
-                                <div class="title font-bold pb-5 pr-2.5 text-center text-3xl">{{ service.title }}</div>
+                                <div class="title font-bold pb-5 pr-2.5 text-center text-4xl">{{ service.title }}</div>
                             </div>
 
                         </template>
@@ -25,18 +25,20 @@
                         </template>
                         <template #content>
                             <div class="w-full">
-                                <div class="text-xl border-b-2 font-bold">
+                                <div class="description__header text-2xl border-b-2 font-bold">
                                     Описание:
                                 </div>
-                                <div class="border-b-2 pt-5 description">
+                                <div class="description__text text-xl border-b-2 pt-5 description">
                                     <p>
                                         {{service.description}}
                                     </p>
                                 </div>
-                                <div class="text-xl pt-5 border-b-2 font-bold">
+                                <div v-if="service.resources.length > 0">
+
+                                <div  class="description__header text-2xl pt-5 border-b-2 font-bold">
                                     Используемые ресурсы:
                                 </div>
-                                <div class="font-bold border-b-2 pt-5">
+                                <div class="description__text text-xl font-bold border-b-2 pt-5">
                                     <ol>
                                         <li class="resources pb-2.5" v-for="resource in service.resources">
                                             {{resource.title}};
@@ -48,41 +50,55 @@
                                         </li>
                                     </ol>
                                 </div>
+                                </div>
+
                                 <div class="text-xl pt-6 border-b-2 font-bold">
                                     Цена за кг:
                                 </div>
-                                <div class="font-bold border-b-2 pt-5">
+                                <div class="text-xl font-bold border-b-2 pt-5">
                                     {{service.price_one_unit}} руб.
                                 </div>
                             </div>
                             <div class="button w-full ">
-                                <Button  class="custom-button" icon="pi pi-check" label="Save" />
+                                <Button  class="custom-button" icon="pi pi-check" label="Оформить заказ" @click="handleOpenDialog" />
                             </div>
                         </template>
                     </Card>
                 </div>
             </div>
             </div>
+    <UserOrderDialog v-model:visible="openDialog" @close="handleCloseDialog"></UserOrderDialog>
+
 </template>
 
 <script setup>
 import {useStore} from "vuex";
 import ServiceService from '../../services/ServiceService.js';
-import {onMounted, computed, onUnmounted} from "vue";
+import {onMounted, computed, onUnmounted, ref} from "vue";
 import Card from "primevue/card"
 import { useRoute } from 'vue-router'
 import router from "../../router";
+import UserOrderDialog from "../../components/Dialogs/ClientDialogs/UserOrderDialog.vue";
 const route = useRoute()
 const serviceService = new ServiceService();
 const store = useStore();
 //
 const service = computed(()=>store.getters['serviceModule/activeService']);
 
+const openDialog = ref(false);
+
+const handleOpenDialog = async () =>{
+    openDialog.value = true;
+}
+const handleCloseDialog = async () =>{
+    openDialog.value = false;
+}
 
 //methods
 const click = async (id) =>{
    console.log(id)
 };
+
 
 
 onMounted(async ()=>{
@@ -122,11 +138,12 @@ ul{
     justify-content: space-between;
 }
 .custom-button{
-    background-color: #7578da;
+    background-color: #1a1a59;
+    animation: ease-out 3ms;
     border: none;
 }
 .custom-button:hover{
-    background-color: #56599d;
+    background-color: #3f4ae7;
 }
 .title{
     line-height: 1rem;
@@ -137,7 +154,7 @@ border-radius: 40px 0 0 0 ;
 }
 
 .card_wrapper{
-    background-color: #b3b3b3;
+    background-color: rgba(235, 190, 255, 0.63);
     color: #000000;
     transition: .2s all ease-out;
     border-radius: 40px 40px 40px 40px;
@@ -185,7 +202,15 @@ border-radius: 40px 0 0 0 ;
     .title{
         @apply text-xl;
     }
-
+    .description__header{
+        font-size: 90%;
+    }
+    .description__text{
+        font-size: 90%;
+    }
+    .button .custom-button{
+        font-size: 90%;
+    }
     .description{
         font-size: 0.85rem;
     }
@@ -197,7 +222,12 @@ border-radius: 40px 0 0 0 ;
     .custom-img{
         @apply w-44 h-44;}
 
-
+    .description__header{
+        font-size: 90%;
+    }
+    .description__text{
+        font-size: 90%;
+    }
     .card-container{
         max-height: 45vh;
         max-width: 80%;

@@ -17,6 +17,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderTypesControllers;
 use App\Http\Controllers\ServiceTypesControllers;
+use App\Http\Controllers\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -156,12 +157,20 @@ Route::prefix('service')->group(function (){
     Route::post('/{id}', [ServiceController::class,'update']);
     Route::delete('/{id}', [ServiceController::class,'destroy']);
 });
+Route::prefix('reviews')->group(function (){
+    Route::get('/', [ReviewController::class, 'getAll']);
+    Route::get('/{id}',[ReviewController::class, 'getById']);
+
+    Route::post('/', [ReviewController::class,'store'])->middleware('auth:sanctum', 'abilities:user');
+    Route::patch('/{id}', [ReviewController::class,'update']);
+    Route::delete('/{id}', [ReviewController::class,'destroy']);
+});
 
 Route::prefix('orders')->group(function (){
     Route::get('/', [OrderController::class, 'getAll']);
     Route::get('/{id}', [OrderController::class, 'getById']);
 
-    Route::post('/{id}', [OrderController::class, 'store']);
+    Route::post('/', [OrderController::class, 'store']);
     Route::patch('/{id}', [OrderController::class, 'update']);
     Route::get('/findCar/{id}', [OrderController::class, 'findCarForOrder']);
     Route::get('/findDriver/{id}', [OrderController::class, 'findDriverForOrder']);

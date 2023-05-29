@@ -29,6 +29,9 @@ class Order extends Model
     public function auto(){
         return $this->belongsTo(Auto::class);
     }
+    public function my_resource(){
+        return $this->belongsTo(Resource::class, 'resource_id', 'id');
+    }
 
     public function order_type(){
         return $this->belongsTo(OrderType::class, 'order_types_id', 'id');
