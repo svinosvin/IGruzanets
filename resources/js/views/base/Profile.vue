@@ -171,11 +171,6 @@
                                                                 <h2 class="font-bold mr-2">Водитель: </h2>
                                                                 <div>Еще не подобран</div>
                                                             </div>
-                                                            <div class="w-full mt-3 flex">
-                                                                <div class="mr-2">
-                                                                    <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data.id)"/>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -194,7 +189,6 @@
                             </Column>
                             <Column field="order_type.title" header="Статус заказа" style="max-width:8rem;">
                             </Column>
-
 
                             <template #footer> В сумме {{ orders ? orders.length : 0 }} заказов. </template>
                         </DataTable>
@@ -218,6 +212,7 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 
 import OrderService from '../../services/OrderService';
+
 const orderService = new OrderService();
 
 
@@ -235,6 +230,7 @@ const getData =  ()=>{
      store.dispatch('authUser/getDataUser');
 
 }
+
 const dataUpdate = async ()=>{
 
     await confirm.require({

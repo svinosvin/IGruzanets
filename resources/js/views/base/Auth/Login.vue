@@ -8,7 +8,7 @@
                         <InputText placeholder="" name="Email"  сlass="w-full" v-model="user.email"></InputText>
                     </div>
                     <div class="text-left">
-                        <h2 class="text-white font-light mb-2">Password</h2>
+                        <h2 class="text-white font-light mb-2">Пароль</h2>
                         <Password class="w-full" :feedback="false"  toggleMask   v-model="user.password">
                             <!--                        <template #header>-->
                             <!--                            <h6>Pick a password</h6>-->
@@ -57,7 +57,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .login-pager {
     width: 450px;

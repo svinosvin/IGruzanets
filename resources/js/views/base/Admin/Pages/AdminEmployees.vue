@@ -59,7 +59,6 @@ import {useConfirm} from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import EmployeeDialog from '../../../../components/Dialogs/EmployeeDialog.vue';
-
 const employeeService = new AdminService();
 
 const toast = useToast();

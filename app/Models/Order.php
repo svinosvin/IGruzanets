@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Helpers\OrderStatusConstant;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +18,17 @@ class Order extends Model
 
     public $timestamps = false;
 
+    public function scopeOrderAt(Builder $query, $date) : Builder
+    {
+        $dateString = preg_replace('/\(.*$/', '', $date);
+        $date = \Carbon\Carbon::parse($dateString)->format('Y-m-d H:i:s');
+        $dateMin = \Carbon\Carbon::make($date)->subDay();
+        $dateMax = \Carbon\Carbon::make($date)->addDay();
+
+        return $query
+            ->whereDate('order_at', '>', $dateMin )
+            ->whereDate('order_at', '<', $dateMax );
+    }
 
     public function user(){
         return $this->belongsTo(User::class);

@@ -27,8 +27,6 @@ const props = defineProps({
     headerPage: String,
 })
 
-
-
 </script>
 
 <style scoped lang="scss">

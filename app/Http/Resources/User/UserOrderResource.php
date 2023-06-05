@@ -18,6 +18,9 @@ class UserOrderResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'first_name' => $this->first_name,
+            'patronymic' => $this->patronymic,
+
             'tel_number' => $this->tel_number,
             'email' => $this->email,
             'company' => CompanyResourceMin::make($this->company)

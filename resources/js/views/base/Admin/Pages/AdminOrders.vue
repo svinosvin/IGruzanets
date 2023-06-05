@@ -3,20 +3,24 @@
         <template v-slot:header>
             <Toolbar class="mb-4 flex flex-wrap">
                 <template #start>
-                        <div class="mr-5" >
-                            <Dropdown @change="" v-model="orderType"  :options="[ ...orderTypes]"
-                                      optionLabel="title" class="w-full"  placeholder="Выберите cтатус заказа" :filter="true">
-                            </Dropdown>
-                        </div>
-                        <div class="mr-5">
-                            <Dropdown @change="" v-model="serviceType"  :options="[ ...services]"
-                                      optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
-                            </Dropdown>
-                        </div>
-                        <div >
-                            <Button label="Сбросить" icon="pi pi-cross" class="p-button mr-5" @click="resetButton" />
+                    <div class="mr-5" >
+                        <Dropdown @change="" v-model="orderType"  :options="[ ...orderTypes]"
+                                  optionLabel="title" class="w-full"  placeholder="Выберите cтатус заказа" :filter="true">
+                        </Dropdown>
+                    </div>
+                    <div class="mr-5">
+                        <Dropdown @change="" v-model="serviceType"  :options="[ ...services]"
+                                  optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
+                        </Dropdown>
+                    </div>
+                    <div class="mr-5">
+                        <VueDatePicker v-model="orderAt"    :month-change-on-scroll="false"  locale="ru" placeholder="Предпочтительная дата и время" cancelText="отменить" format="dd-MM-yy HH:mm"  selectText="выбрать" />
+                    </div>
 
-                        </div>
+                    <div >
+                        <Button label="Сбросить" icon="pi pi-cross" class="p-button mr-5" @click="resetButton" />
+
+                    </div>
                 </template>
                 <template #end>
                     <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />
@@ -25,11 +29,11 @@
         </template>
         <template v-slot:main>
             <DataTable  v-if="loaded" style=""  :class="`p-datatable-sm`"
-                       :value="orders" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="3"
-                       showGridlines
-                       scrollable
-                       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                       :rowsPerPageOptions="[3,10]"
+                        :value="orders" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="3"
+                        showGridlines
+                        scrollable
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                        :rowsPerPageOptions="[3,10]"
             >
                 <template #header>
                     <span class="text-3xl">Заказы</span>
@@ -68,27 +72,27 @@
                                             <h2 class="font-bold w-half mr-2">Дата: </h2>
                                             <div class="w-full pt-2 pb-2">
 
-                                                    <Calendar class="w-full" v-model="slotProps.data.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />
+                                                <Calendar class="w-full" v-model="slotProps.data.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />
 
                                             </div>
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
                                             <h2 class="font-bold w-half  mr-2">Общий вес (кг): </h2>
                                             <div class="w-full pt-2 pb-2">
-                                                <InputNumber  @input="onChangePrice(slotProps.data)" class="w-full " v-model="slotProps.data.weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="5" :min="5" :max="7000" />
+                                                <InputNumber  @input="onChangePrice(slotProps.data)" @focusout="onChangePrice(slotProps.data)" class="w-full " v-model="slotProps.data.weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="5" :min="5" :max="7000" />
                                             </div>
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
-                                                <h2 class="font-bold w-half  mr-2">Услуга: </h2>
-                                                <div class="w-full pt-2 pb-2">
-                                                    <Dropdown @change="onChangePrice(slotProps.data)" v-model="slotProps.data.service"  :options="[{'id': null, 'title': 'Выберите услугу', 'price_one_unit': 0}, ...services]"
-                                                              optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
-                                                    </Dropdown>
-                                                </div>
+                                            <h2 class="font-bold w-half  mr-2">Услуга: </h2>
+                                            <div class="w-full pt-2 pb-2">
+                                                <Dropdown @change="onChangePrice(slotProps.data)" v-model="slotProps.data.service"  :options="[{'id': null, 'title': 'Выберите услугу', 'price_one_unit': 0}, ...services]"
+                                                          optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
+                                                </Dropdown>
+                                            </div>
 
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
-                                            <h2 class="font-bold w-half  mr-2">Услуга: </h2>
+                                            <h2 class="font-bold w-half  mr-2">Категория мусора: </h2>
                                             <div class="w-full pt-2 pb-2">
                                                 <Dropdown v-model="slotProps.data.resource" :options="[{'id':null,'title':'По умолчанию',}, ...slotProps.data.service.resources]"
                                                           optionLabel="title" class="w-full"  placeholder="По умолчанию" :filter="true" filterPlaceholder="Найти категорию">
@@ -178,7 +182,7 @@
                                                         <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data.id)"/>
                                                     </div>
                                                 </div>
-                                        </div>
+                                            </div>
                                         </div>
                                         <div class="w-full mb-10 flex-col ">
                                             <div v-if="slotProps.data.user!=null" class="flex flex-col">
@@ -261,6 +265,12 @@
                                             <div class="w-full pt-2 pb-2">
                                                 <div class="w-full">{{slotProps.data.service.title}}</div>
                                             </div>
+                                        </div>
+                                        <div class="w-full mb-2 flex border-b-2">
+                                            <h2 class="font-bold w-half  mr-2">Категория мусора: </h2>
+                                            <div class="w-full pt-2 pb-2">
+                                                <div class="w-full">{{slotProps.data.resource != null ? slotProps.data.resource.title : 'По умолчанию' }}</div>
+                                            </div>
 
                                         </div>
                                         <div class="w-full mb-2 pt-5 pb-5 flex border-b-2 ">
@@ -316,34 +326,34 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="w-full mb-10 flex-col ">
+                                        <div v-if="slotProps.data.user!=null" class="flex flex-col">
+                                            <div class="font-bold text-3xl pb-4">Аккаунт</div>
+                                            <div class="w-full flex">
+                                                <h2 class="font-bold mr-2">ФИО: </h2>
+                                                <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.first_name ?? ''}`}}</div>
+                                            </div>
+                                            <div class="w-full flex">
+                                                <h2 class="font-bold mr-2">Телефон: </h2>
+                                                <div>{{slotProps.data.user.tel_number}}</div>
+                                            </div>
+                                            <div class="w-full flex">
+                                                <h2 class="font-bold mr-2">Email: </h2>
+                                                <div>{{slotProps.data.user.email}}</div>
+                                            </div>
                                         </div>
-                                        <div class="w-full mb-10 flex-col ">
-                                            <div v-if="slotProps.data.user!=null" class="flex flex-col">
-                                                <div class="font-bold text-3xl pb-4">Аккаунт</div>
-                                                <div class="w-full flex">
-                                                    <h2 class="font-bold mr-2">ФИО: </h2>
-                                                    <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.first_name ?? ''}`}}</div>
-                                                </div>
-                                                <div class="w-full flex">
-                                                    <h2 class="font-bold mr-2">Телефон: </h2>
-                                                    <div>{{slotProps.data.user.tel_number}}</div>
-                                                </div>
-                                                <div class="w-full flex">
-                                                    <h2 class="font-bold mr-2">Email: </h2>
-                                                    <div>{{slotProps.data.user.email}}</div>
-                                                </div>
+                                        <div v-else>
+                                            <div class="w-full flex">
+                                                <div class="font-bold text-3xl pb-4">Аккаунт: не авторизован</div>
                                             </div>
-                                            <div v-else>
-                                                <div class="w-full flex">
-                                                    <div class="font-bold text-3xl pb-4">Аккаунт: не авторизован</div>
-                                                </div>
-                                            </div>
+                                        </div>
 
-                                        </div>
-                                        <div class="w-full mb-2 flex border-b-2">
-                                            <h2 class="font-bold text-2xl w-half mr-2">Итого: </h2>
-                                            <div class="w-full text-2xl">{{slotProps.data.total_price}} руб.</div>
-                                        </div>
+                                    </div>
+                                    <div class="w-full mb-2 flex border-b-2">
+                                        <h2 class="font-bold text-2xl w-half mr-2">Итого: </h2>
+                                        <div class="w-full text-2xl">{{slotProps.data.total_price}} руб.</div>
+                                    </div>
 
                                 </AccordionTab>
                             </Accordion>
@@ -405,7 +415,7 @@
                 </Column>
             </DataTable>
         </template>
-    </AdminPageWrapper>Ske
+    </AdminPageWrapper>
 </template>
 
 <script setup>
@@ -445,6 +455,7 @@ const store = useStore();
 //refs
 const orderType = ref({'id': null, 'title':'Выберите cтатус заказа'});
 const serviceType = ref({'id': null, 'title':  'Выберите тип услуги'});
+const orderAt = ref(null);
 
 //uses
 
@@ -460,10 +471,15 @@ const orderTypes = computed(()=>store.getters['orderModule/order_types']);
 
 //watches
 watch(orderType, async ()=>{
-     await loadOrderParams();
+    await loadOrderParams();
 
 })
 watch(serviceType, async ()=>{
+    await loadOrderParams();
+
+})
+watch(orderAt, async ()=>{
+    console.log(orderAt.value);
     await loadOrderParams();
 
 })
@@ -544,6 +560,12 @@ const loadOrderParams = async (reset = false) =>{
         else {
             orderQuery.removeFilter(orderQuery.ORDER_TYPE_FILTER)
         }
+        if (orderAt.value !== null) {
+            orderQuery.addFilter(orderQuery.DATE_FILTER, orderAt.value);
+        }
+        else {
+            orderQuery.removeFilter(orderQuery.DATE_FILTER)
+        }
     }
     else {
         orderQuery.deleteParams();
@@ -556,7 +578,7 @@ const resetButton = async () =>{
     await loadOrderParams(true);
     serviceType.value = {'id': null, 'title':'Выберите cтатус заказа'};
     orderType.value = {'id': null, 'title':  'Выберите тип услуги'};
-
+    orderAt.value = null;
 
 }
 
@@ -588,7 +610,7 @@ const updateOrder = async (data)=>{
                 total_price : activeOrder.value.total_price,
                 order_at : activeOrder.value.order_at,
                 notice : activeOrder.value.notice,
-                }).then(data => {
+            }).then(data => {
                 findOrder(activeOrder.value.id);
             })
             // await fillServices();

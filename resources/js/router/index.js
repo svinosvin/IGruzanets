@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Main from "../views/base/Main.vue";
 import Home from '../views/base/Home.vue'
+import About from '../views/base/About.vue'
+
 import AdminMain from '../views/base/Admin/AdminMain.vue'
 import Register from "../views/base/Auth/Register.vue";
 
@@ -14,11 +16,11 @@ const routes = ([
         children :[
             { path:'/', redirect: 'home'},
             { path:'home', component: Home, name: 'Home',},
-            { path:'about', component:()=> import('../views/base/About.vue')},
+            { path:'about',component: About},
             { path:'reviews', component:()=> import('../views/base/Reviews.vue')},
             { path:'services', component:()=> import('../views/base/Services.vue')},
             { path:'service/:id', component:()=> import('../views/base/Service.vue')},
-            { path:'profile', component:()=> import('../views/base/Profile.vue')},
+            { path:'profile', component:()=> import('../views/base/Profile.vue'), name: 'Profile'},
             { path:'employees', component:()=> import('../views/base/Employees.vue')},
 
         ]
@@ -84,21 +86,16 @@ router.beforeEach((to, from, next) =>{
     }
 
     else {
-        // if(!user_token){
-        //     if (to.path === 'Login' || to.name === 'Register'){
-        //         return next();
-        //     }
-        //     else {
-        //         return next({
-        //             name:'Login'
-        //         });
-        //     }
-        // }
-        // if(to.name === 'Login' || to.name === 'Register' && user_token){
-        //     return next({
-        //         name:'Home'
-        //     });
-        // }
+        if(!user_token){
+            if (to.name === 'Profile'){
+                return next({
+                    name:'Login'
+                });
+            }
+            else {
+               return next();
+            }
+        }
         return next();
     }
 

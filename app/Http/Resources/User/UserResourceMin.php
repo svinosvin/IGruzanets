@@ -5,6 +5,9 @@ namespace App\Http\Resources\User;
 use App\Http\Resources\Company\CompanyResourceMin;
 use App\Http\Resources\Order\OrderFullResource;
 use App\Http\Resources\Order\OrderUserResource;
+use App\Http\Resources\Review\ReviewFullResource;
+use App\Http\Resources\Review\ReviewSmallResource;
+use App\Models\Review;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResourceMin extends JsonResource
@@ -25,7 +28,8 @@ class UserResourceMin extends JsonResource
             'patronymic'=> $this->patronymic,
             'tel_number' => $this->tel_number,
             'company' => CompanyResourceMin::make($this->company),
-            'orders' => OrderUserResource::collection($this->orders)
+            'orders' => OrderUserResource::collection($this->newOrders),
+            'reviews'=> ReviewSmallResource::collection($this->reviews)
 
         ];
     }

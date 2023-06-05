@@ -1,23 +1,23 @@
 
 <template>
-    <div class="page-wrapper min-h-screen g-gradient-light " :class="{'sidebar-active': sidebarSmall}">
+    <div class="page-wrapper min-h-screen " :class="{'sidebar-active': sidebarSmall}">
         <header class="header">
             <div class="header__wrapper">
-                <nav class="header__nav">
-                    <div class="header__nav__block cursor-pointer font-bold">
+                <nav class="header__nav text-white">
+                    <div class="header__nav__block cursor-pointer font-bold ">
                         Полезные вкладки:
                     </div>
-                    <div class="header__nav__block">
+                    <div class="header__nav__block font-bold">
                         <router-link class="header__nav__link" to="/admin/orders" >Заказы</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">Принятые</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/services" >Услуги</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">В ожидании</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/home" >Статистика</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">График работы</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/employees" >Сотрудники</router-link>
                     </div>
                 </nav>
             </div>
@@ -37,7 +37,7 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="show" route="/admin/home" tooltip="Статистика" icon="pi pi-home">Статистика</NavLink>
+                    <NavLink :isOpen="show" route="/admin/home" tooltip="Статистика" icon="far fa-chart-bar">Статистика</NavLink>
                     <br>
                     <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi pi-shopping-bag">Услуги</NavLink>
                     <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon="pi pi-car pi-table">Ресурсы</NavLink>
@@ -57,8 +57,8 @@
                         <div class="profile__details">
                             <img src="../../../../images/admin/user.jpg" alt="">
                             <div class="name__job">
-                                <div class="name">Artem Ivanets</div>
-                                <div class="job">Programmer</div>
+                                <div class="name">{{currentAdmin.first_name}} {{currentAdmin.name}}</div>
+                                <div class="job">Администратор</div>
                             </div>
                         </div>
                         <div class="log_out_wrapper cursor-pointer">
@@ -152,11 +152,14 @@ $sidebar_size_close:80px;
 }
 
 .header {
+
     margin-left: $sidebar_size;
     width: 100vw;
-    background-color: rgb(239, 244, 248);
+    background-color: rgba(24, 14, 86, 0.5);
+
 
     &__wrapper{
+        max-height: 55px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -183,7 +186,7 @@ $sidebar_size_close:80px;
 
 .main{
    padding-left: calc($sidebar_size + 150px);
-   padding-top: 110px;
+   padding-top: 80px;
    padding-right: 150px;
 }
 

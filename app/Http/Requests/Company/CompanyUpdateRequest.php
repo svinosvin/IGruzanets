@@ -24,8 +24,8 @@ class CompanyUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|string',
-            'email' => 'nullable|email',
+            'title' => 'required|string',
+            'email' => 'required|email',
             'is_email_verified' => 'nullable|boolean',
         ];
     }

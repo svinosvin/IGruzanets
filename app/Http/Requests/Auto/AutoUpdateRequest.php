@@ -24,13 +24,13 @@ class AutoUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'mark' => 'nullable|string',
-            'description' => 'nullable|string',
-            'img' => 'nullable',
-            'max_weight'=>'nullable',
-            'auto_category' => 'nullable|integer',
-            'car_numbers' => 'nullable|string',
-            'service' => 'nullable|integer',
+            'mark' => 'required|string',
+            'description' => 'required|string',
+            'img' => 'required',
+            'max_weight'=>'required',
+            'auto_category' => 'required|integer',
+            'car_numbers' => 'required|string',
+            'service' => 'required|integer',
         ];
     }
 }

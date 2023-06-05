@@ -9,6 +9,7 @@ const state = {
         first_name: '',
         patronymic: '',
         orders: [],
+        reviews:[],
         email: '',
         company: null,
         tel_number: '',
@@ -54,6 +55,9 @@ const actions = {
                     password: user.password,
                     password_confirmation: user.password_confirmation,
                     tel_number: user.tel_number,
+                    name: user.name,
+                    first_name: user.first_name,
+                    patronymic: user.patronymic,
                 })
                     .then(response =>{
                         if(response.data){
@@ -115,6 +119,7 @@ const mutations = {
             email: '',
             orders: [],
             company: null,
+            reviews:[],
             tel_number: '',
         };
         state.token = '';

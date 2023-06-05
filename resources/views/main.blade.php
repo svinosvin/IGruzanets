@@ -12,12 +12,15 @@
     'resources/sass/app.scss',
 
 ])
+<script src="https://api-maps.yandex.ru/2.1/?apikey=83485b2c-952f-4ab5-97d8-222f47e1644d&lang=ru_RU" type="text/javascript">
+</script>
 
 </head>
 <body>
 <div id="app">
 
 </div>
+
 </body>
 </html>
 

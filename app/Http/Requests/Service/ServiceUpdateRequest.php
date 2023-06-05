@@ -24,11 +24,11 @@ class ServiceUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'resources' => 'nullable',
-            'price_one_unit' => 'nullable',
-            'type' => 'nullable|integer',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'resources' => 'required',
+            'price_one_unit' => 'required',
+            'type' => 'required|integer',
             'service_type' => 'nullable',
         ];
     }

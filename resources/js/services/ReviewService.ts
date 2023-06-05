@@ -1,13 +1,17 @@
 import axios from '../axios/axios-instance'
 
+import ReviewQuery from "./Query/ReviewQuery";
 export default class ReviewService{
 
-    async getReviews(){
-        let response = await axios.get('/api/reviews/');
+    async getReviews(query: ReviewQuery){
+        let response = await axios.get('/api/reviews/', {
+            params: query.getParams(),
+        });
         return await response.data;
     }
     async getReview(id){
         let response = await axios.get(`/api/reviews/${id}`)
+
         return await response.data;
     }
     async createReview(data){

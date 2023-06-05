@@ -14,16 +14,14 @@ import InputText from "primevue/inputtext";
 import Textarea from "primevue/textarea";
 import Select from "./Select.vue"
 import Dropdown from "primevue/dropdown";
-import AdminPageWrapper from '../base/AdminPageWrapper.vue'
-import Upload from '../ui/Upload.vue'
 import FileUpload from "primevue/fileupload";
 import Password from "primevue/password";
 
 
 import CustomToggle from '../ui/CustomToggle.vue'
+
 export default [
     CustomToggle,
-
     Password,
     Dropdown,
     Toolbar,
@@ -41,7 +39,5 @@ export default [
     InputText,
     Textarea,
     Select,
-    AdminPageWrapper,
-    Upload,
     FileUpload
 ]

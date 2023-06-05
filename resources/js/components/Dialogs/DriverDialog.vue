@@ -4,29 +4,37 @@
             <h3>Водитель-Грузчик</h3>
         </template>
         <div class="flex-column justify-center">
-            <div class="mb-6">
+            <div class="mb-3 field">
                 <h2>Водитель</h2>
                 <Upload placeholder="dsadas" :source="activeDriver.img" v-model="file"/>
             </div>
 
-            <div class="mb-6">
+            <div class="mb-3 field">
                 <h2>Имя</h2>
                 <InputText class="w-full" v-model="activeDriver.name"></InputText>
+                <ValidationComponent  name="name" v-model="activeDriver.name"></ValidationComponent>
+
             </div>
-            <div class="mb-6">
+            <div class="mb-3 field">
                 <h2>Фамилия</h2>
                 <InputText class="w-full" v-model="activeDriver.first_name"></InputText>
+                <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+
             </div>
-            <div class="mb-6">
+            <div class="mb-3 field">
                 <h2>Отчество </h2>
                 <InputText class="w-full" v-model="activeDriver.patronymic"></InputText>
+                <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+
             </div>
             <div class="flex flex-wrap">
-                <div class="mr-6">
+                <div class="mr-3 field">
                     <h2>Телефон</h2>
                     <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                    <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+
                 </div>
-                <div class="mb-6">
+                <div class="mb-3 field">
                     <h2>Категория</h2>
                     <MultiSelect v-model="activeDriver.categories" :options="categories"   optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom md:w-20rem w-full"
                                  emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
@@ -55,6 +63,17 @@ import { useConfirm } from "primevue/useconfirm";
 
 import DriverService from "../../services/DriverService";
 import AutoCategoryService from "../../services/AutoCategoryService";
+import { Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
+
+//VALIDATION SCHEMA
+const schema = yup.object().shape({
+    name: yup.string().required(()=>'Имя - обязательное поле'),
+    first_name: yup.string().required(()=>'Фамилия - обязательное поле'),
+    patronymic:  yup.string().required(()=>'Отчество - обязательное поле'),
+    tel_numbers: yup.string().required(() => "Номер телефона - обязательное поле"),
+});
+const error = ref(false)
 
 
 const emit = defineEmits(['close'])

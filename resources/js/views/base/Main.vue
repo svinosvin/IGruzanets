@@ -1,12 +1,10 @@
 <template>
     <div class="min-h-screen bg-black">
         <div class="wrapper">
-
             <header class="header min-w-full bg-neutral-700">
               <NavBar></NavBar>
             </header>
-
-            <main >
+            <main>
                     <div class="content ">
                         <router-view></router-view>
                     </div>

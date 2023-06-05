@@ -83,12 +83,19 @@ const route = useRoute()
 const serviceService = new ServiceService();
 const store = useStore();
 //
+const currentUser = computed(()=>store.getters['authUser/currentUser']);
 const service = computed(()=>store.getters['serviceModule/activeService']);
-
+const activeOrder = computed(()=>store.getters['orderModule/activeOrder']);
 const openDialog = ref(false);
 
 const handleOpenDialog = async () =>{
     openDialog.value = true;
+    console.log(currentUser.value.id);
+    if(currentUser.value.id!=null){
+        activeOrder.value.user = currentUser.value;
+        activeOrder.value.name = currentUser.value.name;
+        activeOrder.value.tel_number = currentUser.value.tel_number;
+    }
 }
 const handleCloseDialog = async () =>{
     openDialog.value = false;
@@ -112,6 +119,7 @@ onMounted(async ()=>{
 })
 onUnmounted(()=>{
     store.dispatch('serviceModule/clearStore');
+    store.dispatch('authUser/getDataUser');
 })
 
 </script>

@@ -28,7 +28,7 @@
                 <div class="flex w-full flex-wrap mb-3">
                     <div class="mb-3 w-full">
                         <h2 class="font-bold">Предпочтительная дата и время</h2>
-                        <VueDatePicker v-model="activeOrder.order_at"    :month-change-on-scroll="false"  locale="ru" placeholder="Предпочтительная дата и время" cancelText="отменить" format="dd-MM-yy HH:mm"  :min-date="new Date()"  selectText="выбрать" />
+                        <VueDatePicker v-model="activeOrder.order_at"    :month-change-on-scroll="false"  locale="ru" placeholder="Заказы в конкретную дату" cancelText="отменить" format="dd-MM-yy HH:mm"    :min-date="new Date()"  selectText="выбрать" />
                         <!--                            <Calendar class="w-full" v-model="activeOrder.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />-->
                     </div>
                     <div class="w-half mr-2" >
@@ -101,6 +101,8 @@ const activeService = computed(()=>store.getters['serviceModule/activeService'])
 const resources = computed(()=>store.getters['resourceModule/resources']);
 const serviceTypes = computed(()=>store.getters['serviceModule/service_types']);
 const activeOrder = computed(()=>store.getters['orderModule/activeOrder']);
+const currentUser = computed(()=>store.getters['authUser/currentUser']);
+
 
 //methods
 
@@ -114,12 +116,12 @@ const acceptChanges = async () => {
         header: 'Подтверждение',
         icon: 'pi pi-exclamation-triangle',
         accept: async () => {
-            await toast.add({
-                severity:'success',
-                summary: 'Ждите подтверждения заказа, с вами свяжутся!',
-                detail:'',
-                life: 3000
-            })
+                await toast.add({
+                    severity:'success',
+                    summary: 'Ждите подтверждения заказа, с вами свяжутся!',
+                    detail:'',
+                    life: 3000
+                })
             // await serviceService.deleteService(id);
             await orderService.createOrder( {
                 driver_id : activeOrder.value.driver !=null ? activeOrder.value.driver.id : null,
@@ -162,6 +164,8 @@ const onChangePrice = async () =>{
     console.log(activeOrder.value.total_price)
 }
 onMounted(()=>{
+
+
     onChangePrice();
     console.log(serviceTypes.value);
 })

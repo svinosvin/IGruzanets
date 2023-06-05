@@ -29,7 +29,7 @@ class OrderController extends Controller
                 AllowedFilter::exact('user', 'user_id'),
                 AllowedFilter::scope('order_at'),
             ])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('order_at', 'desc')
             ->get();
         return OrderFullResource::collection( $orders);
     }
@@ -111,7 +111,7 @@ class OrderController extends Controller
         $orders = QueryBuilder::for(Order::class)
             ->with(['service', 'user', 'driver', 'order_type'])
             ->where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('order_at', 'desc')
             ->get();
 
         return OrderFullResource::collection($orders);
@@ -124,8 +124,11 @@ class OrderController extends Controller
         $data = $request->validated();
         $date = $data['order_at'];
         unset($data['order_at']);
-        $data['order_at'] = \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+        $date = \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+        $data['order_at'] = Carbon::make($date)->addHours(3);
+
 //23.05.2023 17:45:46
+
         $order = Order::create($data);
         $order->save();
 
@@ -145,7 +148,9 @@ class OrderController extends Controller
         $data = $request->validated();
         $date = $data['order_at'];
         unset($data['order_at']);
-        $data['order_at'] = \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+        $date = \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+        $data['order_at'] = Carbon::make($date)->addHours(3);
+
 //23.05.2023 17:45:46
 
         $order = Order::findOrFail($id);

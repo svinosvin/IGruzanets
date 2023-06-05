@@ -3,10 +3,10 @@ const state = {
     autos : [],
     activeAuto: {
         id: null,
-        mark: '',
+        mark: null,
         description: '',
         img: '',
-        max_weight: '',
+        max_weight: 0.5,
         car_numbers: '',
         auto_category: null,
         service: null,
@@ -52,15 +52,15 @@ const mutations = {
     },
     clear_active_auto(state) {
         state.activeAuto =  {
-                id: null,
-                mark: '',
-                description: '',
-                img: '',
-                max_weight: '',
-                auto_category: null,
-                is_active: '',
-                service: null,
-
+            id: null,
+            mark: null,
+            description: '',
+            img: '',
+            max_weight: 0.5,
+            car_numbers: '',
+            auto_category: null,
+            service: null,
+            is_active: '',
         };
     }
 }
