@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Service;
 
+use App\Http\Resources\Resource\ResourceTableResource;
+use App\Http\Resources\Types\ServiceTypeResourceFull;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServiceResourceMin extends JsonResource
@@ -18,6 +20,11 @@ class ServiceResourceMin extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'resources' => ResourceTableResource::collection($this->my_resources),
+            'img' => $this->imgUrl,
+            'price_one_unit' => $this->price_one_unit,
+            'service_type' => ServiceTypeResourceFull::make($this->service_type),
+
         ];
     }
 }

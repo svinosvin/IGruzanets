@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\JsonExceptionResponse;
 use App\Http\CommandBus\Commands\Image\ImageAddCommand;
+use App\Http\CommandBus\Commands\Image\ImageRemoveCommand;
 use App\Http\CommandBus\Handlers\Image\ImageAddHandler;
+use App\Http\CommandBus\Handlers\Image\ImageRemoveHandler;
 use App\Http\Requests\Auto\AutoStoreRequest;
 use App\Http\Requests\Auto\AutoUpdateRequest;
 use App\Http\Resources\Auto\AutoResourceFull;
@@ -12,6 +14,7 @@ use App\Models\Auto;
 use App\Models\AutoCategory;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Storage;
 
 class AutoController extends Controller
 {
@@ -34,60 +37,75 @@ class AutoController extends Controller
 
     public function store(AutoStoreRequest $request, ImageAddHandler $handler)
     {
-        if(!AutoCategory::findOrFail($request->auto_category_id) && $request->auto_category_id){
-            return JsonExceptionResponse::error("Auto Category doesn't exist");
-        }
+
         $data = $request->validated();
-
-
         $image = $request->file('img');
+
         $path = null;
-        if(!$image){
-            $command = new ImageAddCommand($image->getClientOriginalName());
-            $path = $handler->handle($command, Image::FOLDER_AUTO);
+        if($image){
+            $command = new ImageAddCommand($image, Image::FOLDER_AUTO);
+            $path = $handler->handle($command);
         }
+
 
         $auto = Auto::create([
             'mark' => $data['mark'] ?? null,
             'description' => $data['description'] ?? null,
             'img' => $path,
             'max_weight' => $data['max_weight'] ?? null,
-            'auto_category_id' => $data['auto_category_id'] ?? null,
+            'auto_category_id'=> $data['auto_category'] ?? null,
+            'service_id'=> $data['service'] ?? null,
+            'car_numbers' => $data['car_numbers'] ?? null
         ]);
+
+
         return AutoResourceFull::make($auto);
     }
 
 
-    public function update(AutoUpdateRequest $request, int $id, ImageAddHandler $handler)
+    public function update(AutoUpdateRequest $request, int $id, ImageAddHandler $handler, ImageRemoveHandler $removeHandler)
     {
-
         $auto = Auto::findOrFail($id);
-
-        if(!AutoCategory::findOrFail($request->auto_category_id) && $request->auto_category_id){
-            return JsonExceptionResponse::error("Auto Category doesn't exist");
-        }
         $data = $request->validated();
+
+        if ($data['auto_category']!=null && AutoCategory::find($data['auto_category']) === null)
+        {
+            return JsonExceptionResponse::error('Водительская категория не найдена!');
+        }
+
         $image = $request->file('img');
         $path = null;
-        if(!$image){
-            $command = new ImageAddCommand($image->getClientOriginalName(), Image::FOLDER_AUTO);
-            $path = $handler->handle($command,  Image::FOLDER_AUTO);
+
+        if($image){
+            $command = new ImageAddCommand($image, Image::FOLDER_AUTO);
+            $path = $handler->handle($command);
+        }
+
+        if($path!=null && $auto->img){
+            $command = new ImageRemoveCommand($auto->img);
+            $removeHandler->handle($command);
         }
 
         $auto->update([
             'mark' => $data['mark'] ,
             'description' => $data['description'],
-            'img' => $path,
+            'img' => $path ?? $auto->img,
             'max_weight' => $data['max_weight'],
-            'auto_category_id' => $data['auto_category_id'],
+            'auto_category_id' => $data['auto_category'] ?? null,
+            'service_id'=> $data['service'] ?? null,
+            'car_numbers' => $data['car_numbers'] ?? null
         ]);
-
         return AutoResourceFull::make($auto);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id, ImageRemoveHandler $handler)
     {
         $auto = Auto::findOrFail($id);
+        if($auto->img){
+            $command = new ImageRemoveCommand($auto->img, Image::FOLDER_AUTO);
+            $handler->handle($command);
+        }
+
         $auto->delete();
         return response()->json(null, 204);
     }

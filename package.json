@@ -5,6 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "5.15.4",
         "@vitejs/plugin-vue": "^3.2.0",
         "autoprefixer": "^10.4.13",
         "axios": "^0.25",
@@ -17,13 +18,18 @@
         "vite": "^3.2.5"
     },
     "dependencies": {
+        "@fawmi/vue-google-maps": "^0.9.79",
+        "@vuepic/vue-datepicker": "^5.1.2",
+        "chart.js": "^4.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.3",
+        "vee-validate": "^4.8.4",
         "vue": "^3.2.36",
         "vue-axios": "^3.5.2",
         "vue-loader": "^17.0.1",
         "vue-router": "^4.1.6",
         "vue3-burger-menu": "^1.1.1",
-        "vuex": "4.1.0"
+        "vuex": "4.1.0",
+        "yup": "^1.0.2"
     }
 }

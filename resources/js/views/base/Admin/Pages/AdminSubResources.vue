@@ -11,16 +11,19 @@
             </template>
             <template v-slot:main>
                 <div class="mb-20">
-                    <DataTable
-                        :value="resources" :sortOrder="2"  :paginator="true" :rows="5"
-                        showGridlines
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        :rowsPerPageOptions="[5,10]"
-                        @row-dblclick="dblclickHandlerResource"
+                    <DataTable style="font-size: 90%"
+                        :value="resources" :sortOrder="2" :class="`p-datatable-sm`" :paginator="true" :rows="5"
+                        showGridlines :autoLayot="true"
+                               v-model:filters="filter"
+                               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                        :rowsPerPageOptions="[5,10]" scrollable  @row-dblclick="dblclickHandlerResource"
                     >
 
                         <template #header>
-                            <span class="text-3xl">Компоненты</span>
+                          <span class="p-input-icon-right">
+                            <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
+                            <i class="pi pi-search" />
+                         </span>
                         </template>
                         <Column field="title" header="Название" :sortable="true">
                             <template #body="slotProps">
@@ -30,15 +33,17 @@
                                 </div>
                             </template>
                         </Column>
-                        <Column field="description" header="Описание"></Column>
-                        <Column field="examples" header="Примеры"></Column>
-                        <Column :exportable="false" style="min-width:8rem">
+                        <Column field="description" header="Описание" style="max-width:40rem"></Column>
+                        <Column field="examples" header="Примеры" ></Column>
+                        <Column :exportable="false" style="min-width:6rem">
                             <template #body="slotProps">
-                                <div class="mb-2">
-                                    <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
-                                </div>
-                                <div>
-                                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                                <div class="flex">
+                                    <div class="">
+                                        <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
+                                    </div>
+                                    <div>
+                                        <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                                    </div>
                                 </div>
                             </template>
                         </Column>
@@ -54,32 +59,37 @@
                     </template>
                 </Toolbar>
                 <div class="mb-20">
-                    <DataTable :value="subresources" showGridlines
-                               rowGroupMode="subheader"  responsiveLayout="scroll"
+                    <DataTable style="font-size:85%" :value="subresources" showGridlines  :class="`p-datatable-sm`"
+                               rowGroupMode="subheader" :autoLayot="true"
                                sortMode="single"
                                sortField="resource"
                                groupRowsBy="resource.title"
                                :sortOrder="1"
                                scrollable
+                               v-model:filters="filter1"
+
                                @row-dblclick="dblclickHandlerSub"
-                               :paginator="true" :rows="15"
+                               :paginator="true" :rows="10"
                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                               :rowsPerPageOptions="[15,20]"
+                               :rowsPerPageOptions="[10,15,20]"
                     >
                         <template #header>
-                            <span class="text-3xl">Подкомпоненты</span>
+                             <span class="p-input-icon-right">
+                            <InputText class="m-1" v-model="filter1['global'].value" placeholder="Поиск..." />
+                            <i class="pi pi-search" />
+                         </span>
                         </template>
                         <Column field="resource.title" header="Resource"></Column>
                         <Column field="title" header="Название">
                             <template #body="slotProps">
-                                <div class="text-gray-500 font-bold">
+                                <div class="text-gray-500 font-bold"  style="font-size: 120%">
                                     {{slotProps.data.title}}
                                 </div>
                             </template>
                         </Column>
-                        <Column field="description" header="Описание"></Column>
+                        <Column field="description" header="Описание"  style="max-width:40rem" ></Column>
                         <Column field="examples" header="Примеры"></Column>
-                        <Column :exportable="false" style="min-width:8rem">
+                        <Column :exportable="false" style="min-width:6rem">
                             <template #body="slotProps">
                                 <div class="mr-2">
                                     <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleSubresourceEditDialog(slotProps.data)"/>
@@ -138,7 +148,9 @@ const filter = ref({
     'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
     'resources': {value: null, matchMode: FilterMatchMode.CONTAINS},
 })
-
+const filter1 = ref({
+    'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+})
 //computed
 const activeSubResource = computed(()=>store.getters['subresourceModule/activeSubResource']);
 const activeResource = computed(()=>store.getters['resourceModule/activeResource'])

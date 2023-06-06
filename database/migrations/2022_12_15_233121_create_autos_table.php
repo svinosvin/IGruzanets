@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('autos', function (Blueprint $table) {
             $table->id();
-            $table->string('mark');
-            $table->text('description');
+            $table->string('mark')->nullable();
+            $table->text('description')->nullable();
             $table->string('img')->nullable();;
             $table->float('max_weight', 4, 2);
             $table->timestamps();

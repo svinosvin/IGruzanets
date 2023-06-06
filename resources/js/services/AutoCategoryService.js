@@ -10,14 +10,14 @@ export default class AutoCategory{
         return await response.data;
     }
     async createAutoCategory(data){
-        let response = await axios.post('/api/auto_category', data);
+        let response = await axios.post('/api/auto_category/', data);
         return await response.data[0];
     }
     async updateAutoCategory(id, data){
         let response = await axios.patch(`/api/auto_category/${id}`, data);
         return await response.data[0];
     }
-    async destroyAutoCategory(id){
+    async deleteAutoCategory(id){
         let response = await axios.delete(`/api/auto_category/${id}`);
         return await response.data[0];
     }

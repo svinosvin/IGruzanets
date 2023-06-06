@@ -18,10 +18,12 @@ class DriverFullResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'img' => $this->imgUrl,
             'first_name' => $this->first_name,
             'patronymic' => $this->patronymic,
             'tel_number' => $this->tel_number,
             'categories' => AutoCategoryResourceMin::collection($this->auto_categories) ?? [],
+            'is_active' => $this->is_active,
         ];
     }
 }

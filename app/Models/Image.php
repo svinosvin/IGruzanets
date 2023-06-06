@@ -11,11 +11,12 @@ class Image extends Model
 
     public const FOLDER_BASE = '';
     public const FOLDER_AUTO = 'Auto';
+    public const FOLDER_SERVICE = 'Service';
+    public const FOLDER_DRIVER = 'Driver';
+
+    protected $guarded = false;
 
     protected $table = 'images';
 
-    protected $fillable = [
-        'name',
-        'path'
-    ];
+
 }

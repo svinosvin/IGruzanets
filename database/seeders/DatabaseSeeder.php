@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Service::factory(10)->create();
+//        Service::factory(10)->create();
         Driver::factory(13)->create();
         $this->call([
             AutoCategorySeeder::class,
             ResourcesSeeder::class,
-            SubResourcesSeeder::class
+            SubResourcesSeeder::class,
+            OrderTypesSeeder::class,
+            ServiceTypesSeeder::class,
         ]);
 
         $categories = AutoCategory::all();

@@ -12,6 +12,12 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubResourceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderTypesControllers;
+use App\Http\Controllers\ServiceTypesControllers;
+use App\Http\Controllers\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,8 +40,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::group(['prefix'=>'user', 'middleware' => ['auth:sanctum', 'abilities:user']], function (){
-    Route::get('/profile', [UserController::class, 'profile']);
-    Route::patch('/updateProfile', [UserController::class, 'changeUserData']);
+
+    Route::get('/profile', [AuthController::class, 'profile']);
+    Route::patch('/updateProfile/{id}', [AuthController::class, 'changeUserData']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum', 'abilities:user']);;
 });
 
@@ -48,16 +55,59 @@ Route::prefix('admin')->group(function (){
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         Route::get('/data', [AdminAuthController::class, 'index']);
         Route::get('/profile', [AdminController::class, 'profile']);
-        Route::patch('/updateProfile', [AdminController::class, 'changeUserData']);
+        Route::patch('/updateProfile', [AdminController::class, 'changeAdminData']);
     });
 });
+
+Route::group(['middleware' => ['auth:sanctum', 'abilities:admin']], function (){
+
+
+    Route::prefix('employees')->group(function (){
+        Route::get('/', [EmployeeController::class, 'getAll']);
+        Route::get('/{id}',[EmployeeController::class, 'getById']);
+
+        Route::post('/', [EmployeeController::class,'store']);
+        Route::patch('/{id}', [EmployeeController::class,'update']);
+        Route::delete('/{id}', [EmployeeController::class,'destroy']);
+    });
+    Route::prefix('orders')->group(function (){
+        Route::get('/', [OrderController::class, 'getAll']);
+        Route::post('/newOrder', [OrderController::class, 'getAll']);
+
+    });
+
+    Route::prefix('users')->group(function (){
+        Route::get('/', [UserController::class, 'getAll']);
+        Route::get('/{id}',[UserController::class, 'getById']);
+
+        Route::post('/', [UserController::class,'store']);
+        Route::patch('/{id}', [UserController::class,'update']);
+        Route::delete('/{id}', [UserController::class,'destroy']);
+    });
+
+});
+
+
+Route::get('/order_types', [OrderTypesControllers::class, 'getAll']);
+Route::get('/service_types', [ServiceTypesControllers::class, 'getAll']);
+
+
+Route::prefix('companies')->group(function (){
+    Route::get('/', [CompanyController::class, 'getAll']);
+    Route::get('/{id}',[CompanyController::class, 'getById']);
+
+    Route::post('/', [CompanyController::class,'store']);
+    Route::patch('/{id}', [CompanyController::class,'update']);
+    Route::delete('/{id}', [CompanyController::class,'destroy']);
+});
+
 
 Route::prefix('driver')->group(function (){
     Route::get('/', [DriverController::class, 'getAll']);
     Route::get('/{id}',[DriverController::class, 'getById']);
 
     Route::post('/', [DriverController::class,'store']);
-    Route::patch('/{id}', [DriverController::class,'update']);
+    Route::post('/{id}', [DriverController::class,'update']);
     Route::delete('/{id}', [DriverController::class,'destroy']);
 });
 
@@ -66,7 +116,7 @@ Route::prefix('auto')->group(function (){
     Route::get('/{id}',[AutoController::class, 'getById']);
 
     Route::post('/', [AutoController::class,'store']);
-    Route::patch('/{id}', [AutoController::class,'update']);
+    Route::post('/{id}', [AutoController::class,'update']);
     Route::delete('/{id}', [AutoController::class,'destroy']);
 });
 
@@ -104,9 +154,32 @@ Route::prefix('service')->group(function (){
     Route::get('/{id}',[ServiceController::class, 'getById']);
 
     Route::post('/', [ServiceController::class,'store']);
-    Route::patch('/{id}', [ServiceController::class,'update']);
+    Route::post('/{id}', [ServiceController::class,'update']);
     Route::delete('/{id}', [ServiceController::class,'destroy']);
 });
+Route::prefix('reviews')->group(function (){
+    Route::get('/', [ReviewController::class, 'getAll']);
+    Route::get('/{id}',[ReviewController::class, 'getById']);
 
+    Route::post('/', [ReviewController::class,'store'])->middleware('auth:sanctum', 'abilities:user');
+    Route::patch('/{id}', [ReviewController::class,'update']);
+    Route::delete('/{id}', [ReviewController::class,'destroy']);
+});
+
+Route::prefix('orders')->group(function (){
+    Route::get('/', [OrderController::class, 'getAll']);
+    Route::get('/{id}', [OrderController::class, 'getById']);
+
+    Route::post('/', [OrderController::class, 'store']);
+    Route::patch('/{id}', [OrderController::class, 'update']);
+    Route::get('/findCar/{id}', [OrderController::class, 'findCarForOrder']);
+    Route::get('/findDriver/{id}', [OrderController::class, 'findDriverForOrder']);
+    Route::get('/acceptOrder/{id}', [OrderController::class, 'acceptOrder']);
+    Route::get('/finishOrder/{id}', [OrderController::class, 'finishOrder']);
+
+    Route::get('/declineOrder/{id}', [OrderController::class, 'declineOrder']);
+    Route::delete('/{id}', [OrderController::class, 'destroy']);
+
+});
 
 

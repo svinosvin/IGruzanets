@@ -3,11 +3,14 @@ const state = {
     autos : [],
     activeAuto: {
         id: null,
-        mark: '',
+        mark: null,
         description: '',
         img: '',
-        max_weight: '',
+        max_weight: 0.5,
+        car_numbers: '',
         auto_category: null,
+        service: null,
+        is_active: '',
     },
 };
 const getters = {
@@ -41,20 +44,23 @@ const mutations = {
         state.autos.push(value);
     },
     set_active_auto(state,value) {
-        state.activeDriver = value;
+        state.activeAuto = value;
     },
     clear_store(state) {
-        state.drivers = [];
-        mutations.clear_active_driver(state);
+        state.autos = [];
+        mutations.clear_active_auto(state);
     },
     clear_active_auto(state) {
         state.activeAuto =  {
-                id: null,
-                mark: '',
-                description: '',
-                img: '',
-                max_weight: '',
-                auto_category: null,
+            id: null,
+            mark: null,
+            description: '',
+            img: '',
+            max_weight: 0.5,
+            car_numbers: '',
+            auto_category: null,
+            service: null,
+            is_active: '',
         };
     }
 }

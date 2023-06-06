@@ -49,6 +49,7 @@ ol[class] {
 /* Убираем внешние отступы */
 body,
 h1,
+button,
 h2,
 h3,
 h4,
@@ -99,15 +100,14 @@ article > * + * {
 html {
     box-sizing: border-box;
     font-size: 100%; // 1rem = 10px, 10px/16px = 62.5%
-
-    @media only screen and (max-width: $bp-large) {
-        font-size: 70%;
-    }
+    //
+    //@media only screen and (max-width: $bp-large) {
+    //    font-size: 70%;
+    //}
 }
 
 /* Наследуем шрифты для инпутов и кнопок */
 input,
-button,
 textarea,
 select {
     font: inherit;
@@ -116,11 +116,17 @@ select {
 
 
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+//@media (prefers-reduced-motion: reduce) {
+//    * {
+//        animation-duration: 0.01ms !important;
+//        animation-iteration-count: 1 !important;
+//        transition-duration: 0.01ms !important;
+//        scroll-behavior: auto !important;
+//    }
+//}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
 }

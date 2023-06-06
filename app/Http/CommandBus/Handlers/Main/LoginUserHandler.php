@@ -16,7 +16,7 @@ class LoginUserHandler
             $token = $user->createToken('MyApp', ['user'])->plainTextToken;
             return ['user' => UserResourceMin::make($user), 'token' => $token];
         }
-        return response()->json(['error' => 'Bad credits'], 402);
+        return ['error' => 'Bad credits'];
 
     }
 }

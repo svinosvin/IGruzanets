@@ -1,45 +1,61 @@
+
 <template>
     <div class="wrapper bg-gradient-gray-dark  min-h-screen">
+        <div class="container login-pager">
+            <Form :validation-schema="schema" class="form"  validate-on-mount @submit="login">
 
-    <div class="login-pager">
-        <form class="form">
-            <my-input type="text" placeholder="email" v-model="admin.email"></my-input>
-            <my-input type="text" placeholder="password" v-model="admin.password"></my-input>
-            <my-button type="submit" @click.prevent="login">login</my-button>
-            <router-link to="/home"> <p class="message">Вы не администратор? <a href="#">На главную</a></p> </router-link>
-        </form>
-    </div>
-    </div>
+            <div class="w-full flex-col shrink-0 grow-0">
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Email</h2>
+                        <InputText placeholder="" name="Email"  сlass="w-full" v-model="admin.email"></InputText>
+                        <ValidationComponent name="email" class="w-full" v-model="admin.email"></ValidationComponent>
 
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-white font-light mb-2">Пароль</h2>
+                        <Password class="w-full" :feedback="false"  toggleMask   v-model="admin.password">
+                        </Password>
+                        <div>
+                            <ValidationComponent name="password" class="w-full" v-model="admin.password"></ValidationComponent>
+                        </div>
+
+                    </div>
+                    <my-button type="submit" @click.prevent="login">login</my-button>
+                    <router-link to="/home"> <p class="message">Вы не администратор? <a href="#">На главную</a></p> </router-link>
+                </div>
+            </Form>
+        </div>
+    </div>
 </template>
 
-<script>
+<script setup>
+import { Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
+import {useStore} from "vuex";
+import {ref} from "vue";
 
-export default {
-    name: "Login",
-    data: () => ({
-        admin: {
-            email:"",
-            password:"",
-        },
+//VALIDATION SCHEMA
+const schema = yup.object().shape({
+    email: yup.string().email("Неправильны формат почты").required(()=>'Еmail - обязательное поле'),
+    password: yup.string().required(() => "Пароль - обязательное поле"),
 
-    }),
-    methods:{
-        login(){
-            //console.log(this.user);
-            this.$store.dispatch('authAdmin/loginAdmin', this.admin);
-        }
-    }
+});
+//uses
+const store = useStore();
+const admin = ref({})
 
-
+const login = ()=>{
+    const resp = store.dispatch('authAdmin/loginAdmin', admin.value);
+    console.log(resp)
 }
+
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .login-pager {
     font-weight: bold;
-    width: 450px;
+    width: 550px;
     padding: 10% 0 0;
     margin: auto;
     display:flex;
@@ -50,7 +66,7 @@ export default {
     background-color: var(--color-grey-dark-1);
     background-size: cover;
     background-position: center;
-    max-width: 450px;
+    max-width: 550px;
     margin: 0 auto 100px;
     padding: 65px;
     text-align: center;

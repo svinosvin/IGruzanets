@@ -5,23 +5,31 @@ const state = {
         id: null,
         title: '',
         description: '',
-        services: [],
+        price_one_unit: 0.1,
+        img: null,
+        service_type: null,
+        resources: [],
     },
+    service_types:[],
 };
 const getters = {
     services: (state) => state.services,
-    activeService: (state) => state.activeService
-
+    activeService: (state) => state.activeService,
+    service_types: (state) => state.service_types,
 }
 
 const actions = {
     fillServices({commit}, value){
         commit('fill_services', value);
     },
+    fillServiceTypes({commit}, value){
+        commit('fill_service_types', value);
+    },
     addService({commit}, value){
         commit('add_service', value);
     },
     setActiveService({commit}, value) {
+        console.log(value)
         commit('set_active_service', value);
     },
     clearStore({commit}) {
@@ -33,6 +41,10 @@ const actions = {
 };
 
 const mutations = {
+
+    fill_service_types(state, value){
+        state.service_types = value
+    },
     fill_services(state, value){
         state.services = value
     },
@@ -51,6 +63,8 @@ const mutations = {
             id: null,
             title: '',
             description: '',
+            price_one_unit: 0.1,
+            img: null,
             resources: [],
         }
     }

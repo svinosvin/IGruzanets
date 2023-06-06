@@ -16,7 +16,13 @@ class Auto extends Model
     public function auto_category(){
         return $this->belongsTo(AutoCategory::class);
     }
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
     public function getImgUrlAttribute(){
-        return url('/storage'.$this->img);
+        if($this->img === null){
+            return null;
+        }
+        return url('storage/'. $this->img);
     }
 }

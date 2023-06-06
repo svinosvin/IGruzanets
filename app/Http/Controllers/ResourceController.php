@@ -44,16 +44,19 @@ class ResourceController extends Controller
             foreach ($subresources as $subresource_id) {
                 $model = SubResource::find($subresource_id);
                 if($model===null){
-                    return JsonExceptionResponse::error("Subresource №${$subresource_id} does not exist!" ,406);
+                    return JsonExceptionResponse::error("Subresource № $subresource_id does not exist!" ,406);
                 }
                 $subresources_models[] = $model;
             }
+
+            ;
+
             $resource->sub_resources()->saveMany([...$subresources_models]);
         }
         if($services){
             foreach ($services as $service_id) {
                 if(Service::find($service_id)===null){
-                    return JsonExceptionResponse::error("Service №${$service_id} does not exist!", 406);
+                    return JsonExceptionResponse::error("Service № $service_id does not exist!", 406);
                 }
             }
             $resource->services()->sync($services);
@@ -83,29 +86,19 @@ class ResourceController extends Controller
         $services = $data['services'] ?? null;
         unset($data['sub_resources']);
         unset($data['services']);
-
         $resource->update($data);
 
-        if($subresources)
-        {
-            $subresources_models = [];
-            foreach ($subresources as $subresource_id) {
-                $model = SubResource::find($subresource_id);
-                if($model===null){
-                    return JsonExceptionResponse::error("Subresource №${$subresource_id} does not exist!" ,406);
-                }
-                $subresources_models[] = $model;
-            }
-            $resource->sub_resources()->saveMany([...$subresources_models]);
-        }
         if($services){
             foreach ($services as $service_id) {
                 if(Service::find($service_id)===null){
-                    return JsonExceptionResponse::error("Service №${$service_id} does not exist!", 406);
+                    return JsonExceptionResponse::error("Service № $service_id does not exist!", 406);
                 }
             }
             $resource->services()->sync($services);
         }
+
+        $resource->syncManySubResources($subresources);
+
         $resource->save();
 
         return ResourceResourceFull::make($resource);

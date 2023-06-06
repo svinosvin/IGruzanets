@@ -13,14 +13,26 @@
             <DataTable :value="drivers" v-model:selection="activeDriver" dataKey="id"  :resizableColumns="true" columnResizeMode="expand" showGridlines responsiveLayout="scroll"
                        :paginator="true" v-model:filters="filter" filterDisplay="row" :autoLayot="true" @row-dblclick="dblclickHandler" :rows="5"
                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                       :rowsPerPageOptions="[5,10,25]">
+                       :rowsPerPageOptions="[5,10,25]"
+             class="p-datatable-sm">
                 <template #header>
 
                     <span class="p-input-icon-right">
                         <InputText class="m-1" v-model="filter['global'].value" placeholder="Поиск..." />
                         <i class="pi pi-search" />
-            </span>
+                   </span>
                 </template>
+                <Column header="Изображение" style="max-width:8rem;">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.img!=null">
+                            <img :src="`${slotProps.data.img}`" :alt="slotProps.data.img" class="w-24 h-24  mx-auto" />
+                        </div>
+                        <div v-else class="text-center">
+                            <img src="../../../../../images/admin/empty.png" alt="Нет картинки" class="w-24 h-24  mx-auto" />
+                            <div class="font-bold">No image</div>
+                        </div>
+                    </template>
+                </Column>
                 <Column field="name" header="Имя"  :sortable="true"></Column>
                 <Column field="first_name" header="Фамилия" :sortable="true"></Column>
                 <Column field="patronymic" header="Отчество" :sortable="true"></Column>

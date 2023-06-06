@@ -3,6 +3,7 @@ import axios from '../../axios/axios-instance'
 const state = {
     token: localStorage.getItem('admin-token') || '',
     admin: {
+        id: '',
         name: 0,
         first_name: 0,
         patronymic: 0,
@@ -79,6 +80,7 @@ const mutations = {
     },
     auth_admin_logout(state){
         state.admin = {
+            id: '',
             name: 0,
             first_name: 0,
             patronymic: 0,

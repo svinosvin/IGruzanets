@@ -24,8 +24,8 @@ class AutoCategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'nullable|unique:auto_categories|string',
-            'description' => 'nullable|string'
+            'title' => 'required|unique:auto_categories|string',
+            'description' => 'required|string'
         ];
     }
 }

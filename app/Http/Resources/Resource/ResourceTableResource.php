@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Resource;
 
+use App\Http\Resources\SubResource\SubResourceTableResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResourceTableResource extends JsonResource
@@ -17,6 +18,7 @@ class ResourceTableResource extends JsonResource
         return [
             'id' => $this->id,
             'title'=> $this->title,
+            'sub_resources'=> SubResourceTableResource::collection($this->sub_resources),
         ];
     }
 }

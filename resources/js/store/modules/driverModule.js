@@ -6,11 +6,14 @@ const state = {
     activeDriver: {
         id: null,
         name: '',
+        img: null,
         first_name: '',
         patronymic: '',
         tel_number: '',
         categories : [],
         categoriesString: null,
+        is_active: '',
+
     },
 };
 const getters = {
@@ -42,10 +45,12 @@ const mutations = {
             return {
                 id: x.id,
                 name: x.name,
+                img: x.img,
                 first_name: x.first_name,
                 patronymic: x.patronymic,
                 tel_number: x.tel_number,
                 categories : x.categories,
+                is_active: x.is_active,
                 categoriesString: x.categories.map(x=>x.title).join('; '),
             }
         })
@@ -65,11 +70,14 @@ const mutations = {
         state.activeDriver = {
             id: null,
             name: '',
+            img: null,
             first_name: '',
             patronymic: '',
             tel_number: '',
             categories : [],
-            categoriesString: null
+            categoriesString: null,
+            is_active: '',
+
         }
     }
 }

@@ -3,30 +3,47 @@
         <template #header>
             <h3>Водитель-Грузчик</h3>
         </template>
+        <Form :validation-schema="schema"  validate-on-mount @submit="acceptChanges">
+
         <div class="flex-column justify-center">
-            <div class="mb-6">
-                <h2>Имя</h2>
-                <InputText class="w-full" v-model="activeDriver.name"></InputText>
-            </div>
-            <div class="mb-6">
-                <h2>Фамилия</h2>
-                <InputText class="w-full" v-model="activeDriver.first_name"></InputText>
-            </div>
-            <div class="mb-6">
-                <h2>Отчество </h2>
-                <InputText class="w-full" v-model="activeDriver.patronymic"></InputText>
+            <div class="mb-3 field">
+                <h2>Водитель</h2>
+                <Upload placeholder="dsadas" :source="activeDriver.img" v-model="file"/>
             </div>
 
-            <div class="mb-6">
-                <h2>Телефон</h2>
-                <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+            <div class="mb-3 field">
+                <h2>Имя</h2>
+                <InputText class="w-full" v-model="activeDriver.name"></InputText>
+                <ValidationComponent name="name" v-model="activeDriver.name"></ValidationComponent>
+
             </div>
-            <div class="mb-6">
-                <h2>Категория</h2>
-                <MultiSelect v-model="activeDriver.categories" :options="categories"   optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom w-full"
-                 display="chip"  emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
+            <div class="mb-3 field">
+                <h2>Фамилия</h2>
+                <InputText class="w-full" v-model="activeDriver.first_name"></InputText>
+                <ValidationComponent  name="first_name" v-model="activeDriver.first_name"></ValidationComponent>
+
+            </div>
+            <div class="mb-3 field">
+                <h2>Отчество </h2>
+                <InputText class="w-full" v-model="activeDriver.patronymic"></InputText>
+                <ValidationComponent  name="patronymic" v-model="activeDriver.patronymic"></ValidationComponent>
+
+            </div>
+            <div class="flex flex-wrap">
+                <div class="mr-3 field">
+                    <h2>Телефон</h2>
+                    <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                    <ValidationComponent  name="tel_number"  v-model="activeDriver.tel_number"></ValidationComponent>
+
+                </div>
+                <div class="mb-3 field">
+                    <h2>Категория</h2>
+                    <MultiSelect v-model="activeDriver.categories" :options="categories"   optionLabel="title" placeholder="Выберите категории" :filter="true" class="multiselect-custom md:w-20rem w-full"
+                                 emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>
+                </div>
             </div>
         </div>
+        </Form>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
                 <div>
@@ -49,6 +66,17 @@ import { useConfirm } from "primevue/useconfirm";
 
 import DriverService from "../../services/DriverService";
 import AutoCategoryService from "../../services/AutoCategoryService";
+import { Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
+
+//VALIDATION SCHEMA
+const schema = yup.object().shape({
+    name: yup.string().required(()=>'Имя - обязательное поле'),
+    first_name: yup.string().required(()=>'Фамилия - обязательное поле'),
+    patronymic:  yup.string().required(()=>'Отчество - обязательное поле'),
+    tel_number: yup.string().required(() => "Номер телефона - обязательное поле"),
+});
+const error = ref(false)
 
 
 const emit = defineEmits(['close'])
@@ -57,6 +85,7 @@ const confirm = useConfirm();
 const store = useStore();
 const toast = useToast();
 //refs
+const file = ref(null)
 
 const driverService = new DriverService();
 
@@ -68,21 +97,31 @@ const categories = computed(()=>store.getters['autoCategoryModule/autoCategories
 //methods
 
 const handleClose = () => {
-
+    file.value = null;
     store.dispatch('driverModule/clearActiveDriver');
     emit('close');
 }
 
 const acceptChanges = async () => {
+    const data = new FormData()
+    data.append("img", file.value);
+    data.append('name',  activeDriver.value.name);
+    data.append('first_name',  activeDriver.value.first_name);
+    data.append('patronymic',  activeDriver.value.patronymic);
+    data.append('tel_number',  activeDriver.value.tel_number);
 
+
+    let categoriesData = [];
+    if(activeDriver.value.categories){
+        categoriesData = activeDriver.value.categories.map(elem => elem.id);
+        data.append('categories', JSON.stringify(categoriesData));
+    }
+    else {
+        data.append('categories', null);
+    }
     if(activeDriver.value.id == null){
 
-        await driverService.createDriver({
-            name: activeDriver.value.name,
-            first_name: activeDriver.value.first_name,
-            patronymic: activeDriver.value.patronymic,
-            tel_number: activeDriver.value.tel_number,
-            categories : activeDriver.value.categories.map(elem => elem.id)});
+        await driverService.createDriver(data);
 
         toast.add({
             severity:'success',
@@ -93,13 +132,7 @@ const acceptChanges = async () => {
     }
     else {
 
-        await driverService.updateDriver(activeDriver.value.id,{
-
-            name: activeDriver.value.name,
-            first_name: activeDriver.value.first_name,
-            patronymic: activeDriver.value.patronymic,
-            tel_number: activeDriver.value.tel_number,
-            categories : activeDriver.value.categories.map(elem => elem.id)});
+        await driverService.updateDriver(activeDriver.value.id, data);
 
         toast.add({
             severity:'success',

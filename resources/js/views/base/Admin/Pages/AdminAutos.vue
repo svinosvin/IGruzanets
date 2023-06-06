@@ -10,28 +10,48 @@
          </Toolbar>
      </template>
      <template v-slot:main>
-         <DataTable
-             :value="autos" :sortOrder="2"  :paginator="true" :rows="5"
-             showGridlines
-             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-             :rowsPerPageOptions="[5,10]"
-             @row-dblclick=""
+         <DataTable style=""  :class="`p-datatable-sm`"
+                     :value="autos" :sortOrder="2" :autoLayot="true" :paginator="true" :rows="5"
+                     showGridlines
+                    scrollable
+                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                     :rowsPerPageOptions="[5,10]"
+                     @row-dblclick="dblclickHandlerAuto"
          >
              <template #header>
                  <span class="text-3xl">Машины</span>
              </template>
-             <Column field="img" header="Изображение"></Column>
-             <Column field="mark" header="Марка"></Column>
-             <Column field="description" header="Описание"></Column>
-             <Column field="examples" header="Примеры"></Column>
-             <Column field="max_weight" header="Максимальная масса груза"></Column>
-             <Column :exportable="false" style="min-width:8rem">
+             <Column header="Изображение" style="max-width:8rem;">
                  <template #body="slotProps">
-                     <div class="mb-2">
-                         <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleResourceEditDialog(slotProps.data.id)"/>
+                     <div v-if="slotProps.data.img!=null">
+                         <img :src="`${slotProps.data.img}`" :alt="slotProps.data.img" class="w-24 h-24 mx-auto" />
+                     </div>
+                     <div v-else class="text-center">
+                         <img src="../../../../../images/admin/auto.png" alt="Нет картинки" class="w-24 h-24  mx-auto" />
+                         <div class="font-bold">Нет изображения</div>
+                     </div>
+                 </template>
+             </Column>
+             <Column field="service.title" header="Услуга"  :sortable="true"></Column>
+             <Column field="mark" header="Марка"  :sortable="true"></Column>
+             <Column field="description" header="Описание" ></Column>
+             <Column field="car_numbers" header="Номер автомобиля">
+                 <template #body="slotProps">
+                     <div class="font-bold">
+                         {{slotProps.data.car_numbers}}
+                     </div>
+                 </template>
+             </Column>
+             <Column field="max_weight" header="Ограничение (тонн.)"  :sortable="true"></Column>
+             <Column field="auto_category.title" header="Требуемая водительская категория"  :sortable="true"></Column>
+
+             <Column :exportable="false" style="min-width:6rem">
+                 <template #body="slotProps">
+                     <div class="mr-2">
+                         <Button icon="pi pi-pencil" class="p-button-rounded mr-2 p-button-success" @click="handleEditDialog(slotProps.data)"/>
                      </div>
                      <div>
-                         <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteResource(slotProps.data.id)"/>
+                         <Button icon="pi pi-trash" class="p-button-rounded p-button-danger"  @click="deleteAuto(slotProps.data.id)"/>
                      </div>
                  </template>
              </Column>
@@ -45,6 +65,8 @@
 
 import {computed, onMounted, onUnmounted, ref,watch} from "vue";
 import AutoService from '../../../../services/AutoService'
+import ServiceService from '../../../../services/ServiceService'
+
 import AutoCategoryService from "../../../../services/AutoCategoryService";
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
@@ -59,6 +81,8 @@ const confirm = useConfirm();
 //refs
 const store = useStore();
 const autoService = new AutoService();
+const serviceService = new ServiceService();
+
 const categoriesService = new AutoCategoryService();
 //uses
 
@@ -78,6 +102,16 @@ const autos = computed(()=>store.getters['autoModule/autos']);
 
 //methods
 
+const setActiveAuto = (data)=>{
+    store.dispatch('autoModule/setActiveAuto', data);
+}
+
+const dblclickHandlerAuto = (event) =>{
+    setActiveAuto(event.data);
+    openDialog.value = true;
+}
+
+
 const fillAutos = async () =>{
     await autoService.getAutos().then(data => {
         store.dispatch('autoModule/fillAutos', data.data);
@@ -88,7 +122,18 @@ const fillCategories = async () =>{
         store.dispatch('autoCategoryModule/fillCategories', data.data);
     })
 }
+const fillServices = async () =>{
+    await serviceService.getServices().then(data => {
+        let services = data.data.map(x => {
+            return {
+                id: x.id,
+                title: x.title,
+            }
+        });
+        store.dispatch('serviceModule/fillServices', services);
 
+    })
+}
 const clearActiveAuto = ()=>{
     store.dispatch('autoModule/clearActiveAuto');
 }
@@ -133,7 +178,7 @@ const deleteAuto = async (id)=>{
             await toast.add({
                 severity:'success',
                 summary: 'Удалено!',
-                detail:'Водитель успешно удален!',
+                detail:'Авто успешно удалено!',
                 life: 3000
             })
             await fillAutos();
@@ -153,11 +198,14 @@ const deleteAuto = async (id)=>{
 
 //hooks
 onMounted(() =>{
+    fillServices();
     fillAutos();
+    fillCategories();
 })
 
 onUnmounted(()=>{
     store.dispatch('driverModule/clearStore');
+    store.dispatch('serviceModule/clearStore');
 })
 
 </script>

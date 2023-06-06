@@ -12,5 +12,8 @@ class Company extends Model
     protected $table = 'companies';
     protected $guarded = false;
 
+    public function users(){
+        $this->hasMany(User::class);
+    }
 
 }

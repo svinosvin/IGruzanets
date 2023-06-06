@@ -1,23 +1,23 @@
 
 <template>
-    <div class="page-wrapper min-h-screen g-gradient-light " :class="{'sidebar-active': sidebarSmall}">
+    <div class="page-wrapper min-h-screen " :class="{'sidebar-active': sidebarSmall}">
         <header class="header">
             <div class="header__wrapper">
-                <nav class="header__nav">
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                <nav class="header__nav text-white">
+                    <div class="header__nav__block cursor-pointer font-bold ">
+                        Полезные вкладки:
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/orders" >Заказы</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/services" >Услуги</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/home" >Статистика</router-link>
                     </div>
-                    <div class="header__nav__block">
-                        <a href="" class="header__nav__link">dasdasdsa</a>
+                    <div class="header__nav__block font-bold">
+                        <router-link class="header__nav__link" to="/admin/employees" >Сотрудники</router-link>
                     </div>
                 </nav>
             </div>
@@ -37,23 +37,32 @@
                 </div>
                 <!--Links-->
                 <nav class="sidebar__nav">
-                    <NavLink :isOpen="sidebarSmall" route="/admin/home" tooltip="Главная" icon="pi-home">Главная</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/services" tooltip="Услуги" icon="pi-user">Услуги</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/drivers" tooltip="Водитель" icon="pi-user">Водитель</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/autos" tooltip="Машины" icon=" pi-car">Машины</NavLink>
-                    <NavLink :isOpen="sidebarSmall" route="/admin/subresources" tooltip="Ресурсы" icon=" pi-car pi-table">Ресурсы</NavLink>
+                    <NavLink :isOpen="show" route="/admin/home" tooltip="Статистика" icon="far fa-chart-bar">Статистика</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/services" tooltip="Услуги" icon="pi pi-shopping-bag">Услуги</NavLink>
+                    <NavLink :isOpen="show" route="/admin/subresources" tooltip="Ресурсы" icon="pi pi-car pi-table">Ресурсы</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/drivers" tooltip="Водители" icon="pi pi-user">Водители</NavLink>
+                    <NavLink :isOpen="show" route="/admin/autos" tooltip="Машины" icon="pi pi-car">Машины</NavLink>
+                    <NavLink :isOpen="show" route="/admin/categories" tooltip="Категории" icon="pi pi-book">Авто Категории</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/employees" tooltip="Сотрудники" icon="fas fa-user-cog">Сотрудники</NavLink>
+                    <NavLink :isOpen="show" route="/admin/users" tooltip="Пользователи" icon="fas fa-users">Пользователи</NavLink>
+                    <br>
+                    <NavLink :isOpen="show" route="/admin/orders" tooltip="Заказы" icon="far fa-bell">Заказы</NavLink>
+                    <NavLink :isOpen="show" route="/admin/reviews" tooltip="Отзывы" icon="far fa-comment">Отзывы</NavLink>
                 </nav>
                 <div class="profile__content">
                     <div class="profile">
                         <div class="profile__details">
-                            <img src="../../../../images/admin/user.jpg" alt="">[plugin:vite:import-analysis] Failed to resolve import "../../../../images/admin/user.jpg" from "resources/js/components/ui/Upload.vue". Does the file exist?
+                            <img src="../../../../images/admin/user.jpg" alt="">
                             <div class="name__job">
-                                <div class="name">Artem Ivanets</div>
-                                <div class="job">Programmer</div>
+                                <div class="name">{{currentAdmin.first_name}} {{currentAdmin.name}}</div>
+                                <div class="job">Администратор</div>
                             </div>
                         </div>
-                        <div class="log_out_wrapper">
-                            <i class="pi pi-sign-out" id="log_out"></i>
+                        <div class="log_out_wrapper cursor-pointer">
+                            <i class="pi pi-sign-out" @click="logout" id="log_out"></i>
                         </div>
                     </div>
                 </div>
@@ -62,7 +71,7 @@
         </aside>
         <main class="main">
             <div class="main__wrapper">
-                <div class="container mx-auto">
+                <div class="mx-auto">
                     <router-view></router-view>
                 </div>
             </div>
@@ -85,12 +94,25 @@ const currentAdmin = computed(()=>store.state.authAdmin.admin);
 //
 //refs
 let sidebarSmall = ref(false);
+let show = ref(false);
 
 //
 // Methods
 //
 const switchSidebar = () =>{
     sidebarSmall.value = !sidebarSmall.value;
+    if(show.value===true){
+        setTimeout(()=>{
+            show.value = !show.value;
+        },20)
+    }
+    else {
+        show.value = !show.value;
+
+    }
+
+
+
 }
 
 const getData = () =>{
@@ -130,11 +152,14 @@ $sidebar_size_close:80px;
 }
 
 .header {
+
     margin-left: $sidebar_size;
     width: 100vw;
-    background-color: rgb(239, 244, 248);
+    background-color: rgba(24, 14, 86, 0.5);
+
 
     &__wrapper{
+        max-height: 55px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -161,7 +186,7 @@ $sidebar_size_close:80px;
 
 .main{
    padding-left: calc($sidebar_size + 150px);
-   padding-top: 150px;
+   padding-top: 80px;
    padding-right: 150px;
 }
 

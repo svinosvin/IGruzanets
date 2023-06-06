@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\JsonExceptionResponse;
+use App\Http\CommandBus\Commands\Image\ImageAddCommand;
+use App\Http\CommandBus\Commands\Image\ImageRemoveCommand;
+use App\Http\CommandBus\Handlers\Image\ImageAddHandler;
+use App\Http\CommandBus\Handlers\Image\ImageRemoveHandler;
 use App\Http\Requests\Driver\DriverStoreRequest;
 use App\Http\Requests\Driver\DriverUpdateRequest;
 use App\Http\Resources\Driver\DriverFullResource;
 use App\Models\AutoCategory;
 use App\Models\Driver;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -20,12 +25,27 @@ class DriverController extends Controller
 
 
 
-    public function store(DriverStoreRequest $request)
+    public function store(DriverStoreRequest $request, ImageAddHandler $handler)
     {
         $data = $request->validated();
-        $categoriesID = $data['categories'] ?? null;
+        $image = $request->file('img');
+
+        $categoriesID = json_decode($data['categories']) ?? null;
+
         unset($data['categories']);
-        $driver =  Driver::create($data);
+
+        $path = null;
+        if($image){
+            $command = new ImageAddCommand($image, Image::FOLDER_DRIVER);
+            $path = $handler->handle($command);
+        }
+        $driver = Driver::create([
+            'name' => $data['name'] ?? null,
+            'first_name' => $data['first_name'] ?? null,
+            'patronymic' => $data['patronymic'] ?? null,
+            'tel_number' => $data['tel_number'] ?? null,
+            'img' => $path ?? null,
+        ]);
         $driver->save();
 
         if($categoriesID){
@@ -46,14 +66,33 @@ class DriverController extends Controller
 
 
 
-    public function update(DriverUpdateRequest $request, int $id)
+    public function update(DriverUpdateRequest $request, int $id,  ImageAddHandler $handler, ImageRemoveHandler $removeHandler)
     {
         $driver = Driver::findOrFail($id);
         $data = $request->validated();
 
-        $categories = $data['categories'] ?? null;
+        $image = $request->file('img');
+        $path = null;
+
+        if($image){
+            $command = new ImageAddCommand($image, Image::FOLDER_DRIVER);
+            $path = $handler->handle($command);
+        }
+
+        if($path!=null && $driver->img){
+            $command = new ImageRemoveCommand($driver->img);
+            $removeHandler->handle($command);
+        }
+
+        $categories = json_decode($data['categories']) ?? null;
         unset($data['categories']);
-        $driver->updateOrFail($data);
+        $driver->update([
+            'name' => $data['name'] ?? null,
+            'first_name' => $data['first_name'] ?? null,
+            'patronymic' => $data['patronymic'] ?? null,
+            'tel_number' => $data['tel_number'] ?? null,
+            'img' => $path ?? $driver->img,
+        ]);
 
         foreach ($categories as $category_id){
             if(AutoCategory::find($category_id) === null){
@@ -66,10 +105,15 @@ class DriverController extends Controller
     }
 
 
-    public function destroy(int $id)
+    public function destroy(int $id, ImageRemoveHandler $handler)
     {
         $driver = Driver::findOrFail($id);
         $driver->auto_categories()->detach();
+
+        if($driver->img){
+            $command = new ImageRemoveCommand($driver->img, Image::FOLDER_DRIVER);
+            $handler->handle($command);
+        }
         $driver->delete();
         return response()->json(null, 204);
     }
