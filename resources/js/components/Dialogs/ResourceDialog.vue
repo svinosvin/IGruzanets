@@ -1,8 +1,11 @@
 <template>
     <Dialog  :modal="true" :style="{width: '50vw'}">
+
         <template #header>
             <h3>Категория</h3>
         </template>
+        <Form :validation-schema="schema"  validate-on-mount @submit="acceptChanges">
+
         <div class="flex-column justify-center">
             <div class="mb-6">
                 <h2 class="font-bold">Категория</h2>
@@ -12,6 +15,8 @@
             <div class="mb-6">
                 <h2 class="font-bold">Название</h2>
                 <InputText v-model="activeResource.title" class="w-full"></InputText>
+                <ValidationComponent name="title" v-model="activeResource.title"></ValidationComponent>
+
             </div>
             <div class="mb-6">
                 <h2 class="font-bold">Описание</h2>
@@ -22,6 +27,7 @@
                 <Textarea v-model="activeResource.examples" class="w-full"  :autoResize="true" rows="5" />
             </div>
         </div>
+        </Form>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
                 <div>
@@ -43,7 +49,13 @@ import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import ResourceService from "../../services/ResourceService";
 import SubResourceService from "../../services/SubResourceService";
+import * as yup from "yup";
+import { Form, Field, ErrorMessage} from 'vee-validate';
 
+
+const schema = yup.object().shape({
+    title: yup.string().required(()=>'Название категории - обязательное поле'),
+});
 //uses
 const toast = useToast();
 const confirm = useConfirm();

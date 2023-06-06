@@ -16,9 +16,7 @@ import Select from "./Select.vue"
 import Dropdown from "primevue/dropdown";
 import FileUpload from "primevue/fileupload";
 import Password from "primevue/password";
-
-
-import CustomToggle from '../ui/CustomToggle.vue'
+import CustomToggle from './CustomToggle.vue'
 
 export default [
     CustomToggle,

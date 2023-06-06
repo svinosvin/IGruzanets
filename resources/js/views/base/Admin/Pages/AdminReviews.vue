@@ -60,7 +60,7 @@
                             <!--                         <ToggleButton v-model="slotProps.data.is_active" onLabel="Включен" offLabel="Выключен"-->
                             <!--                                       onIcon="pi pi-check" offIcon="pi pi-times" class="w-9rem" />-->
 
-                            <custom-toggle v-on:update-check="updateVisibility" @click="setActiveReview(slotProps.data)"  v-model="slotProps.data.is_active"/>
+                            <CustomToggle v-on:update-check="updateVisibility" @click="setActiveReview(slotProps.data)"  v-model="slotProps.data.is_active"/>
                         </div>
                     </template>
                 </Column>
@@ -81,18 +81,11 @@
 
 import {computed, onMounted, onUnmounted, ref,watch} from "vue";
 import ReviewService from '../../../../services/ReviewService'
-import ServiceService from '../../../../services/ServiceService'
 
-import SelectButton from 'primevue/selectbutton';
-import ToggleButton from 'primevue/togglebutton';
-import AutoCategoryService from "../../../../services/AutoCategoryService";
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
-// import AutoDialog from '../../../../components/Dialogs/AutoDialog.vue';
-
-import Checkbox from 'primevue/checkbox';
+import CustomToggle from '../../../../components/ui/CustomToggle.vue'
 import ReviewQuery from "../../../../services/Query/ReviewQuery";
 const toast = useToast();
 const confirm = useConfirm();
@@ -141,8 +134,8 @@ const updateVisibility = async (data)=>{
             });
             await toast.add({
                 severity:'success',
-                summary: 'Удалено!',
-                detail:'Комментарий успешно удален!',
+                summary: 'Изменено!',
+                detail:'Комментарий успешно изменен!',
                 life: 3000
             })
             await fillReviews();

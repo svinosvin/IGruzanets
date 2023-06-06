@@ -3,6 +3,7 @@
         <template #header>
             <h3>Подкатегория</h3>
         </template>
+        <Form :validation-schema="schema"  validate-on-mount @submit="acceptChanges">
         <div class="flex-column justify-center">
             <div class="mb-3">
                 <h2>Пример выполненых услуг</h2>
@@ -10,9 +11,12 @@
             </div>
             <div class="mb-3">
                 <h2>Тип оказываемы услуг</h2>
+
                 <Dropdown v-model="activeService.service_type"  :options="[{'id': null, 'title': 'Выберите тип услуги'}, ...serviceTypes]"
                           optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
                 </Dropdown>
+                <ValidationComponent v-if="serviceTypes.length>0 && activeService.service_type!=null" name="service_type" v-model="activeService.service_type.id"></ValidationComponent>
+
             </div>
             <div class="mb-3">
                 <h2 class="font-bold">Категория</h2>
@@ -22,18 +26,22 @@
             <div class="mb-3">
                 <h2 class="font-bold">Цена в руб.</h2>
                 <InputNumber v-model="activeService.price_one_unit" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="0.1" :min="0.1" :max="10000" />
+
             </div>
             <div class="mb-3">
                 <h2 class="font-bold">Название</h2>
                 <InputText v-model="activeService.title" class="w-full"></InputText>
+                <ValidationComponent name="title" v-model="activeService.title"></ValidationComponent>
+
             </div>
             <div class="">
                 <h2 class="font-bold">Описание</h2>
                 <Textarea v-model="activeService.description" class="w-full" :autoResize="true" rows="4" cols="50" />
+                <ValidationComponent name="description" v-model="activeService.title"></ValidationComponent>
+
             </div>
-
-
         </div>
+        </Form>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
                 <div>
@@ -56,7 +64,17 @@ import { useConfirm } from "primevue/useconfirm";
 import ResourceService from "../../services/ResourceService";
 import ServiceService from "../../services/ServiceService";
 import InputNumber from 'primevue/inputnumber';
+import { Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
 
+
+//VALIDATION SCHEMA
+const schema = yup.object().shape({
+    title: yup.string().required(()=>'Название услуги - обязательное поле'),
+    service_type: yup.string().required(() => "Тип услуги - обязательное поле"),
+    description:  yup.string().required(() => "Описание - обязательное поле"),
+
+});
 //uses
 const toast = useToast();
 const confirm = useConfirm();

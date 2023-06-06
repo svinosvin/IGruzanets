@@ -5,7 +5,7 @@ const state = {
         id: null,
         title: '',
         description: '',
-        price_one_unit: null,
+        price_one_unit: 0.1,
         img: null,
         service_type: null,
         resources: [],
@@ -63,7 +63,7 @@ const mutations = {
             id: null,
             title: '',
             description: '',
-            price_one_unit: null,
+            price_one_unit: 0.1,
             img: null,
             resources: [],
         }

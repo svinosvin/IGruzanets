@@ -23,7 +23,7 @@
                     </div>
                 </template>
                 <template #end>
-                    <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />
+<!--                    <Button label="Добавить" icon="pi pi-plus" class="p-button-success mr-5" @click="handleOpenDialog" />-->
                 </template>
             </Toolbar>
         </template>
@@ -41,30 +41,38 @@
 
                 <Column header="Инфо">
                     <template #body="slotProps">
+
                         <div v-if="slotProps.data.order_type.id == 1" class="flex-col w-full">
 
                             <div class="w-full text-center font-bold text-xl">
                                 Дата:{{slotProps.data.order_at}}
                             </div>
                             <Accordion class="pb-10 w-full" :multiple="true" :activeIndex="[]">
+
                                 <AccordionTab header="Данные заказа">
+                                    <Form :validation-schema="schema"  validate-on-mount @submit="updateOrder">
                                     <div class="flex flex-col">
                                         <div class="w-full mb-2 flex border-b-2">
                                             <h2 class="font-bold  w-half mr-2">Имя: </h2>
                                             <div class="w-full pt-1 pb-1">
                                                 <InputText class="w-full" v-model="slotProps.data.name"></InputText>
+                                                <ValidationComponent name="name" v-model="slotProps.data.name"></ValidationComponent>
+
                                             </div>
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
                                             <h2 class="font-bold w-half mr-2">Адрес: </h2>
                                             <div class="w-full pt-2 pb-2">
                                                 <InputText class="w-full" v-model="slotProps.data.address"></InputText>
+                                                <ValidationComponent name="address" v-model="slotProps.data.address"></ValidationComponent>
+
                                             </div>
                                         </div>
                                         <div class="w-full mb-2  flex border-b-2">
                                             <h2 class="font-bold w-half mr-2">Телефон: </h2>
                                             <div class="w-full pt-2 pb-2">
-                                                <InputText class="w-full" v-model="slotProps.data.tel_number"></InputText>
+                                                <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="slotProps.data.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                                                <ValidationComponent name="tel_number" v-model="slotProps.data.tel_number"></ValidationComponent>
 
                                             </div>
                                         </div>
@@ -73,6 +81,7 @@
                                             <div class="w-full pt-2 pb-2">
 
                                                 <Calendar class="w-full" v-model="slotProps.data.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />
+                                                <ValidationComponent name="order_at" v-model="slotProps.data.order_at"></ValidationComponent>
 
                                             </div>
                                         </div>
@@ -80,6 +89,7 @@
                                             <h2 class="font-bold w-half  mr-2">Общий вес (кг): </h2>
                                             <div class="w-full pt-2 pb-2">
                                                 <InputNumber  @input="onChangePrice(slotProps.data)" @focusout="onChangePrice(slotProps.data)" class="w-full " v-model="slotProps.data.weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="5" :min="5" :max="7000" />
+
                                             </div>
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
@@ -88,15 +98,20 @@
                                                 <Dropdown @change="onChangePrice(slotProps.data)" v-model="slotProps.data.service"  :options="[{'id': null, 'title': 'Выберите услугу', 'price_one_unit': 0}, ...services]"
                                                           optionLabel="title" class="w-full"  placeholder="Выберите тип услуги" :filter="true">
                                                 </Dropdown>
+                                                <ValidationComponent v-if="services.length>0 && slotProps.data.service!=null" name="service" v-model="slotProps.data.service.id"></ValidationComponent>
+
                                             </div>
 
                                         </div>
                                         <div class="w-full mb-2 flex border-b-2">
                                             <h2 class="font-bold w-half  mr-2">Категория мусора: </h2>
                                             <div class="w-full pt-2 pb-2">
-                                                <Dropdown v-model="slotProps.data.resource" :options="[{'id':null,'title':'По умолчанию',}, ...slotProps.data.service.resources]"
+                                                <div v-if="slotProps.data.service.id!=null" class="w-full">
+                                                <Dropdown  v-model="slotProps.data.resource" :options="[{'id':null,'title':'По умолчанию',}, ...slotProps.data.service.resources]"
                                                           optionLabel="title" class="w-full"  placeholder="По умолчанию" :filter="true" filterPlaceholder="Найти категорию">
                                                 </Dropdown>
+                                                <ValidationComponent v-if="slotProps.data.service.resources.length>0 && slotProps.data.resource!=null" name="resource" v-model="slotProps.data.resource.id"></ValidationComponent>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -215,6 +230,7 @@
                                             <Button icon="pi" label="Сохранить" class="p-button-rounded mr-2 p-button" @click="updateOrder(slotProps.data)"/>
                                         </div>
                                     </div>
+                        </Form>
 
                                 </AccordionTab>
                             </Accordion>
@@ -432,11 +448,18 @@ import Skeleton from "primevue/skeleton";
 import { useStore } from 'vuex';
 import {useConfirm} from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
-import {data} from "autoprefixer";
 import OrderQuery from "../../../../services/Query/OrderQuery";
+import * as yup from "yup";
+import { Form, Field, ErrorMessage} from 'vee-validate';
 
-// import ServiceDialog from '../../../../components/Dialogs/ServiceDialog.vue';
+const schema = yup.object().shape({
+    name: yup.string().required(()=>'Имя - обязательное поле'),
+    address: yup.string().required(()=>'Адрес - обязательное поле'),
+    resource:  yup.number().required(()=>'Категория муосра - обязательное поле'),
+    service:  yup.number().required(()=>'Услуга - обязательное поле'),
+    order_at:  yup.string().required(()=>'Дата - обязательное поле'),
+    tel_number: yup.string().required(() => "Номер телефона - обязательное поле"),
+});
 
 const services = computed(()=>store.getters['serviceModule/services']);
 

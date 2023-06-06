@@ -1,6 +1,7 @@
 import axios from '../../axios/axios-instance'
 import router from "../../router";
 
+
 const state = {
     token: localStorage.getItem('user-token') || '',
     user:{
@@ -18,6 +19,7 @@ const state = {
 }
 const actions = {
     loginUser({commit}, user){
+
         return new Promise((resolve)=>{
             axios.get('/sanctum/csrf-cookie').then( response =>{
                 axios.post('/api/login', {
@@ -26,13 +28,14 @@ const actions = {
 
                 })
                     .then(response =>{
-                        if(response.data ){
+                        if(response.data){
                             const token = response.data.token ?? null;
                             const user = response.data.user ?? null;
                             localStorage.setItem('user-token', token);
                             console.log(response.data)
                             commit('auth_user', user, token);
                             resolve(response);
+
                             if(user)
                                 router.push('/')
                             return response.data
@@ -40,6 +43,7 @@ const actions = {
                 })
                     .catch((error)=> {
                         console.log(error.response);
+
                         localStorage.removeItem('user-token')
                         return error.response
 

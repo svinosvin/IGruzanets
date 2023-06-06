@@ -3,6 +3,8 @@
         <template #header>
             <h3>Водитель-Грузчик</h3>
         </template>
+        <Form :validation-schema="schema"  validate-on-mount @submit="acceptChanges">
+
         <div class="flex-column justify-center">
             <div class="mb-3 field">
                 <h2>Водитель</h2>
@@ -12,26 +14,26 @@
             <div class="mb-3 field">
                 <h2>Имя</h2>
                 <InputText class="w-full" v-model="activeDriver.name"></InputText>
-                <ValidationComponent  name="name" v-model="activeDriver.name"></ValidationComponent>
+                <ValidationComponent name="name" v-model="activeDriver.name"></ValidationComponent>
 
             </div>
             <div class="mb-3 field">
                 <h2>Фамилия</h2>
                 <InputText class="w-full" v-model="activeDriver.first_name"></InputText>
-                <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+                <ValidationComponent  name="first_name" v-model="activeDriver.first_name"></ValidationComponent>
 
             </div>
             <div class="mb-3 field">
                 <h2>Отчество </h2>
                 <InputText class="w-full" v-model="activeDriver.patronymic"></InputText>
-                <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+                <ValidationComponent  name="patronymic" v-model="activeDriver.patronymic"></ValidationComponent>
 
             </div>
             <div class="flex flex-wrap">
                 <div class="mr-3 field">
                     <h2>Телефон</h2>
                     <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeDriver.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
-                    <ValidationComponent  name="service" v-model="activeAuto.service.id"></ValidationComponent>
+                    <ValidationComponent  name="tel_number"  v-model="activeDriver.tel_number"></ValidationComponent>
 
                 </div>
                 <div class="mb-3 field">
@@ -41,6 +43,7 @@
                 </div>
             </div>
         </div>
+        </Form>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
                 <div>
@@ -71,7 +74,7 @@ const schema = yup.object().shape({
     name: yup.string().required(()=>'Имя - обязательное поле'),
     first_name: yup.string().required(()=>'Фамилия - обязательное поле'),
     patronymic:  yup.string().required(()=>'Отчество - обязательное поле'),
-    tel_numbers: yup.string().required(() => "Номер телефона - обязательное поле"),
+    tel_number: yup.string().required(() => "Номер телефона - обязательное поле"),
 });
 const error = ref(false)
 

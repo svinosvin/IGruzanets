@@ -89,6 +89,7 @@ const activeOrder = computed(()=>store.getters['orderModule/activeOrder']);
 const openDialog = ref(false);
 
 const handleOpenDialog = async () =>{
+    store.dispatch('orderModule/clearActiveOrder');
     openDialog.value = true;
     console.log(currentUser.value.id);
     if(currentUser.value.id!=null){
@@ -99,6 +100,7 @@ const handleOpenDialog = async () =>{
 }
 const handleCloseDialog = async () =>{
     openDialog.value = false;
+    await store.dispatch('orderModule/clearActiveOrder');
 }
 
 //methods

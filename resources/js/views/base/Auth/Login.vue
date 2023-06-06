@@ -1,60 +1,61 @@
 <template>
     <div class="wrapper bg-gradient-gray-dark  min-h-screen">
         <div class="container login-pager">
-            <form class="form">
+            <Form :validation-schema="schema" class="form"  validate-on-mount @submit="login">
                 <div class="w-full flex-col shrink-0 grow-0">
                     <div class="text-left">
                         <h2 class="text-white font-light mb-2">Email</h2>
                         <InputText placeholder="" name="Email"  сlass="w-full" v-model="user.email"></InputText>
+                        <ValidationComponent name="email" v-model="user.email"></ValidationComponent>
+
                     </div>
                     <div class="text-left">
                         <h2 class="text-white font-light mb-2">Пароль</h2>
                         <Password class="w-full" :feedback="false"  toggleMask   v-model="user.password">
-                            <!--                        <template #header>-->
-                            <!--                            <h6>Pick a password</h6>-->
-                            <!--                        </template>-->
-                            <!--                        <template #footer>-->
-                            <!--                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">-->
-                            <!--                                <li>Минимум 8 символов</li>-->
-                            <!--                            </ul>-->
-                            <!--                        </template>-->
                         </Password>
+                        <ValidationComponent name="password" v-model="user.password"></ValidationComponent>
+
                     </div>
                     <my-button type="submit" @click.prevent="login">login</my-button>
                     <router-link to="/register"> <p class="message">Вы не зарегистрированы? <a href="#">Регистрация</a></p> </router-link>
                 </div>
-            </form>
+            </Form>
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: "Login",
+<script setup>
+import { Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
+import {useStore} from "vuex";
+import {ref} from "vue";
 
-    data:()=>({
-        user:{
-            email:"",
-            password:"",
-        },
-        errors:[],
-    }),
-    methods:{
-        login(){
-            if(this.user.email && this.user.password)
-                this.$store.dispatch('authUser/loginUser', this.user)
-            this.errors = [];
+//VALIDATION SCHEMA
+const schema = yup.object().shape({
+    email: yup.string().email("Неправильны формат почты").required(()=>'Еmail - обязательное поле'),
+    password: yup.string().required(() => "Пароль - обязательное поле"),
 
-            if(!this.user.email)
-                this.errors.push('')
+});
+//uses
+const store = useStore();
+const user = ref({})
 
-            if(!this.user.password)
-                this.errors.push('')
-
-        }
-    }
-
+const login = ()=>{
+    const resp = store.dispatch('authUser/loginUser', user.value);
+    console.log(resp)
 }
+// toast.add({
+//     severity:'success',
+//     summary: 'Подтверждено!',
+//     detail:'Успешно вошли в аккаунт',
+//     life: 3000
+// })
+// toast.add({
+//     severity:'warn',
+//     summary: 'Отказано в доступе!',
+//     detail:'Данные были введены неверно',
+//     life: 3000
+// })
 </script>
 
 <style lang="scss" scoped>

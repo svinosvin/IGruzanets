@@ -3,6 +3,8 @@
         <template #header>
             <h3 class="text-3xl font-bold ">Заказ</h3>
         </template>
+        <Form :validation-schema="schema"  validate-on-mount @submit="acceptChanges">
+
         <div class="flex-column   pt-2 justify-center">
             <div >
                 <div class="flex pb-2  header__wrapper border-b-3 mb-3">
@@ -24,17 +26,24 @@
                     <Dropdown v-model="activeOrder.resource" :options="[{'id':null,'title':'По умолчанию',}, ...activeService.resources]"
                               optionLabel="title" class="w-full"  placeholder="По умолчанию" :filter="true" filterPlaceholder="Найти категорию">
                     </Dropdown>
+                    <ValidationComponent v-if="activeService.resources.length>0 && activeOrder.resource!=null" name="resource" v-model="activeOrder.resource.id"></ValidationComponent>
+
                 </div>
                 <div class="flex w-full flex-wrap mb-3">
                     <div class="mb-3 w-full">
                         <h2 class="font-bold">Предпочтительная дата и время</h2>
-                        <VueDatePicker v-model="activeOrder.order_at"    :month-change-on-scroll="false"  locale="ru" placeholder="Заказы в конкретную дату" cancelText="отменить" format="dd-MM-yy HH:mm"    :min-date="new Date()"  selectText="выбрать" />
+                        <VueDatePicker v-model="activeOrder.order_at"  :month-change-on-scroll="false"  locale="ru" placeholder="Заказы в конкретную дату" cancelText="отменить" format="dd-MM-yy HH:mm"    :min-date="new Date()"  selectText="выбрать" />
                         <!--                            <Calendar class="w-full" v-model="activeOrder.order_at" :minDate="new Date()" dateFormat="dd-mm-yy"  :manualInput="false" showIcon showTime hourFormat="24" />-->
+                        <ValidationComponent name="order_at" v-model="activeOrder.order_at"></ValidationComponent>
+
                     </div>
                     <div class="w-half mr-2" >
                         <h2 class="font-bold">Введите ваш телефон</h2>
                         <InputMask placeholder="8 0XX XХХХХХХ" class="w-full"  v-model="activeOrder.tel_number" mask="8 099 9999999" slotChar="8 0XX XХХХХХХ" />
+                        <ValidationComponent name="tel_number" v-model="activeOrder.tel_number"></ValidationComponent>
+
                     </div>
+
                     <div class="mb-3">
                         <h2 class="font-bold">Масса отходов.</h2>
                         <InputNumber  @input="onChangePrice" class="w-full " @focusout="onChangePrice" @change="onChangePrice" v-model="activeOrder.weight" inputId="horizontal-buttons" showButtons buttonLayout="horizontal" mode="decimal" :step="5" :min="5" :max="7000" />
@@ -45,22 +54,23 @@
                 <div class="mb-3 stroke__wrapper">
                     <h2 class=" font-bold stroke__header">Введите адрес</h2>
                     <InputText class="w-full" v-model="activeOrder.address"></InputText>
+                    <ValidationComponent name="address" v-model="activeOrder.address"></ValidationComponent>
                 </div>
                 <div class="mb-3">
                     <h2 class="font-bold stroke__header">Введите ваше имя</h2>
                     <InputText class="w-full" v-model="activeOrder.name"/>
 <!--                    <MultiSelect v-model="activeService.resources"  :options="resources"  optionLabel="title" placeholder="Выберите ресурсы" :filter="true" class="multiselect-custom w-full md:w-20rem"-->
 <!--                                 emptyFilterMessage="Ничего не найдено" emptyMessage="Нету доступных вариантов"></MultiSelect>-->
+                    <ValidationComponent name="name" v-model="activeOrder.name"></ValidationComponent>
+
                 </div>
                 <div class="mb-3">
                     <h2 class="font-bold">Комментарий к заказу</h2>
                     <Textarea v-model="activeOrder.notice" class="w-full" :autoResize="true" rows="2" cols="50" />
                 </div>
             </div>
-
-
-
         </div>
+        </Form>
         <template #footer>
             <div class="footer-wrapper flex justify-between">
 
@@ -82,10 +92,21 @@ import { useConfirm } from "primevue/useconfirm";
 import VueDatePicker from '@vuepic/vue-datepicker';
 
 import InputNumber from 'primevue/inputnumber';
-import ServiceService from "../../../services/ServiceService";
 import OrderService from "../../../services/OrderService";
-import Calendar from 'primevue/calendar';
+import * as yup from "yup";
+import { Form, Field, ErrorMessage} from 'vee-validate';
 
+
+const schema = yup.object().shape({
+    name: yup.string().required(()=>'Имя - обязательное поле'),
+    first_name: yup.string().required(()=>'Фамилия - обязательное поле'),
+    tel_number: yup.string().required(()=>'Телефон - обязательное поле'),
+    address: yup.string().required(()=>'Адрес - обязательное поле'),
+    patronymic:  yup.string().required(()=>'Отчество - обязательное поле'),
+    resource: yup.number().required(() => "Категория отходов - обязательное поле"),
+    order_at: yup.string().required(() => "Поле дата - обязательное поле"),
+
+});
 //uses
 const toast = useToast();
 const confirm = useConfirm();
