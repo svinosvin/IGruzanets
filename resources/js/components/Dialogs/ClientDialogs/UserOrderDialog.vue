@@ -123,7 +123,7 @@ const resources = computed(()=>store.getters['resourceModule/resources']);
 const serviceTypes = computed(()=>store.getters['serviceModule/service_types']);
 const activeOrder = computed(()=>store.getters['orderModule/activeOrder']);
 const currentUser = computed(()=>store.getters['authUser/currentUser']);
-
+const error = ref(false);
 
 //methods
 
@@ -132,17 +132,13 @@ const handleClose = () => {
 }
 
 const acceptChanges = async () => {
+    error.value = false;
     await confirm.require({
-        message:`Вы точно хотите обновить данные заказа?`,
+        message:`Вы точно хотите подтвердить запрос на заказа?`,
         header: 'Подтверждение',
         icon: 'pi pi-exclamation-triangle',
         accept: async () => {
-                await toast.add({
-                    severity:'success',
-                    summary: 'Ждите подтверждения заказа, с вами свяжутся!',
-                    detail:'',
-                    life: 3000
-                })
+
             // await serviceService.deleteService(id);
             await orderService.createOrder( {
                 driver_id : activeOrder.value.driver !=null ? activeOrder.value.driver.id : null,
@@ -159,9 +155,29 @@ const acceptChanges = async () => {
                 order_at : activeOrder.value.order_at,
                 notice : activeOrder.value.notice,
             }).then(data => {
-                store.dispatch('orderModule/clearActiveOrder');
-                handleClose();
+
+            }).catch(e=>{
+                error.value = true
+                console.log(e);
             })
+            if(!error.value){
+                toast.add({
+                    severity:'success',
+                    summary: 'Ждите подтверждения заказа, с вами свяжутся!',
+                    detail:'',
+                    life: 3000
+                })
+                handleClose();
+            }
+            else {
+                toast.add({
+                    severity:'warn',
+                    summary: 'Данные введены некорректно',
+                    detail:'',
+                    life: 3000
+                })
+            }
+
             // await fillServices();
         },
         reject: () => {

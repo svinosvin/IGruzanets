@@ -190,7 +190,7 @@
                             <Column field="order_type.title" header="Статус заказа" style="max-width:8rem;">
                             </Column>
 
-                            <template #footer> В сумме {{ orders ? orders.length : 0 }} заказов. </template>
+                            <template #footer> В сумме {{ user.orders ? user.orders.length : 0 }} заказов. </template>
                         </DataTable>
 
 
@@ -298,5 +298,27 @@ onMounted( ()=>{
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+.w-half{
+    width: 50%;
+}
+@media only screen and (max-width: 780px) {
+    .custom-img{
+        @apply w-44 h-44;}
+
+
+
+}
+@media only screen and (max-width: 500px) {
+    .custom-img{
+        @apply w-20 h-20}
+
+
+}
+@media only screen and (max-width: 480px) {
+    .custom-img{
+        display: none}
+
+
 }
 </style>

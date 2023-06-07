@@ -28,7 +28,6 @@ class ServiceUpdateRequest extends FormRequest
             'description' => 'required|string',
             'resources' => 'required',
             'price_one_unit' => 'required',
-            'type' => 'required|integer',
             'service_type' => 'nullable',
         ];
     }

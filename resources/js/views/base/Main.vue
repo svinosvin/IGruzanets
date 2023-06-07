@@ -68,19 +68,18 @@
               >Полезные ссылки</span
               >
                                 <ul class="list-unstyled">
-                                    <li>
-                                        <a
-                                            class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                                            href="#"
-                                        >О нас</a
-                                        >
+                                    <li> <router-link to="/about"> <p class=""> <a href="#"><a
+                                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                                        href="#"
+                                    >О нас</a></a></p> </router-link>
                                     </li>
-                                    <li>
-                                        <a
-                                            class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                                            href="#"
-                                        >Github</a
-                                        >
+
+                                    <li> <router-link to="/services"> <p class=""> <a href="#"><a
+                                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                                        href="#"
+                                    >Наши услуги</a></a></p> </router-link>
+
+
                                     </li>
                                 </ul>
                             </div>
@@ -90,27 +89,25 @@
               >Другие ресурсы</span
               >
                                 <ul class="list-unstyled">
+                                    <li> <router-link to="/about"> <p class=""> <a href="#"><a
+                                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                                        href="#"
+                                    >Карта с пунктами сдачи мусора</a></a></p> </router-link>
 
-                                    <li>
-                                        <a
-                                            class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                                            href="#"
-                                        >Соглашения</a
-                                        >
+
                                     </li>
-                                    <li>
-                                        <a
-                                            class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                                            href="#"
-                                        >Приватность</a
-                                        >
+                                    <li> <router-link to="/employees"> <p class=""> <a href="#"><a
+                                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                                        href="#"
+                                    >Наш Автопарк</a></a></p> </router-link>
+
+
                                     </li>
-                                    <li>
-                                        <a
-                                            class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                                            href="#"
-                                        >Связаться с нами</a
-                                        >
+                                    <li> <router-link to="/home"> <p class=""> <a href="#"><a
+                                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
+                                        href="#"
+                                    >Главная</a></a></p> </router-link>
+
                                     </li>
                                 </ul>
                             </div>

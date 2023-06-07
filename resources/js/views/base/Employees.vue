@@ -54,8 +54,8 @@
                                 <h6 class="mt-0 mb-3">{{ slotProps.data.first_name }}</h6>
                                 <!--                        <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data.inventoryStatus)" />-->
                                 <div class="mt-5">
-                                    <Button icon="pi pi-search" rounded class="mr-2" />
-                                    <Button icon="pi pi-star-fill" rounded severity="success" class="mr-2"/>
+<!--                                    <Button icon="pi pi-search" rounded class="mr-2" />-->
+<!--                                    <Button icon="pi pi-star-fill" rounded severity="success" class="mr-2"/>-->
                                 </div>
                             </div>
                         </div>

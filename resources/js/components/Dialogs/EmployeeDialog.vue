@@ -37,24 +37,29 @@
                     <ValidationComponent name="tel_number" v-model="activeEmployee.tel_number"></ValidationComponent>
                 </div>
             </div>
-            <div class="flex" v-if="activeEmployee.id==null">
-                <div  class="mr-6">
+            <div class="flex w-full" v-if="activeEmployee.id==null">
+                <div  class="flex-col mr-6">
                     <h2>Придумайте Пароль</h2>
-                    <Password class="w-full" v-model="activeEmployee.password" toggleMask :feedback="false"></Password>
+                    <Password  class="w-full"  v-model="activeEmployee.password" toggleMask :feedback="false"></Password>
+                    <div>
+                        <ValidationComponent name="password" v-model="activeEmployee.password"></ValidationComponent>
 
+                    </div>
                 </div>
-                <ValidationComponent name="password" v-model="activeEmployee.password"></ValidationComponent>
 
-                <div>
+                <div class="flex-col">
+
                     <h2>Повторите пароль</h2>
-                    <Password class="w-full"  v-model="activeEmployee.password_confirmation" :feedback="false" toggleMask></Password>
 
+                    <Password class="w-full" v-model="activeEmployee.password_confirmation" :feedback="false" toggleMask></Password>
+                    <div>
+                        <ValidationComponent name="password_confirmation" v-model="activeEmployee.password_confirmation"></ValidationComponent>
+
+                    </div>
                 </div>
-                <ValidationComponent name="password_confirmation" v-model="activeEmployee.password_confirmation"></ValidationComponent>
 
             </div>
             <div>
-                <small class="pt-2 text-red-800" :class="{hidden1: !(activeEmployee.password!='' && activeEmployee.password!=activeEmployee.password_confirmation)}">Пароль не совпадает</small>
             </div>
 
         </div>
@@ -88,8 +93,10 @@ const schema = yup.object().shape({
     first_name: yup.string().required(()=>'Фамилия - обязательное поле'),
     patronymic:  yup.string().required(()=>'Отчество - обязательное поле'),
     tel_number: yup.string().required(() => "Номер телефона - обязательное поле"),
-    password: yup.string().required(() => "Номер телефона - обязательное поле"),
-    password_confirmation: yup.string().required(() => "Номер телефона - обязательное поле"),
+    email: yup.string().email("Неправильны формат почты").required(()=>'Еmail - обязательное поле'),
+    password: yup.string().required(() => "Пароль - обязательное поле").min(8,'Минимально 8 символов'),
+    password_confirmation: yup.string()
+        .oneOf([yup.ref('password'), null], 'Пароли должны совпадать').required("Подтверждение пароля - обязательное поле"),
 
 });
 

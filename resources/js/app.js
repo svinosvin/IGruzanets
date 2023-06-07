@@ -14,7 +14,6 @@ import ValidationComponent from './components/base/ValidationComponent.vue'
 import Upload from './components/ui/Upload.vue'
 
 const app = createApp(App)
-import '@vuepic/vue-datepicker/dist/main.css'
 
 
 app.use(PrimeVue);

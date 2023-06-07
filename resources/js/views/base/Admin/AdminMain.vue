@@ -86,6 +86,8 @@ import Footer from "./layout/Footer.vue";
 import axios from "../../../axios/axios-instance";
 import {useStore} from "vuex"
 import {computed, onMounted, ref} from "vue";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 
 //uses
@@ -123,7 +125,16 @@ const logout = ()=> {
 
 }
 //
-onMounted(getData);
+onMounted(()=> {
+getData();
+toast.add({
+    severity:'success',
+    summary: 'Подтверждено!',
+    detail:'Успешно вошли в аккаунт',
+    life: 3000
+})
+
+});
 
 
 </script>
