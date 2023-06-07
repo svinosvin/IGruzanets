@@ -24,8 +24,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|nullable',
-            'first_name' => 'string|nullable',
+            'name' => 'string|required',
+            'first_name' => 'string|required',
             'patronymic' => 'string|nullable',
             'tel_number' => ['required','string', 'unique:users,tel_number','regex:/^(8)\s(0)(29|25|44|33)\s(\d{3})(\d{2})(\d{2})$/'],
             'email' => 'required|string|unique:users,email',

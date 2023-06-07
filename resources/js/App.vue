@@ -11,7 +11,3 @@ import Toast from 'primevue/toast';
 
 </script>
 
-
-<style scoped>
-
-</style>

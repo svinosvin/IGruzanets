@@ -14,7 +14,7 @@
                         </Dropdown>
                     </div>
                     <div class="mr-5">
-                        <VueDatePicker v-model="orderAt"    :month-change-on-scroll="false"  locale="ru" placeholder="Предпочтительная дата и время" cancelText="отменить" format="dd-MM-yy HH:mm"  selectText="выбрать" />
+                        <VueDatePicker v-model="orderAt"    :month-change-on-scroll="false"  locale="ru" placeholder="Предпочтительная дата и время" cancelText="Отменить" format="dd-MM-yy HH:mm"  selectText="Выбрать" ></VueDatePicker>
                     </div>
 
                     <div >
@@ -47,7 +47,7 @@
                             <div class="w-full text-center font-bold text-xl">
                                 Дата:{{slotProps.data.order_at}}
                             </div>
-                            <Accordion class="pb-10 w-full" :multiple="true" :activeIndex="[]">
+                            <Accordion class="pb-10 w-full" :multiple="true" :activeIndex="activeOrder.id == slotProps.data.id ? [0] : []">
 
                                 <AccordionTab header="Данные заказа">
                                     <Form :validation-schema="schema"  validate-on-mount @submit="updateOrder">
@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="w-full flex mt-2">
                                                     <div class="mr-2">
-                                                        <Button icon="pi pi-search" label="Подобрать другую машину" class="p-button-rounded mr-2 p-button-success" @click="findCar(slotProps.data.id)"/>
+                                                        <Button icon="pi pi-search" label="Подобрать другую машину" class="p-button-rounded mr-2 p-button-success" @click="findCar(slotProps.data)"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,7 +165,7 @@
                                                 </div>
                                                 <div class="w-full mt-3 flex">
                                                     <div class="mr-2">
-                                                        <Button icon="pi pi-search" label="Подобрать машину" class="p-button-rounded mr-2 p-button-success" @click="findCar(slotProps.data.id)"/>
+                                                        <Button icon="pi pi-search" label="Подобрать машину" class="p-button-rounded mr-2 p-button-success" @click="findCar(slotProps.data)"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                                                 </div>
                                                 <div class="w-full mt-3 flex">
                                                     <div class="mr-2">
-                                                        <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data.id)"/>
+                                                        <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data)"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,7 +194,7 @@
                                                 </div>
                                                 <div class="w-full mt-3 flex">
                                                     <div class="mr-2">
-                                                        <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data.id)"/>
+                                                        <Button icon="pi pi-search" label="Подобрать другого водителя" class="p-button-rounded mr-2 p-button-success" @click="findDriver(slotProps.data)"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -204,7 +204,7 @@
                                                 <div class="font-bold text-3xl pb-4">Аккаунт</div>
                                                 <div class="w-full flex">
                                                     <h2 class="font-bold mr-2">ФИО: </h2>
-                                                    <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.first_name ?? ''}`}}</div>
+                                                    <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.patronymic ?? ''}`}}</div>
                                                 </div>
                                                 <div class="w-full flex">
                                                     <h2 class="font-bold mr-2">Телефон: </h2>
@@ -348,7 +348,7 @@
                                             <div class="font-bold text-3xl pb-4">Аккаунт</div>
                                             <div class="w-full flex">
                                                 <h2 class="font-bold mr-2">ФИО: </h2>
-                                                <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.first_name ?? ''}`}}</div>
+                                                <div>{{`${slotProps.data.user.first_name ?? ''}  ${slotProps.data.user.name}  ${slotProps.data.user.patronymic ?? ''}`}}</div>
                                             </div>
                                             <div class="w-full flex">
                                                 <h2 class="font-bold mr-2">Телефон: </h2>
@@ -530,27 +530,46 @@ const clearActiveOrder = ()=>{
     store.dispatch('orderModule/clearActiveOrder');
 }
 
-const findDriver = async (id) =>{
-    console.log(id);
+const findDriver = async (datas) =>{
+    setActiveOrder(datas);
+    if(activeOrder.value.auto!=null){
+        await orderService.findDriver(activeOrder.value.id).then(data => {
+            console.log(data.data)
+            findOrder(activeOrder.value.id);
+        })
+    }
+    else {
+         toast.add({
+            severity:'warn',
+            summary: 'Осторожно',
+            detail:'Вам сразу необходимо подобрать машину',
+            life: 3000
+        });
+    }
 
-    await orderService.findDriver(id).then(data => {
-        console.log(data.data)
-        findOrder(id);
-    })
+
 
 }
 
-const findCar = async (id) =>{
-    await orderService.findCar(id).then(data => {
-        console.log(data.data)
-        findOrder(id);
+const findCar = async (datas) =>{
+    setActiveOrder(datas);
+    await orderService.findCar(activeOrder.value.id).then(data => {
+        findOrder(activeOrder.value.id);
+
     })
+    .catch((error) => {
+        toast.add({
+            severity:'warn',
+            summary: 'Не найдено',
+            detail:'Видимо все машины заняты на данный момент',
+            life: 3000
+        });
+    });
 }
 
 const findOrder = async (id)=>{
 
     await orderService.getOrder(id).then(data => {
-
         console.log(data.data)
         store.dispatch('orderModule/updateOrder', {id: id, data: data.data});
     })
@@ -654,34 +673,45 @@ const updateOrder = async (data)=>{
 const acceptOrder = async (data) =>{
     setActiveOrder(data);
 
-    await confirm.require({
-        message:`Вы точно хотите принять заказ?`,
-        header: 'Подтверждение',
-        icon: 'pi pi-exclamation-triangle',
-        accept: async () => {
-            // await serviceService.deleteService(id);
-            await toast.add({
-                severity:'success',
-                summary: 'Успешно принято!',
-                detail:'',
-                life: 3000
-            })
-            await orderService.acceptOrder(activeOrder.value.id).then(data => {
-            }).then(data => {
-                findOrder(activeOrder.value.id);
-            })
-            // await fillServices();
-        },
-        reject: () => {
-            //callback to execute when user rejects the action
-        },
-        onShow: () => {
-            //callback to execute when dialog is shown
-        },
-        onHide: () => {
-            //callback to execute when dialog is hidden
-        }
-    });
+    if(activeOrder.value.auto!=null && activeOrder.value.driver!=null){
+        await confirm.require({
+            message:`Вы точно хотите принять заказ?`,
+            header: 'Подтверждение',
+            icon: 'pi pi-exclamation-triangle',
+            accept: async () => {
+                // await serviceService.deleteService(id);
+                await toast.add({
+                    severity:'success',
+                    summary: 'Успешно принято!',
+                    detail:'',
+                    life: 3000
+                })
+                await orderService.acceptOrder(activeOrder.value.id).then(data => {
+                }).then(data => {
+                    findOrder(activeOrder.value.id);
+                })
+                // await fillServices();
+            },
+            reject: () => {
+                //callback to execute when user rejects the action
+            },
+            onShow: () => {
+                //callback to execute when dialog is shown
+            },
+            onHide: () => {
+                //callback to execute when dialog is hidden
+            }
+        });
+    }
+    else {
+        await toast.add({
+            severity:'warn',
+            summary: 'Внимание',
+            detail:'Не все данные были корректно заполнены или не подобран персонал',
+            life: 3000
+        })
+    }
+
 
 }
 

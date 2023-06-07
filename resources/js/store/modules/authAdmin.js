@@ -1,4 +1,5 @@
 import axios from '../../axios/axios-instance'
+import router from "../../router";
 
 const state = {
     token: localStorage.getItem('admin-token') || '',
@@ -30,12 +31,13 @@ const actions = {
                             const admin = response.data.admin;
                             localStorage.setItem('admin-token', token);
                             commit('auth_admin', admin, token);
-                            window.location.replace('/admin/')
+                            router.go( `/admin/`)
+
                         }
                 })
                     .catch((error)=> {
                         console.log(error.response);
-                        localStorage.removeItem('admin-token')
+                        // localStorage.removeItem('admin-token')
                 })
             })
         })
